@@ -661,6 +661,8 @@
                             </li>
                         @endif
 
+
+
                         @isset($web->email)
                             <li class="flex items-start gap-3">
                                 <svg class="mt-0.5 h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
@@ -680,6 +682,13 @@
                                 <span style="color: var(--ink-soft);">{{ $web->address }}</span>
                             </li>
                         @endisset
+
+                            <li class="flex items-start gap-3">
+                                <a href="{{ asset('certificate.jpeg') }}" target="_blank">
+                                    <img src="{{ asset('certificate.jpeg') }}" style="width:150px;"/>
+                                </a>
+                            </li>
+
                     </ul>
                 </div>
             </div>
