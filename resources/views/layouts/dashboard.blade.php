@@ -183,6 +183,8 @@
 <script type="text/javascript">
     var _smartsupp = _smartsupp || {};
     _smartsupp.key = '9b0178b92e04d66828cce90557e4d657a384c179';
+    _smartsupp.offsetX = 0;
+    _smartsupp.offsetY = 180;
     window.smartsupp||(function(d) {
         var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
         s=d.getElementsByTagName('script')[0];c=d.createElement('script');

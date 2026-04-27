@@ -687,7 +687,7 @@
             <div class="mt-10 border-t pt-6" style="border-color: var(--line);">
                 <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                     <p class="text-xs" style="color: var(--muted);">
-                        © {{ '2017 - ' . date('Y') }} {{ $siteName ?? 'InvestCo' }}. All rights reserved.
+                        © {{ '2014 - ' . date('Y') }} {{ $siteName ?? 'InvestCo' }}. All rights reserved.
                     </p>
 
                     <div class="flex items-center gap-5 text-xs">
@@ -788,6 +788,8 @@
 <script type="text/javascript">
     var _smartsupp = _smartsupp || {};
     _smartsupp.key = '9b0178b92e04d66828cce90557e4d657a384c179';
+    _smartsupp.offsetX = 0;
+    _smartsupp.offsetY = 180;
     window.smartsupp||(function(d) {
         var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
         s=d.getElementsByTagName('script')[0];c=d.createElement('script');

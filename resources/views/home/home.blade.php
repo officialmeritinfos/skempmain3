@@ -772,7 +772,7 @@
                                   style="background: linear-gradient(135deg, var(--brand), var(--brand-2), var(--accent));">
                                 <span class="inline-flex items-center rounded-full px-4 py-2 text-[11px] font-extrabold text-white"
                                       style="background: rgba(20,10,35,.72);">
-                                    TRUSTED • SINCE 2017
+                                    TRUSTED • SINCE 2014
                                 </span>
                             </span>
                             </div>

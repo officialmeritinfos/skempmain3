@@ -148,7 +148,7 @@
                             clear — even when markets get noisy.
                         </p>
                         <p>
-                            Since 2017, we’ve supported thousands of investors with a simple promise:
+                            Since 2014, we’ve supported thousands of investors with a simple promise:
                             transparency, consistent communication, and a plan you can actually follow.
                         </p>
                         <p>
