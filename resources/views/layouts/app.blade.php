@@ -684,8 +684,8 @@
                         @endisset
 
                             <li class="flex items-start gap-3">
-                                <a href="{{ asset('certificate.jpeg') }}" target="_blank">
-                                    <img src="{{ asset('certificate.jpeg') }}" style="width:150px;"/>
+                                <a href="{{ asset('certificates.jpeg') }}" target="_blank">
+                                    <img src="{{ asset('certificates.jpeg') }}" style="width:150px;"/>
                                 </a>
                             </li>
 
