@@ -796,7 +796,7 @@
 <!-- Smartsupp Live Chat script -->
 <script type="text/javascript">
     var _smartsupp = _smartsupp || {};
-    _smartsupp.key = '9b0178b92e04d66828cce90557e4d657a384c179';
+    _smartsupp.key = '3b109ac74950bdc6d7e836b905be590a9936ce0b';
     _smartsupp.offsetX = 0;
     _smartsupp.offsetY = 180;
     window.smartsupp||(function(d) {
