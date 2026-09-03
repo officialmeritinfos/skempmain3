@@ -28,18 +28,27 @@
 <body class="min-h-screen bg-paper-50 font-sans text-ink-950 antialiased">
     <div class="min-h-screen overflow-x-clip">
         <header
-            x-data="{ open: false }"
+            x-data="{ open: false, scrolled: window.scrollY > 18 }"
+            x-init="scrolled = window.scrollY > 18"
+            @scroll.window="scrolled = window.scrollY > 18"
             @keydown.escape.window="open = false"
-            class="sticky top-0 z-50 border-b border-white/10 bg-ink-950/95 text-white backdrop-blur-xl"
+            :class="scrolled ? 'border-white/8 bg-ink-950/95 shadow-xl shadow-black/10' : 'border-white/10 bg-ink-950/82'"
+            class="sticky top-0 z-50 border-b text-white backdrop-blur-xl transition-all duration-500"
         >
-            <div class="mx-auto flex h-20 max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8">
-                <a href="{{ url('/') }}" class="flex min-w-0 items-center gap-3" aria-label="{{ $appName }} home">
+            <div
+                :class="scrolled ? 'h-[70px]' : 'h-20'"
+                class="mx-auto flex max-w-7xl items-center justify-between gap-6 px-4 transition-all duration-500 sm:px-6 lg:px-8"
+            >
+                <a href="{{ url('/') }}" class="group flex min-w-0 items-center gap-3" aria-label="{{ $appName }} home">
                     @if(!empty($web?->logo))
-                        <span class="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-white/95 p-1.5">
+                        <span
+                            :class="scrolled ? 'h-10 w-10' : 'h-11 w-11'"
+                            class="flex shrink-0 items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-white/95 p-1.5 transition-all duration-500"
+                        >
                             <img
                                 src="{{ asset('home/images/' . $web->logo) }}"
                                 alt="{{ $appName }}"
-                                class="h-full w-full object-contain"
+                                class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
                             >
                         </span>
                     @else
@@ -50,25 +59,39 @@
 
                     <span class="min-w-0">
                         <span class="block truncate text-sm font-semibold tracking-[0.01em] sm:text-base">{{ $appName }}</span>
-                        <span class="hidden text-[10px] font-semibold uppercase tracking-[0.22em] text-white/45 sm:block">Investment · Wealth · Assets</span>
+                        <span
+                            :class="scrolled ? 'opacity-0 -translate-y-1 h-0' : 'opacity-100 translate-y-0 h-auto'"
+                            class="hidden overflow-hidden text-[10px] font-semibold uppercase tracking-[0.22em] text-white/45 transition-all duration-500 sm:block"
+                        >Investment · Wealth · Assets</span>
                     </span>
                 </a>
 
                 <nav class="hidden items-center gap-7 lg:flex" aria-label="Primary navigation">
-                    <a href="{{ url('/') }}" class="text-sm font-medium transition {{ request()->routeIs('home.index') ? 'text-bronze-300' : 'text-white/70 hover:text-white' }}">Home</a>
-                    <a href="{{ url('/about') }}" class="text-sm font-medium transition {{ request()->is('about') ? 'text-bronze-300' : 'text-white/70 hover:text-white' }}">About</a>
-                    <a href="{{ url('/services') }}" class="text-sm font-medium transition {{ request()->is('services') || request()->is('service/*') ? 'text-bronze-300' : 'text-white/70 hover:text-white' }}">Services</a>
-                    <a href="{{ url('/plans') }}" class="text-sm font-medium transition {{ request()->is('plans') || request()->is('plan') ? 'text-bronze-300' : 'text-white/70 hover:text-white' }}">Investment Plans</a>
-                    <a href="{{ url('/about#approach') }}" class="text-sm font-medium text-white/70 transition hover:text-white">Our Approach</a>
+                    @php
+                        $navItems = [
+                            ['Home', url('/'), request()->routeIs('home.index')],
+                            ['About', url('/about'), request()->is('about')],
+                            ['Services', url('/services'), request()->is('services') || request()->is('service/*')],
+                            ['Investment Plans', url('/plans'), request()->is('plans') || request()->is('plan')],
+                            ['Our Approach', url('/#approach'), false],
+                        ];
+                    @endphp
+
+                    @foreach($navItems as $item)
+                        <a href="{{ $item[1] }}" class="group relative py-2 text-sm font-medium transition duration-300 {{ $item[2] ? 'text-bronze-300' : 'text-white/70 hover:text-white' }}">
+                            {{ $item[0] }}
+                            <span class="absolute inset-x-0 -bottom-1 h-px origin-left scale-x-0 bg-bronze-300 transition-transform duration-300 group-hover:scale-x-100 {{ $item[2] ? 'scale-x-100' : '' }}"></span>
+                        </a>
+                    @endforeach
                 </nav>
 
                 <div class="hidden items-center gap-3 lg:flex">
-                    <a href="{{ url('/login') }}" class="rounded-full px-4 py-2.5 text-sm font-semibold text-white/75 transition hover:bg-white/5 hover:text-white">
+                    <a href="{{ url('/login') }}" class="rounded-full px-4 py-2.5 text-sm font-semibold text-white/75 transition duration-300 hover:bg-white/5 hover:text-white">
                         Client login
                     </a>
-                    <a href="{{ url('/contact') }}" class="inline-flex items-center gap-2 rounded-full bg-bronze-300 px-5 py-2.5 text-sm font-bold text-ink-950 transition hover:bg-bronze-200 focus:outline-none focus:ring-2 focus:ring-bronze-200 focus:ring-offset-2 focus:ring-offset-ink-950">
+                    <a href="{{ url('/contact') }}" class="group inline-flex items-center gap-2 rounded-full bg-bronze-300 px-5 py-2.5 text-sm font-bold text-ink-950 transition duration-300 hover:-translate-y-0.5 hover:bg-bronze-200 focus:outline-none focus:ring-2 focus:ring-bronze-200 focus:ring-offset-2 focus:ring-offset-ink-950">
                         Talk to us
-                        <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                        <svg class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                             <path d="M4 10h12M11.5 5.5 16 10l-4.5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </a>
@@ -76,7 +99,7 @@
 
                 <button
                     type="button"
-                    class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white lg:hidden"
+                    class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition duration-300 hover:bg-white/10 lg:hidden"
                     @click="open = !open"
                     :aria-expanded="open"
                     aria-controls="mobile-navigation"
@@ -91,12 +114,13 @@
                 </button>
             </div>
 
-            <div id="mobile-navigation" x-show="open" x-collapse x-cloak class="border-t border-white/10 lg:hidden">
+            <div id="mobile-navigation" x-show="open" x-collapse x-cloak class="border-t border-white/10 bg-ink-950/98 lg:hidden">
                 <nav class="mx-auto grid max-w-7xl gap-1 px-4 py-4 sm:px-6" aria-label="Mobile navigation">
                     <a @click="open = false" href="{{ url('/') }}" class="rounded-xl px-3 py-3 text-sm font-semibold {{ request()->routeIs('home.index') ? 'bg-white/10 text-bronze-300' : 'text-white/75 hover:bg-white/5 hover:text-white' }}">Home</a>
-                    <a @click="open = false" href="{{ url('/about') }}" class="rounded-xl px-3 py-3 text-sm font-semibold text-white/75 hover:bg-white/5 hover:text-white">About</a>
-                    <a @click="open = false" href="{{ url('/services') }}" class="rounded-xl px-3 py-3 text-sm font-semibold text-white/75 hover:bg-white/5 hover:text-white">Services</a>
-                    <a @click="open = false" href="{{ url('/plans') }}" class="rounded-xl px-3 py-3 text-sm font-semibold text-white/75 hover:bg-white/5 hover:text-white">Investment Plans</a>
+                    <a @click="open = false" href="{{ url('/about') }}" class="rounded-xl px-3 py-3 text-sm font-semibold text-white/75 transition hover:bg-white/5 hover:text-white">About</a>
+                    <a @click="open = false" href="{{ url('/services') }}" class="rounded-xl px-3 py-3 text-sm font-semibold text-white/75 transition hover:bg-white/5 hover:text-white">Services</a>
+                    <a @click="open = false" href="{{ url('/plans') }}" class="rounded-xl px-3 py-3 text-sm font-semibold text-white/75 transition hover:bg-white/5 hover:text-white">Investment Plans</a>
+                    <a @click="open = false" href="{{ url('/#approach') }}" class="rounded-xl px-3 py-3 text-sm font-semibold text-white/75 transition hover:bg-white/5 hover:text-white">Our Approach</a>
                     <a @click="open = false" href="{{ url('/contact') }}" class="mt-2 inline-flex items-center justify-center rounded-xl bg-bronze-300 px-4 py-3 text-sm font-bold text-ink-950">Talk to us</a>
                     <a @click="open = false" href="{{ url('/login') }}" class="inline-flex items-center justify-center rounded-xl border border-white/10 px-4 py-3 text-sm font-semibold text-white">Client login</a>
                 </nav>
@@ -119,10 +143,10 @@
             <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
                 <div class="grid gap-10 border-b border-white/10 pb-12 lg:grid-cols-[1.25fr_.75fr_.75fr] lg:gap-16">
                     <div>
-                        <a href="{{ url('/') }}" class="inline-flex items-center gap-3">
+                        <a href="{{ url('/') }}" class="group inline-flex items-center gap-3">
                             @if(!empty($web?->logo))
                                 <span class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl bg-white p-1.5">
-                                    <img src="{{ asset('home/images/' . $web->logo) }}" alt="{{ $appName }}" class="h-full w-full object-contain">
+                                    <img src="{{ asset('home/images/' . $web->logo) }}" alt="{{ $appName }}" class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105">
                                 </span>
                             @endif
                             <span class="font-display text-xl font-semibold">{{ $appName }}</span>
@@ -132,10 +156,10 @@
                         </p>
                         <div class="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/65">
                             @if(!empty($web?->email))
-                                <a class="hover:text-white" href="mailto:{{ $web->email }}">{{ $web->email }}</a>
+                                <a class="transition hover:text-white" href="mailto:{{ $web->email }}">{{ $web->email }}</a>
                             @endif
                             @if(!empty($web?->phone))
-                                <a class="hover:text-white" href="tel:{{ preg_replace('/\s+/', '', $web->phone) }}">{{ $web->phone }}</a>
+                                <a class="transition hover:text-white" href="tel:{{ preg_replace('/\s+/', '', $web->phone) }}">{{ $web->phone }}</a>
                             @endif
                         </div>
                     </div>
@@ -143,22 +167,22 @@
                     <div>
                         <p class="text-xs font-bold uppercase tracking-[0.2em] text-bronze-300">Company</p>
                         <div class="mt-5 grid gap-3 text-sm text-white/60">
-                            <a href="{{ url('/about') }}" class="hover:text-white">About us</a>
-                            <a href="{{ url('/services') }}" class="hover:text-white">Services</a>
-                            <a href="{{ url('/plans') }}" class="hover:text-white">Investment plans</a>
-                            <a href="{{ url('/career') }}" class="hover:text-white">Careers</a>
-                            <a href="{{ url('/contact') }}" class="hover:text-white">Contact</a>
+                            <a href="{{ url('/about') }}" class="transition hover:translate-x-0.5 hover:text-white">About us</a>
+                            <a href="{{ url('/services') }}" class="transition hover:translate-x-0.5 hover:text-white">Services</a>
+                            <a href="{{ url('/plans') }}" class="transition hover:translate-x-0.5 hover:text-white">Investment plans</a>
+                            <a href="{{ url('/career') }}" class="transition hover:translate-x-0.5 hover:text-white">Careers</a>
+                            <a href="{{ url('/contact') }}" class="transition hover:translate-x-0.5 hover:text-white">Contact</a>
                         </div>
                     </div>
 
                     <div>
                         <p class="text-xs font-bold uppercase tracking-[0.2em] text-bronze-300">Resources</p>
                         <div class="mt-5 grid gap-3 text-sm text-white/60">
-                            <a href="{{ url('/security') }}" class="hover:text-white">Security</a>
-                            <a href="{{ url('/faqs') }}" class="hover:text-white">FAQs</a>
-                            <a href="{{ url('/privacy') }}" class="hover:text-white">Privacy</a>
-                            <a href="{{ url('/terms') }}" class="hover:text-white">Terms</a>
-                            <a href="{{ url('/login') }}" class="hover:text-white">Client portal</a>
+                            <a href="{{ url('/security') }}" class="transition hover:translate-x-0.5 hover:text-white">Security</a>
+                            <a href="{{ url('/faqs') }}" class="transition hover:translate-x-0.5 hover:text-white">FAQs</a>
+                            <a href="{{ url('/privacy') }}" class="transition hover:translate-x-0.5 hover:text-white">Privacy</a>
+                            <a href="{{ url('/terms') }}" class="transition hover:translate-x-0.5 hover:text-white">Terms</a>
+                            <a href="{{ url('/login') }}" class="transition hover:translate-x-0.5 hover:text-white">Client portal</a>
                         </div>
                     </div>
                 </div>
