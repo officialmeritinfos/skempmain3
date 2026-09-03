@@ -37,6 +37,7 @@ Route::get('privacy',[HomeController::class,'privacy']);
 Route::get('career',[HomeController::class,'career']);
 Route::get('buy-btc',[HomeController::class,'buyBtc']);
 Route::get('register',[Register::class,'landingPage']);
+Route::get('login',[Login::class,'landingPage']);
 
 // Services / investment areas
 Route::get('realestate',[HomeController::class,'realEstate']);
