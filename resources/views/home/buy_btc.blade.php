@@ -1,84 +1,31 @@
-@extends('home.base')
+@extends('layouts.marketing')
+
+@section('title', config('app.name') . ' | Bitcoin & Digital Assets')
+@section('meta_description', 'A risk-aware introduction to Bitcoin exposure, custody, liquidity and portfolio sizing.')
+
+@php
+$assetPage = [
+    'eyebrow' => 'Bitcoin & digital assets',
+    'title' => 'Access is easy. Understanding the risk is the harder part.',
+    'intro' => 'Bitcoin is globally traded, highly liquid in major markets and historically volatile. For investors considering exposure, the important questions are not only where to buy, but why to own it, how to hold it and how much risk the wider portfolio can absorb.',
+    'lens' => 'Conviction without concentration.',
+    'section_title' => 'Digital-asset exposure needs the same discipline as any other investment—plus additional operational care.',
+    'section_copy' => 'Bitcoin can offer a distinct return profile, but price volatility, custody, platform risk, regulation and investor behaviour can produce large swings. We treat it as a specialised allocation whose role and size should be explicit.',
+    'principles' => [
+        ['Volatility first', 'Large price moves are normal in digital-asset markets, so position sizing matters before any return thesis.'],
+        ['Custody matters', 'Self-custody, exchanges and custodians introduce different security, access and counterparty risks.'],
+        ['Liquidity is not stability', 'Deep trading markets can make an asset easy to transact without making its price predictable.'],
+        ['Portfolio role', 'Exposure should be considered in the context of existing risk, liquidity needs and the ability to tolerate drawdowns.'],
+    ],
+    'questions' => [
+        ['Why own Bitcoin?', 'We define the thesis—diversification, scarcity, adoption, tactical exposure or another objective—before implementation.'],
+        ['How will it be held?', 'Custody choice affects security, recovery options, counterparty exposure and operational responsibility.'],
+        ['What drawdown can be tolerated?', 'Sizing should reflect the possibility of severe volatility rather than assuming recent market conditions will continue.'],
+        ['How does it interact with the rest of the portfolio?', 'The decision should account for existing growth, technology and speculative exposure elsewhere.'],
+    ],
+];
+@endphp
 
 @section('content')
-
-    <!-- START SECTION BANNER -->
-    <section class="hero-section ptb-100 gradient-overlay"
-             style="background: url('{{asset('home/img/header-bg-5.jpg')}}')no-repeat center center / cover">
-        <div class="container">
-
-            <div class="row justify-content-center">
-                <div class="col-md-8 col-lg-7">
-                    <div class="page-header-content text-white text-center pt-sm-5 pt-md-5 pt-lg-0">
-                        <h1 class="text-white mb-0">{{$pageName}}</h1>
-                        <div class="custom-breadcrumb">
-                            <ol class="breadcrumb d-inline-block bg-transparent list-inline py-0">
-                                <li class="list-inline-item breadcrumb-item active">{{$siteName}}</li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section class="service-details-section ptb-100">
-        <div class="container">
-            <div class="row text-center">
-                <div class="col-md-3">
-                    <a href="https://paxful.com/roots/buy-bitcoin" target="_blank"><img src="{{asset('home/images/exchenger-1.png')}}"/></a>
-                </div>
-                <div class="col-md-3">
-                    <a href="https://www.coinmama.com/" target="_blank"><img src="{{asset('home/images/exchenger-2.png')}}"/></a>
-                </div>
-                <div class="col-md-3">
-                    <a href="https://digatrade.com/" target="_blank"><img src="{{asset('home/images/exchenger-3.png')}}"/></a>
-                </div>
-                <div class="col-md-3">
-                    <a href="https://24xbtc.com/" target="_blank"><img src="{{asset('home/images/exchenger-4.png')}}"/></a>
-                </div>
-                <div class="col-md-3">
-                    <a href="https://hitbtc.com/" target="_blank"><img src="{{asset('home/images/exchenger-5.png')}}"/></a>
-                </div>
-                <div class="col-md-3">
-                    <a href="https://bit2me.com/en/index.php" target="_blank"><img src="{{asset('home/images/exchenger-6.png')}}"/></a>
-                </div>
-                <div class="col-md-3">
-                    <a href="https://coinmate.io/home" target="_blank"><img src="{{asset('home/images/exchenger-7.png')}}"/></a>
-                </div>
-                <div class="col-md-3">
-                    <a href="https://www.bitcoin.de/en" target="_blank"><img src="{{asset('home/images/exchenger-8.png')}}"/></a>
-                </div>
-                <div class="col-md-3">
-                    <a href="https://cex.io/" target="_blank"><img src="{{asset('home/images/exchenger-9.png')}}"/></a>
-                </div>
-                <div class="col-md-3">
-                    <a href="https://cubits.com/" target="_blank"><img src="{{asset('home/images/exchenger-10.png')}}"/></a>
-                </div>
-                <div class="col-md-3">
-                    <a href="https://wemovecoins.com/" target="_blank"><img src="{{asset('home/images/exchenger-11.png')}}"/></a>
-                </div>
-                <div class="col-md-3">
-                    <a href="https://www.quoine.com/" target="_blank"><img src="{{asset('home/images/exchenger-12.png')}}"/></a>
-                </div>
-                <div class="col-md-3">
-                    <a href="https://coinfloor.co/" target="_blank"><img src="{{asset('home/images/exchenger-13.png')}}"/></a>
-                </div>
-                <div class="col-md-3">
-                    <a href="https://www.bitfinex.com/" target="_blank"><img src="{{asset('home/images/exchenger-15.png')}}"/></a>
-                </div>
-                <div class="col-md-3">
-                    <a href="https://www.bitnovo.com/comprar-bitcoins" target="_blank"><img src="{{asset('home/images/exchenger-16.png')}}"/></a>
-                </div>
-                <div class="col-md-3">
-                    <a href="https://www.lakebtc.com/" target="_blank"><img src="{{asset('home/images/exchenger-17.png')}}"/></a>
-                </div>
-
-
-
-            </div>
-        </div>
-    </section>
-
+    @include('home.partials.asset-page', ['assetPage' => $assetPage])
 @endsection
