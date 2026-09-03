@@ -26,7 +26,7 @@
 <body class="min-h-screen bg-paper-50 font-sans text-ink-950 antialiased">
     <div class="min-h-screen overflow-x-hidden">
         <header class="absolute inset-x-0 top-0 z-40">
-            <div class="mx-auto flex max-w-[1500px] items-center justify-between gap-4 px-4 py-5 sm:px-6 lg:px-8">
+            <div class="mx-auto flex max-w-[1500px] items-center justify-between gap-3 px-4 py-5 sm:px-6 lg:px-8">
                 <a href="{{ url('/') }}" class="group inline-flex min-w-0 items-center gap-3 text-white" aria-label="Return to {{ $appName }} home">
                     <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/15 bg-white/10 backdrop-blur-md">
                         <svg class="h-5 w-5 text-bronze-300" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -40,17 +40,25 @@
                     </span>
                 </a>
 
-                <a href="{{ url('/') }}" class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/10 px-4 py-2 text-xs font-semibold text-white/75 backdrop-blur-md transition hover:border-white/30 hover:bg-white/10 hover:text-white">
-                    <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                        <path d="m11.5 5-5 5 5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    Back to website
-                </a>
+                <div class="flex shrink-0 items-center gap-2">
+                    @include('layouts.partials.google-translate', ['tone' => 'dark'])
+
+                    <a href="{{ url('/') }}" class="inline-flex h-10 items-center gap-2 rounded-xl border border-white/15 bg-black/10 px-3 text-xs font-semibold text-white/75 backdrop-blur-md transition hover:border-white/30 hover:bg-white/10 hover:text-white sm:rounded-full sm:px-4">
+                        <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                            <path d="m11.5 5-5 5 5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span class="hidden sm:inline">Back to website</span>
+                        <span class="sm:hidden">Back</span>
+                    </a>
+                </div>
             </div>
         </header>
 
         @yield('content')
     </div>
+
+    {{-- Google Translate's native control stays hidden; the branded selector above drives it. --}}
+    <div id="google_translate_element" class="hidden" aria-hidden="true"></div>
 
     @stack('scripts')
 
