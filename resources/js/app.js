@@ -83,3 +83,29 @@ Alpine.data('revealOnScroll', (threshold = 0.14) => ({
 }))
 
 Alpine.start()
+
+// The dashboard translator historically used `hidden sm:block`. Keep the same
+// desktop presentation while exposing a compact globe trigger on small screens.
+const syncDashboardTranslateTrigger = () => {
+    document.querySelectorAll('[x-data="gtUi()"].hidden.sm\\:block').forEach((root) => {
+        const mobile = window.matchMedia('(max-width: 639px)').matches
+        const button = root.querySelector(':scope > button')
+        const label = button?.querySelector('[x-text="label"]')
+
+        root.style.display = mobile ? 'block' : ''
+
+        if (label) {
+            label.style.display = mobile ? 'none' : ''
+        }
+
+        if (button) {
+            button.style.width = mobile ? '40px' : ''
+            button.style.paddingLeft = mobile ? '0' : ''
+            button.style.paddingRight = mobile ? '0' : ''
+            button.style.justifyContent = mobile ? 'center' : ''
+        }
+    })
+}
+
+window.addEventListener('resize', syncDashboardTranslateTrigger)
+requestAnimationFrame(syncDashboardTranslateTrigger)
