@@ -26,6 +26,8 @@
         @click="toggle()"
         :aria-expanded="open"
         aria-haspopup="listbox"
+        :aria-label="'Translate page. Current language: ' + label"
+        :title="'Translate page — ' + label"
         class="{{ $translateFullWidth ? 'w-full justify-between' : '' }} inline-flex h-10 items-center gap-2 rounded-xl border px-3 text-xs font-semibold shadow-sm backdrop-blur-md transition {{ $buttonClasses }}"
     >
         <span class="inline-flex items-center gap-2">
@@ -34,12 +36,9 @@
                 <path d="M3.5 12h17M12 3c2.2 2.4 3.4 5.4 3.4 9S14.2 18.6 12 21c-2.2-2.4-3.4-5.4-3.4-9S9.8 5.4 12 3Z" stroke="currentColor" stroke-width="1.5"/>
             </svg>
             <span class="{{ $translateFullWidth ? '' : 'hidden sm:inline' }}" x-text="label"></span>
-            @unless($translateFullWidth)
-                <span class="sm:hidden">Translate</span>
-            @endunless
         </span>
 
-        <svg class="h-3.5 w-3.5 shrink-0 opacity-55 transition-transform" :class="open ? 'rotate-180' : ''" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <svg class="{{ $translateFullWidth ? '' : 'hidden sm:block' }} h-3.5 w-3.5 shrink-0 opacity-55 transition-transform" :class="open ? 'rotate-180' : ''" viewBox="0 0 20 20" fill="none" aria-hidden="true">
             <path d="m6 8 4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
     </button>
