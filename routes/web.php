@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\RecoverPassword;
 use App\Http\Controllers\Auth\Register;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PublicLoanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +24,6 @@ Route::get('about',[HomeController::class,'about']);
 Route::get('plans',[HomeController::class,'plans']);
 Route::get('plan',[HomeController::class,'plans']);
 Route::get('terms',[HomeController::class,'terms']);
-Route::get('terms',[HomeController::class,'terms']);
 Route::get('services',[HomeController::class,'services']);
 Route::get('service/{id}/details',[HomeController::class,'serviceDetail'])
     ->name('service.details');
@@ -32,12 +32,13 @@ Route::get('faq',[HomeController::class,'faqs']);
 Route::get('security',[HomeController::class,'security']);
 Route::get('estate',[HomeController::class,'estate']);
 Route::get('contact',[HomeController::class,'contact']);
-Route::get('loan',[HomeController::class,'loan']);
+Route::get('loan', PublicLoanController::class);
 Route::get('privacy',[HomeController::class,'privacy']);
 Route::get('career',[HomeController::class,'career']);
 Route::get('buy-btc',[HomeController::class,'buyBtc']);
 Route::get('register',[Register::class,'landingPage']);
-//Services
+
+// Services / investment areas
 Route::get('realestate',[HomeController::class,'realEstate']);
 Route::get('retirement-and-iras',[HomeController::class,'retirement'])->name('home.retirement');
 Route::get('stocks',[HomeController::class,'stocks']);
@@ -46,7 +47,6 @@ Route::get('forex',[HomeController::class,'forex']);
 Route::get('gold',[HomeController::class,'gold']);
 Route::get('agriculture',[HomeController::class,'agriculture']);
 
-
-//Calculate return
+// Calculate return
 Route::post('calculate-return',[HomeController::class,'calculateReturn'])
     ->name('calculate.return');

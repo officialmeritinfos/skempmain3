@@ -1,179 +1,34 @@
-@extends('layouts.app', ['title' => $pageName ?? 'Contact'])
+@extends('layouts.marketing')
+
+@section('title', config('app.name') . ' | Contact')
+@section('meta_description', 'Contact our team to discuss investment, wealth and asset management objectives.')
 
 @section('content')
-    {{-- =========================
-        PAGE HEADER — Emerald Executive + Wave
-    ========================= --}}
-    <section class="relative isolate overflow-hidden bg-[#03160F]">
-        {{-- gradient defs for waves --}}
-        <svg width="0" height="0" class="absolute">
-            <defs>
-                <linearGradient id="fLinear" x1="0" x2="1" y1="0" y2="0">
-                    <stop offset="0" stop-color="#22c55e"/>
-                    <stop offset=".55" stop-color="#84cc16"/>
-                    <stop offset="1" stop-color="#f59e0b"/>
-                </linearGradient>
-            </defs>
-        </svg>
+<section class="relative overflow-hidden bg-ink-950 text-white">
+    <div class="absolute inset-0 opacity-60" aria-hidden="true"><div class="absolute -right-20 top-10 h-96 w-96 rounded-full border border-bronze-300/10"></div><div class="absolute right-24 top-36 h-56 w-56 rounded-full border border-white/5"></div></div>
+    <div class="relative mx-auto grid max-w-7xl gap-12 px-4 py-20 sm:px-6 sm:py-24 lg:grid-cols-[1fr_.78fr] lg:items-end lg:px-8 lg:py-28">
+        <div x-data="revealOnScroll(.05)" :class="{ 'is-visible': shown }" class="reveal-up"><p class="text-xs font-bold uppercase tracking-[0.22em] text-bronze-300">Contact</p><h1 class="mt-5 max-w-4xl font-display text-5xl font-semibold leading-[1.02] tracking-[-0.04em] sm:text-6xl lg:text-7xl">Start with the objective. We can discuss the route from there.</h1></div>
+        <p class="text-base leading-8 text-white/58 lg:pb-2">Whether you are evaluating an investment, restructuring a portfolio or simply need clarity on an existing account, use the official contact details below.</p>
+    </div>
+</section>
 
-        {{-- header background --}}
-        <div class="absolute inset-0 -z-10 bg-gradient-to-br from-[#03160F] via-[#052014] to-[#0B2E1F]"></div>
-
-        {{-- subtle glows --}}
-        <div class="pointer-events-none absolute inset-0 -z-10 opacity-45">
-            <div class="absolute right-8 top-8 h-36 w-36 rounded-full bg-emerald-400/12 blur-2xl"></div>
-            <div class="absolute -left-16 top-16 h-48 w-48 rounded-full bg-amber-300/10 blur-3xl"></div>
-            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(34,197,94,.18),transparent_60%)]"></div>
-            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(245,158,11,.12),transparent_60%)]"></div>
+<section class="bg-paper-50 py-20 sm:py-24 lg:py-28">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid gap-5 md:grid-cols-3">
+            <article x-data="revealOnScroll()" :class="{ 'is-visible': shown }" class="reveal-up rounded-[1.7rem] border border-ink-950/8 bg-white p-6 sm:p-7"><span class="flex h-11 w-11 items-center justify-center rounded-full bg-bronze-100 text-bronze-700"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-4.35 7-10a7 7 0 1 0-14 0c0 5.65 7 10 7 10Z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="11" r="2.5" stroke="currentColor" stroke-width="1.5"/></svg></span><p class="mt-8 text-[10px] font-bold uppercase tracking-[0.2em] text-bronze-600">Visit</p><h2 class="mt-2 font-display text-2xl font-semibold text-ink-950">Office address</h2><div class="mt-3 text-sm leading-7 text-ink-700">{!! $web->address ?: 'Contact us for the current office address.' !!}</div></article>
+            <article x-data="revealOnScroll()" :class="{ 'is-visible': shown }" class="reveal-up rounded-[1.7rem] border border-ink-950/8 bg-white p-6 sm:p-7" style="--reveal-delay: 70ms"><span class="flex h-11 w-11 items-center justify-center rounded-full bg-bronze-100 text-bronze-700"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none"><path d="M4 5h16v14H4V5Z" stroke="currentColor" stroke-width="1.5"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.5"/></svg></span><p class="mt-8 text-[10px] font-bold uppercase tracking-[0.2em] text-bronze-600">Write</p><h2 class="mt-2 font-display text-2xl font-semibold text-ink-950">Email</h2>@if($web->email)<a href="mailto:{{ $web->email }}" class="mt-3 block break-all text-sm font-semibold leading-7 text-ink-950 transition hover:text-bronze-700">{{ $web->email }}</a>@else<p class="mt-3 text-sm text-ink-700">Email contact is not currently published.</p>@endif</article>
+            <article x-data="revealOnScroll()" :class="{ 'is-visible': shown }" class="reveal-up rounded-[1.7rem] border border-ink-950/8 bg-white p-6 sm:p-7" style="--reveal-delay: 140ms"><span class="flex h-11 w-11 items-center justify-center rounded-full bg-bronze-100 text-bronze-700"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none"><path d="M6 3h4l2 5-2.5 1.5a15 15 0 0 0 5 5L16 12l5 2v4c0 1.1-.9 2-2 2C10.7 20 4 13.3 4 5c0-1.1.9-2 2-2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span><p class="mt-8 text-[10px] font-bold uppercase tracking-[0.2em] text-bronze-600">Call</p><h2 class="mt-2 font-display text-2xl font-semibold text-ink-950">Phone</h2>@if($web->phone)<a href="tel:{{ preg_replace('/\s+/', '', $web->phone) }}" class="mt-3 block text-sm font-semibold leading-7 text-ink-950 transition hover:text-bronze-700">{{ $web->phone }}</a>@else<p class="mt-3 text-sm text-ink-700">Phone contact is not currently published.</p>@endif</article>
         </div>
 
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24 text-center relative z-10">
-            <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-emerald-50">
-                {{ $pageName }}
-            </h1>
-            {{-- breadcrumbs --}}
-            <nav class="mt-4 text-xs sm:text-sm text-emerald-100/70">
-                <a href="{{ url('/') }}" class="hover:underline hover:text-emerald-50">Home</a>
-                <span class="mx-2 opacity-75">/</span>
-                <span class="text-emerald-100/85">{{ $pageName }}</span>
-            </nav>
-        </div>
-
-        {{-- bottom wave into content --}}
-        <svg class="absolute bottom-0 left-0 right-0 h-[120px] w-full pointer-events-none"
-             viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M0,96 C240,128 480,64 720,88 C960,112 1200,48 1440,88 L1440,120 Z" fill="#03160F"></path>
-        </svg>
-    </section>
-
-    {{-- =========================
-        CONTACT CARDS — Emerald Glass / Gradient Edge
-    ========================= --}}
-    <section class="relative overflow-hidden bg-[#03160F] py-16 lg:py-24">
-        {{-- top wave if this follows header --}}
-        <svg class="absolute -top-[118px] left-0 right-0 h-[120px] w-full rotate-180 pointer-events-none"
-             viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M0,96 C240,128 480,64 720,88 C960,112 1200,48 1440,88 L1440,120 Z" fill="#03160F"></path>
-        </svg>
-
-        {{-- ambient glows --}}
-        <div class="pointer-events-none absolute -top-20 -left-24 h-[24rem] w-[24rem] rounded-full bg-emerald-400/10 blur-3xl"></div>
-        <div class="pointer-events-none absolute -bottom-24 -right-24 h-[26rem] w-[26rem] rounded-full bg-amber-300/10 blur-3xl"></div>
-
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-
-                {{-- Address --}}
-                <article
-                    class="group rounded-[28px] p-[2px]
-                           bg-[conic-gradient(from_210deg,rgba(34,197,94,.60),rgba(132,204,22,.22),rgba(245,158,11,.18),rgba(3,22,15,0),rgba(34,197,94,.60))]
-                           shadow-[0_30px_90px_-45px_rgba(0,0,0,.70)]
-                           transition-transform duration-300 hover:-translate-y-1">
-                    <div class="h-full rounded-[26px] bg-[#052014]/55 backdrop-blur
-                                ring-1 ring-inset ring-emerald-200/10 p-6">
-                        <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl
-                                    bg-[#03160F]/35 ring-1 ring-inset ring-emerald-200/15">
-                            <svg class="h-6 w-6 text-lime-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                                <path d="M12 21s-7-4.35-7-10a7 7 0 1114 0c0 5.65-7 10-7 10z"></path>
-                                <circle cx="12" cy="11" r="2.5"></circle>
-                            </svg>
-                        </div>
-                        <h5 class="text-lg font-bold text-emerald-50">Address</h5>
-                        <div class="mt-2 text-sm leading-relaxed text-emerald-100/80">
-                            {!! $web->address !!}
-                        </div>
-                    </div>
-                </article>
-
-                {{-- Phone (only if present) --}}
-                @if($web->phone)
-                    <article
-                        class="group rounded-[28px] p-[2px]
-                               bg-[conic-gradient(from_200deg,rgba(245,158,11,.45),rgba(132,204,22,.18),rgba(34,197,94,.22),rgba(3,22,15,0),rgba(245,158,11,.45))]
-                               shadow-[0_30px_90px_-45px_rgba(0,0,0,.70)]
-                               transition-transform duration-300 hover:-translate-y-1">
-                        <div class="h-full rounded-[26px] bg-[#052014]/55 backdrop-blur
-                                    ring-1 ring-inset ring-emerald-200/10 p-6">
-                            <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl
-                                        bg-[#03160F]/35 ring-1 ring-inset ring-amber-200/15">
-                                <svg class="h-6 w-6 text-amber-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.86.33 1.7.62 2.5a2 2 0 0 1-.45 2.11L8.1 9.9a16 16 0 0 0 6 6l1.57-1.13a2 2 0 0 1 2.11-.45c.8.29 1.64.5 2.5.62A2 2 0 0 1 22 16.92z"/>
-                                </svg>
-                            </div>
-                            <h5 class="text-lg font-bold text-emerald-50">Phone</h5>
-                            <p class="mt-2 text-sm leading-relaxed">
-                                <a href="tel:{{ $web->phone }}"
-                                   class="font-semibold text-lime-200 hover:text-emerald-50">
-                                    {{ $web->phone }}
-                                </a>
-                            </p>
-                        </div>
-                    </article>
-                @endif
-
-                {{-- Email --}}
-                <article
-                    class="group rounded-[28px] p-[2px]
-                           bg-[conic-gradient(from_210deg,rgba(34,197,94,.60),rgba(132,204,22,.22),rgba(245,158,11,.18),rgba(3,22,15,0),rgba(34,197,94,.60))]
-                           shadow-[0_30px_90px_-45px_rgba(0,0,0,.70)]
-                           transition-transform duration-300 hover:-translate-y-1">
-                    <div class="h-full rounded-[26px] bg-[#052014]/55 backdrop-blur
-                                ring-1 ring-inset ring-emerald-200/10 p-6">
-                        <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl
-                                    bg-[#03160F]/35 ring-1 ring-inset ring-emerald-200/15">
-                            <svg class="h-6 w-6 text-emerald-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                                <path d="M3 5h18v14H3z"></path><path d="M3 7l9 7 9-7"></path>
-                            </svg>
-                        </div>
-                        <h5 class="text-lg font-bold text-emerald-50">Email</h5>
-                        <p class="mt-2 text-sm leading-relaxed">
-                            <a href="mailto:{{ $web->email }}"
-                               class="font-semibold text-lime-200 hover:text-emerald-50">
-                                {{ $web->email }}
-                            </a>
-                        </p>
-                    </div>
-                </article>
-
-            </div>
-
-            {{-- Optional: “Quick Message” CTA strip (keeps page from feeling empty) --}}
-            <div class="mt-10 rounded-[28px] p-[2px]
-                        bg-[conic-gradient(from_210deg,rgba(34,197,94,.55),rgba(132,204,22,.18),rgba(245,158,11,.14),rgba(3,22,15,0),rgba(34,197,94,.55))]
-                        shadow-[0_26px_80px_-50px_rgba(0,0,0,.75)]">
-                <div class="rounded-[26px] bg-[#052014]/55 ring-1 ring-inset ring-emerald-200/10 backdrop-blur p-6 sm:p-8">
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
-                        <div>
-                            <h3 class="text-xl font-extrabold text-emerald-50">Need help fast?</h3>
-                            <p class="mt-1 text-sm text-emerald-100/75">
-                                Send us an email and we’ll respond as soon as possible.
-                            </p>
-                        </div>
-                        <div class="flex flex-wrap gap-3">
-                            <a href="mailto:{{ $web->email }}"
-                               class="inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold
-                                      text-[#052014] bg-lime-300 hover:bg-amber-200
-                                      focus:outline-none focus:ring-2 focus:ring-lime-200/60">
-                                Email us
-                            </a>
-                            @if($web->phone)
-                                <a href="tel:{{ $web->phone }}"
-                                   class="inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold
-                                          text-emerald-50 bg-[#03160F]/40 ring-1 ring-inset ring-emerald-200/15
-                                          hover:bg-[#03160F]/60 focus:outline-none focus:ring-2 focus:ring-emerald-300/40">
-                                    Call now
-                                </a>
-                            @endif
-                        </div>
-                    </div>
-                </div>
+        <div class="mt-14 grid overflow-hidden rounded-[2rem] border border-ink-950/8 bg-white lg:grid-cols-[1.05fr_.95fr]">
+            <div class="p-7 sm:p-10 lg:p-12"><p class="text-xs font-bold uppercase tracking-[0.2em] text-bronze-600">Before you contact us</p><h2 class="mt-4 max-w-xl font-display text-4xl font-semibold leading-tight text-ink-950 sm:text-5xl">A useful first conversation starts with context.</h2><p class="mt-5 max-w-xl text-base leading-8 text-ink-700">You do not need to arrive with a product in mind. Tell us what the capital is for, when it may be needed, what you already own and what is making the decision difficult.</p></div>
+            <div class="border-t border-ink-950/8 bg-paper-100 p-7 sm:p-10 lg:border-l lg:border-t-0 lg:p-12">
+                <p class="text-xs font-bold uppercase tracking-[0.2em] text-bronze-600">Helpful context</p>
+                <div class="mt-7 space-y-5">@foreach([['Objective','What are you trying to grow, preserve, fund or simplify?'],['Time horizon','When might this capital need to become available?'],['Liquidity','What money must remain accessible outside the investment?'],['Existing exposure','What assets, businesses or currencies already dominate your financial position?']] as $item)<div class="border-t border-ink-950/10 pt-5 first:border-t-0 first:pt-0"><h3 class="text-sm font-bold text-ink-950">{{ $item[0] }}</h3><p class="mt-1 text-sm leading-7 text-ink-700">{{ $item[1] }}</p></div>@endforeach</div>
             </div>
         </div>
+    </div>
+</section>
 
-        {{-- bottom wave to footer / next section --}}
-        <svg class="absolute bottom-0 left-0 right-0 h-[120px] w-full pointer-events-none"
-             viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M0,96 C240,128 480,64 720,88 C960,112 1200,48 1440,88 L1440,120 Z" fill="#03160F"></path>
-        </svg>
-    </section>
+<section class="bg-ink-900 py-20 text-white sm:py-24"><div class="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[1fr_auto] lg:items-end lg:px-8"><div><p class="text-xs font-bold uppercase tracking-[0.2em] text-bronze-300">Existing client?</p><h2 class="mt-4 max-w-3xl font-display text-4xl font-semibold leading-tight sm:text-5xl">For account-specific matters, use your authenticated account where possible.</h2></div><a href="{{ url('/login') }}" class="inline-flex min-w-48 items-center justify-center rounded-full bg-bronze-300 px-6 py-3.5 text-sm font-bold text-ink-950 transition hover:bg-bronze-200">Client login</a></div></section>
 @endsection
