@@ -1,11 +1,12 @@
-{{-- Validation Errors --}}
 @if ($errors->any())
-    <div class="mb-4 rounded-lg bg-red-50 dark:bg-red-900/50 border border-red-200 dark:border-red-800 p-4">
-        <div class="flex items-start space-x-3">
-            <span class="text-red-600 dark:text-red-300">
-                <i class="fas fa-times-circle"></i>
+    <div class="mb-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-3.5 text-red-800">
+        <div class="flex items-start gap-3">
+            <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-red-100">
+                <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <path d="m6 6 8 8M14 6l-8 8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                </svg>
             </span>
-            <div class="flex-1 text-sm text-red-700 dark:text-red-200">
+            <div class="min-w-0 flex-1 text-sm leading-6">
                 @foreach ($errors->all() as $error)
                     <p>{{ $error }}</p>
                 @endforeach
@@ -14,58 +15,57 @@
     </div>
 @endif
 
-{{-- Success --}}
 @if(session('success'))
-    <div class="mb-4 rounded-lg bg-green-50 dark:bg-green-900/50 border border-green-200 dark:border-green-800 p-4">
-        <div class="flex items-start space-x-3">
-            <span class="text-green-600 dark:text-green-300">
-                <i class="fas fa-check-circle"></i>
+    <div class="mb-6 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3.5 text-emerald-800">
+        <div class="flex items-start gap-3">
+            <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-100">
+                <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <path d="m5.5 10.5 3 3 6-7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
             </span>
-            <div class="flex-1 text-sm text-green-700 dark:text-green-200">
-                {{ session('success') }}
-            </div>
+            <p class="min-w-0 flex-1 text-sm leading-6">{{ session('success') }}</p>
         </div>
     </div>
 @endif
 
-{{-- Error --}}
 @if(session('error'))
-    <div class="mb-4 rounded-lg bg-red-50 dark:bg-red-900/50 border border-red-200 dark:border-red-800 p-4">
-        <div class="flex items-start space-x-3">
-            <span class="text-red-600 dark:text-red-300">
-                <i class="fas fa-exclamation-circle"></i>
+    <div class="mb-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-3.5 text-red-800">
+        <div class="flex items-start gap-3">
+            <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-red-100">
+                <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <path d="M10 5.5v5M10 14h.01" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                    <circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.4"/>
+                </svg>
             </span>
-            <div class="flex-1 text-sm text-red-700 dark:text-red-200">
-                {{ session('error') }}
-            </div>
+            <p class="min-w-0 flex-1 text-sm leading-6">{{ session('error') }}</p>
         </div>
     </div>
 @endif
 
-{{-- Warning --}}
 @if(session('warning'))
-    <div class="mb-4 rounded-lg bg-yellow-50 dark:bg-yellow-900/50 border border-yellow-200 dark:border-yellow-800 p-4">
-        <div class="flex items-start space-x-3">
-            <span class="text-yellow-600 dark:text-yellow-300">
-                <i class="fas fa-exclamation-triangle"></i>
+    <div class="mb-6 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3.5 text-amber-900">
+        <div class="flex items-start gap-3">
+            <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-amber-100">
+                <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <path d="M10 5.5v5M10 14h.01" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                    <circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.4"/>
+                </svg>
             </span>
-            <div class="flex-1 text-sm text-yellow-700 dark:text-yellow-200">
-                {{ session('warning') }}
-            </div>
+            <p class="min-w-0 flex-1 text-sm leading-6">{{ session('warning') }}</p>
         </div>
     </div>
 @endif
 
-{{-- Info --}}
 @if(session('info'))
-    <div class="mb-4 rounded-lg bg-blue-50 dark:bg-blue-900/50 border border-blue-200 dark:border-blue-800 p-4">
-        <div class="flex items-start space-x-3">
-            <span class="text-blue-600 dark:text-blue-300">
-                <i class="fas fa-info-circle"></i>
+    <div class="mb-6 rounded-2xl border border-sky-200 bg-sky-50 px-4 py-3.5 text-sky-900">
+        <div class="flex items-start gap-3">
+            <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-sky-100">
+                <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <path d="M10 9v5M10 6h.01" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                    <circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.4"/>
+                </svg>
             </span>
-            <div class="flex-1 text-sm text-blue-700 dark:text-blue-200">
-                {{ session('info') }}
-            </div>
+            <p class="min-w-0 flex-1 text-sm leading-6">{{ session('info') }}</p>
         </div>
     </div>
 @endif
