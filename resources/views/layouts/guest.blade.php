@@ -1,96 +1,57 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" :class="theme">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="bg-paper-50">
 <head>
+    @php
+        $appName = config('app.name');
+        $guestFavicon = setting('favicon');
+    @endphp
+
     <meta charset="UTF-8">
-    <title>@yield('title', setting('name')) — {{ setting('name') }}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="theme-color" content="#08171d">
 
-    {{-- Favicon --}}
-    <link rel="icon" type="image/png" href="{{ asset(setting('favicon')) }}">
+    <title>@yield('title', 'Client access') | {{ $appName }}</title>
+    <meta name="description" content="Secure client access to {{ $appName }}.">
 
-    {{-- Fonts & Icons --}}
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    @if(!empty($guestFavicon))
+        <link rel="icon" type="image/png" href="{{ asset($guestFavicon) }}">
+    @endif
 
-    {{-- Styles --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-    @livewireStyles
+    @stack('head')
 
-    {{-- reCAPTCHA --}}
     <script src="https://www.google.com/recaptcha/api.js" defer></script>
 </head>
+<body class="min-h-screen bg-paper-50 font-sans text-ink-950 antialiased">
+    <div class="min-h-screen overflow-x-hidden">
+        <header class="absolute inset-x-0 top-0 z-40">
+            <div class="mx-auto flex max-w-[1500px] items-center justify-between gap-4 px-4 py-5 sm:px-6 lg:px-8">
+                <a href="{{ url('/') }}" class="group inline-flex min-w-0 items-center gap-3 text-white" aria-label="Return to {{ $appName }} home">
+                    <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/15 bg-white/10 backdrop-blur-md">
+                        <svg class="h-5 w-5 text-bronze-300" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M4 16.5 9 9l3 4 3.5-6L20 16.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M4 19h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                        </svg>
+                    </span>
+                    <span class="min-w-0">
+                        <span class="block truncate text-sm font-semibold sm:text-base">{{ $appName }}</span>
+                        <span class="hidden text-[9px] font-bold uppercase tracking-[0.22em] text-white/45 sm:block">Investment · Wealth · Assets</span>
+                    </span>
+                </a>
 
-<body x-data="themeToggle()" x-init="init()" :class="theme"
-      class="font-sans antialiased min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-gray-100 transition-colors duration-300 relative">
+                <a href="{{ url('/') }}" class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/10 px-4 py-2 text-xs font-semibold text-white/75 backdrop-blur-md transition hover:border-white/30 hover:bg-white/10 hover:text-white">
+                    <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                        <path d="m11.5 5-5 5 5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Back to website
+                </a>
+            </div>
+        </header>
 
-{{-- Floating Theme Toggle Button --}}
-<div class="fixed top-4 right-4 z-50">
-    <button @click="toggleTheme"
-            class="w-10 h-10 rounded-xl flex items-center justify-center bg-white/70 dark:bg-gray-800/70 backdrop-blur-md border border-gray-300 dark:border-gray-700 shadow-md hover:shadow-lg transition"
-            :title="theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
-        <template x-if="theme === 'dark'">
-            <i class="fas fa-sun text-yellow-400 text-lg"></i>
-        </template>
-        <template x-if="theme === 'light'">
-            <i class="fas fa-moon text-gray-700 text-lg"></i>
-        </template>
-    </button>
-</div>
+        @yield('content')
+    </div>
 
-{{-- Main Content Container --}}
-@yield('content')
-
-{{-- Scripts --}}
-@livewireScripts
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
-
-<div class="gtranslate_wrapper"></div>
-<script>window.gtranslateSettings = {"default_language":"en","wrapper_selector":".gtranslate_wrapper"}</script>
-<script src="https://cdn.gtranslate.net/widgets/latest/float.js" defer></script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        toastr.options = {
-            closeButton: true,
-            progressBar: true,
-            timeOut: 3000,
-            positionClass: 'toast-top-right',
-            preventDuplicates: true,
-            showDuration: 300,
-            hideDuration: 1000,
-            showMethod: 'fadeIn',
-            hideMethod: 'fadeOut'
-        };
-    });
-</script>
-
-{{-- Theme Toggle Script --}}
-<script>
-    function themeToggle() {
-        return {
-            theme: localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'),
-            init() {
-                document.documentElement.classList.add(this.theme);
-                document.documentElement.classList.remove(this.theme === 'dark' ? 'light' : 'dark');
-            },
-            toggleTheme() {
-                const newTheme = this.theme === 'dark' ? 'light' : 'dark';
-                document.documentElement.classList.remove(this.theme);
-                document.documentElement.classList.add(newTheme);
-                this.theme = newTheme;
-                localStorage.setItem('theme', newTheme);
-            }
-        };
-    }
-</script>
-
-@stack('scripts')
-
-
+    @stack('scripts')
 </body>
 </html>
