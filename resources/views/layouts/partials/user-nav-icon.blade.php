@@ -14,6 +14,7 @@
     @case('transfer')
         <svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 7h14m0 0-3-3m3 3-3 3M19 17H5m0 0 3 3m-3-3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         @break
+    @case('managed')
     @case('briefcase')
         <svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M4 8h16v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8Zm0 4h16" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
         @break
@@ -29,6 +30,7 @@
     @case('wallet')
         <svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12H6a2 2 0 0 1-2-2V7Z" stroke="currentColor" stroke-width="1.6"/><path d="M16 11h5v4h-5a2 2 0 1 1 0-4Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
         @break
+    @case('referrals')
     @case('users')
         <svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0M16 5.5a3 3 0 0 1 0 5.5M16.5 14a5 5 0 0 1 4 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
         @break
