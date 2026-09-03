@@ -1,223 +1,82 @@
-@extends('layouts.app', ['title' => $pageName ?? 'Plans'])
+@extends('layouts.marketing')
+
+@section('title', config('app.name') . ' | Investment Plans')
+@section('meta_description', 'Explore configured investment plans, funding ranges, durations and return terms with clear risk context.')
 
 @section('content')
-    {{-- =========================
-        PAGE HEADER — Premium Violet
-    ========================= --}}
-    <section class="relative isolate overflow-hidden" style="background: var(--bg);">
-        <svg width="0" height="0" class="absolute">
-            <defs>
-                <linearGradient id="plansGlow" x1="0" x2="1" y1="0" y2="0">
-                    <stop offset="0" stop-color="#8b5cf6"/>
-                    <stop offset=".55" stop-color="#e879f9"/>
-                    <stop offset="1" stop-color="#f3d38a"/>
-                </linearGradient>
-            </defs>
-        </svg>
-
-        <div class="absolute inset-0 -z-10"
-             style="background:
-                radial-gradient(900px 420px at 10% -10%, rgba(139,92,246,.20), transparent 60%),
-                radial-gradient(720px 420px at 90% 0%, rgba(232,121,249,.16), transparent 58%),
-                radial-gradient(680px 380px at 50% 115%, rgba(243,211,138,.12), transparent 62%),
-                linear-gradient(180deg, var(--bg-soft), var(--bg));"></div>
-
-        <div class="pointer-events-none absolute inset-0 -z-10 opacity-60">
-            <div class="absolute right-8 top-8 h-36 w-36 rounded-full bg-fuchsia-400/15 blur-2xl"></div>
-            <div class="absolute -left-16 top-16 h-48 w-48 rounded-full bg-violet-400/15 blur-3xl"></div>
-            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(139,92,246,.18),transparent_60%)]"></div>
-            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(243,211,138,.12),transparent_60%)]"></div>
+<section class="relative overflow-hidden bg-ink-950 text-white">
+    <div class="absolute inset-0 opacity-70" aria-hidden="true">
+        <div class="absolute -right-24 top-14 h-96 w-96 rounded-full border border-bronze-300/10"></div>
+        <div class="absolute right-12 top-40 h-52 w-52 rounded-full border border-white/5"></div>
+    </div>
+    <div class="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28">
+        <div x-data="revealOnScroll(.05)" :class="{ 'is-visible': shown }" class="reveal-up max-w-4xl">
+            <p class="text-xs font-bold uppercase tracking-[0.22em] text-bronze-300">Investment plans</p>
+            <h1 class="mt-5 font-display text-5xl font-semibold leading-[1.02] tracking-[-0.04em] sm:text-6xl lg:text-7xl">Choose structure with the same care you choose opportunity.</h1>
+            <p class="mt-7 max-w-2xl text-base leading-8 text-white/62 sm:text-lg">Each published plan has its own funding range, duration and configured return terms. Review the terms alongside your liquidity needs, time horizon and tolerance for risk before committing capital.</p>
         </div>
+    </div>
+</section>
 
-        <div class="relative z-10 mx-auto max-w-7xl px-4 py-16 text-center sm:px-6 sm:py-24 lg:px-8">
-            <span class="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-extrabold tracking-wide text-white shadow"
-                  style="background: linear-gradient(135deg, var(--brand), var(--brand-2), var(--accent));">
-                <span class="h-2 w-2 rounded-full bg-white/80"></span>
-                Investment Plans
-            </span>
-
-            <h1 class="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl"
-                style="color: var(--ink);">
-                {{ $pageName ?? 'Plans' }}
-            </h1>
-
-            <p class="mt-3" style="color: var(--ink-soft);">
-                Choose a plan that matches your goals. Transparent fees, disciplined growth.
-            </p>
-
-            <nav class="mt-4 text-xs sm:text-sm" style="color: var(--muted);">
-                <a href="{{ url('/') }}" class="hover:underline" style="color: var(--ink-soft);">Home</a>
-                <span class="mx-2 opacity-60">/</span>
-                <span style="color: var(--ink);">{{ $pageName ?? 'Plans' }}</span>
-            </nav>
-        </div>
-
-        <svg class="absolute bottom-0 left-0 right-0 h-[120px] w-full pointer-events-none"
-             viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M0,96 C240,128 480,64 720,88 C960,112 1200,48 1440,88 L1440,120 Z" fill="var(--bg)"></path>
-        </svg>
-    </section>
-
-    {{-- =========================
-        PRICING GRID — Premium Glass Cards
-    ========================= --}}
-    <section class="relative py-16 lg:py-24" style="background: var(--bg);">
-        <div class="pointer-events-none absolute -top-20 -left-24 h-[26rem] w-[26rem] rounded-full bg-violet-500/10 blur-3xl"></div>
-        <div class="pointer-events-none absolute -bottom-24 -right-24 h-[28rem] w-[28rem] rounded-full bg-fuchsia-400/10 blur-3xl"></div>
-        <div class="pointer-events-none absolute inset-0 -z-10 opacity-35">
-            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(139,92,246,.14),transparent_60%)]"></div>
-            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(243,211,138,.10),transparent_60%)]"></div>
-        </div>
-
-        <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <span class="inline-block rounded-full px-4 py-1.5 text-[11px] font-bold tracking-wide text-white shadow"
-                      style="background: linear-gradient(135deg, var(--brand), var(--brand-2), var(--accent));">
-                    Investment Plans
-                </span>
-
-                <h2 class="mt-4 text-2xl font-extrabold sm:text-3xl md:text-4xl"
-                    style="color: var(--ink);">
-                    Find the right plan for your strategy
-                </h2>
+<section class="bg-paper-50 py-20 sm:py-24 lg:py-28">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid gap-8 lg:grid-cols-[.7fr_1.3fr] lg:gap-16">
+            <div x-data="revealOnScroll()" :class="{ 'is-visible': shown }" class="reveal-up lg:sticky lg:top-28 lg:self-start">
+                <p class="text-xs font-bold uppercase tracking-[0.2em] text-bronze-600">Published options</p>
+                <h2 class="mt-4 font-display text-4xl font-semibold leading-tight tracking-[-0.03em] text-ink-950 sm:text-5xl">Compare the terms. Then consider the fit.</h2>
+                <p class="mt-5 text-base leading-8 text-ink-700">A higher configured return is not automatically a better fit. Duration, minimum commitment, liquidity and the underlying strategy should all be considered together.</p>
+                <div class="mt-7 rounded-2xl border border-bronze-500/20 bg-bronze-100/55 p-5 text-sm leading-7 text-ink-700"><strong class="text-ink-950">Important:</strong> displayed plan rates are configured terms, not a statement that investment outcomes are risk-free. Investment values and realised outcomes can differ.</div>
             </div>
 
-            <div class="mt-10 grid gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
-                @foreach($packages as $package)
+            <div class="grid gap-5 md:grid-cols-2">
+                @forelse($packages as $package)
                     @inject('option','App\Defaults\Custom')
-
-                    <article
-                        class="group relative rounded-[28px] p-[2px] transition-transform duration-300 hover:-translate-y-1"
-                        style="
-                            background:
-                                conic-gradient(
-                                    from 210deg,
-                                    rgba(139,92,246,.55),
-                                    rgba(232,121,249,.18),
-                                    rgba(243,211,138,.14),
-                                    rgba(255,255,255,0),
-                                    rgba(139,92,246,.55)
-                                );
-                            box-shadow: 0 30px 80px -50px rgba(0,0,0,.18);
-                        ">
-                        <div class="relative h-full overflow-hidden rounded-[26px] backdrop-blur"
-                             style="background: var(--surface); border: 1px solid var(--line);">
-
-                            {{-- Top band --}}
-                            <div class="relative border-b px-6 pb-8 pt-10 sm:px-8"
-                                 style="
-                                    background:
-                                        linear-gradient(135deg,
-                                            rgba(139,92,246,.12),
-                                            rgba(232,121,249,.08),
-                                            rgba(243,211,138,.05)
-                                        );
-                                    border-color: var(--line);
-                                 ">
-                                <h3 class="text-xl font-extrabold tracking-tight sm:text-2xl"
-                                    style="color: var(--ink);">
-                                    {{ $package->name }}
-                                </h3>
-
-                                <p class="mt-2 text-base font-semibold sm:text-lg"
-                                   style="color: var(--brand-2);">
-                                    {{ number_format($package->roi * $package->numberOfReturns) }}%
-                                    <span style="color: var(--ink-soft);">
-                                        after {{ $package->Duration }}
-                                    </span>
-                                </p>
-
-                                @if($package->note)
-                                    <p class="mt-2 text-xs sm:text-sm" style="color: var(--muted);">
-                                        {{ $package->note }}
-                                    </p>
-                                @endif
-
-                                <span class="pointer-events-none absolute inset-0 opacity-25"
-                                      style="background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,0) 42%);"></span>
+                    <article x-data="revealOnScroll()" :class="{ 'is-visible': shown }" class="reveal-up group flex flex-col overflow-hidden rounded-[1.8rem] border border-ink-950/8 bg-white shadow-sm transition duration-400 hover:-translate-y-1 hover:border-bronze-500/30 hover:shadow-2xl hover:shadow-ink-950/7" style="--reveal-delay: {{ ($loop->index % 4) * 70 }}ms">
+                        <div class="border-b border-ink-950/8 bg-ink-950 p-6 text-white sm:p-7">
+                            <div class="flex items-start justify-between gap-4">
+                                <div><p class="text-[10px] font-bold uppercase tracking-[0.2em] text-bronze-300">Plan {{ str_pad((string)$loop->iteration, 2, '0', STR_PAD_LEFT) }}</p><h3 class="mt-2 font-display text-3xl font-semibold">{{ $package->name }}</h3></div>
+                                <span class="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-bronze-300"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none"><path d="M4 19 9 9l3 6 3-5 5 9H4Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
                             </div>
-
-                            {{-- Body --}}
-                            <div class="px-6 py-8 sm:px-8">
-                                <ul class="space-y-4 text-[15px] leading-relaxed" style="color: var(--ink-soft);">
-                                    <li class="flex items-start gap-3 border-t pt-4" style="border-color: var(--line);">
-                                        <svg class="mt-0.5 h-4 w-4" style="color: var(--brand-2);" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/>
-                                        </svg>
-                                        <span class="min-w-0">
-                                            Price:
-                                            <span style="color: var(--ink);">${{ number_format($package->minAmount,2) }}</span>
-                                            –
-                                            @if($package->isUnlimited != 1)
-                                                <span style="color: var(--ink);">${{ number_format($package->maxAmount,2) }}</span>
-                                            @else
-                                                <span style="color: var(--ink);">Unlimited</span>
-                                            @endif
-                                        </span>
-                                    </li>
-
-                                    <li class="flex items-start gap-3 border-t pt-4" style="border-color: var(--line);">
-                                        <svg class="mt-0.5 h-4 w-4" style="color: var(--brand-2);" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/>
-                                        </svg>
-                                        <span>
-                                            Profit return:
-                                            <span style="color: var(--ink);">{{ $package->roi }}%</span>
-                                            <span style="color: var(--muted);">{{ $option->getReturnType($package->returnType) }}</span>
-                                        </span>
-                                    </li>
-
-                                    <li class="flex items-start gap-3 border-t pt-4" style="border-color: var(--line);">
-                                        <svg class="mt-0.5 h-4 w-4" style="color: var(--brand-2);" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/>
-                                        </svg>
-                                        <span>
-                                            Contract Duration:
-                                            <span style="color: var(--ink);">{{ $package->Duration }}</span>
-                                        </span>
-                                    </li>
-
-                                    <li class="flex items-start gap-3 border-t pt-4" style="border-color: var(--line);">
-                                        <svg class="mt-0.5 h-4 w-4" style="color: var(--brand-2);" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/>
-                                        </svg>
-                                        <span>
-                                            Referral Bonus:
-                                            <span style="color: var(--ink);">{{ $package->referral }}%</span>
-                                        </span>
-                                    </li>
-                                </ul>
-
-                                <div class="mt-8">
-                                    <a href="{{ route('register') }}"
-                                       class="inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white shadow hover:opacity-95 focus:outline-none"
-                                       style="background: linear-gradient(135deg, var(--brand), var(--brand-2), var(--accent));">
-                                        Get Started
-                                        <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                            <path d="M7.05 4.55a.75.75 0 011.06 0l5 5a.75.75 0 01-1.06 1.06L8.56 6.62v7.69a.75.75 0 01-1.5 0V4.55z"/>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
+                            <div class="mt-7 flex items-end gap-2"><span class="font-display text-5xl font-semibold text-bronze-300">{{ rtrim(rtrim(number_format((float)$package->roi, 2), '0'), '.') }}%</span><span class="pb-1 text-xs text-white/45">{{ $option->getReturnType($package->returnType) }}</span></div>
+                            @if($package->note)<p class="mt-4 text-sm leading-6 text-white/55">{{ $package->note }}</p>@endif
                         </div>
 
-                        <div class="pointer-events-none absolute inset-0 rounded-[28px] ring-1 ring-transparent transition-transform duration-300 group-hover:-translate-y-1"></div>
+                        <div class="flex flex-1 flex-col p-6 sm:p-7">
+                            <dl class="space-y-0 divide-y divide-ink-950/8 text-sm">
+                                <div class="flex items-start justify-between gap-4 py-4 first:pt-0"><dt class="text-ink-600">Funding range</dt><dd class="text-right font-semibold text-ink-950">${{ number_format($package->minAmount, 2) }} – @if($package->isUnlimited != 1) ${{ number_format($package->maxAmount, 2) }} @else Open-ended @endif</dd></div>
+                                <div class="flex items-start justify-between gap-4 py-4"><dt class="text-ink-600">Duration</dt><dd class="text-right font-semibold text-ink-950">{{ $package->Duration }}</dd></div>
+                                <div class="flex items-start justify-between gap-4 py-4"><dt class="text-ink-600">Number of returns</dt><dd class="text-right font-semibold text-ink-950">{{ $package->numberOfReturns }}</dd></div>
+                                <div class="flex items-start justify-between gap-4 py-4"><dt class="text-ink-600">Configured total rate</dt><dd class="text-right font-semibold text-ink-950">{{ rtrim(rtrim(number_format((float)($package->roi * $package->numberOfReturns), 2), '0'), '.') }}%</dd></div>
+                                @if((float)$package->referral > 0)<div class="flex items-start justify-between gap-4 py-4"><dt class="text-ink-600">Referral rate</dt><dd class="text-right font-semibold text-ink-950">{{ $package->referral }}%</dd></div>@endif
+                            </dl>
+                            <div class="mt-auto pt-7"><a href="{{ url('/register') }}" class="inline-flex w-full items-center justify-center rounded-full bg-ink-950 px-5 py-3.5 text-sm font-bold text-white transition hover:bg-ink-900">Continue with this plan</a></div>
+                        </div>
                     </article>
-                @endforeach
-            </div>
-
-            <div class="mt-12 text-center">
-                <a href="{{ url('contact') }}"
-                   class="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold backdrop-blur"
-                   style="color: var(--ink); background: var(--surface); border: 1px solid var(--line);">
-                    Need a custom plan? Contact us
-                </a>
+                @empty
+                    <div class="md:col-span-2 rounded-[1.8rem] border border-dashed border-ink-950/15 bg-white p-10 text-center"><p class="text-sm text-ink-700">No investment plans are currently published.</p></div>
+                @endforelse
             </div>
         </div>
+    </div>
+</section>
 
-        <svg class="absolute bottom-0 left-0 right-0 h-[120px] w-full pointer-events-none"
-             viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M0,96 C240,128 480,64 720,88 C960,112 1200,48 1440,88 L1440,120 Z" fill="var(--bg)"></path>
-        </svg>
-    </section>
+@if(isset($cannabis_packages) && $cannabis_packages->isNotEmpty())
+<section class="bg-paper-100 py-20 sm:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="border-b border-ink-950/10 pb-8"><p class="text-xs font-bold uppercase tracking-[0.2em] text-bronze-600">Specialised strategies</p><h2 class="mt-4 font-display text-4xl font-semibold text-ink-950 sm:text-5xl">Additional published opportunities.</h2></div>
+        <div class="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            @foreach($cannabis_packages as $package)
+                <article class="rounded-[1.6rem] border border-ink-950/8 bg-white p-6"><h3 class="font-display text-2xl font-semibold text-ink-950">{{ $package->name }}</h3><p class="mt-3 text-sm leading-7 text-ink-700">Funding from ${{ number_format($package->minAmount, 2) }} with a configured duration of {{ $package->Duration }}.</p><a href="{{ url('/register') }}" class="mt-6 inline-flex text-sm font-bold text-ink-950 hover:text-bronze-700">View account options →</a></article>
+            @endforeach
+        </div>
+    </div>
+</section>
+@endif
+
+<section class="bg-ink-900 py-20 text-white sm:py-24">
+    <div class="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[1fr_auto] lg:items-end lg:px-8">
+        <div><p class="text-xs font-bold uppercase tracking-[0.2em] text-bronze-300">Need context before choosing?</p><h2 class="mt-4 max-w-3xl font-display text-4xl font-semibold leading-tight sm:text-5xl">The plan should fit the objective—not the other way around.</h2></div>
+        <a href="{{ url('/contact') }}" class="inline-flex min-w-48 items-center justify-center rounded-full bg-bronze-300 px-6 py-3.5 text-sm font-bold text-ink-950 transition hover:bg-bronze-200">Talk to our team</a>
+    </div>
+</section>
 @endsection
