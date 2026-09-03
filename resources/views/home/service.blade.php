@@ -1,156 +1,67 @@
-{{-- resources/views/home/service.blade.php --}}
-@extends('layouts.app')
+@extends('layouts.marketing')
+
+@section('title', config('app.name') . ' | Services')
+@section('meta_description', 'Investment, wealth and asset management services designed around long-term objectives, risk awareness and disciplined stewardship.')
 
 @section('content')
-    {{-- =========================
-         SERVICES — Premium Glass Cards + Waves
-    ========================= --}}
-    <section id="sectors" class="relative isolate overflow-hidden py-28" style="background: var(--bg);">
-
-        {{-- Gradient defs --}}
-        <svg width="0" height="0" class="absolute">
-            <defs>
-                <linearGradient id="servicesWaveGlow" x1="0" x2="1" y1="0" y2="0">
-                    <stop offset="0" stop-color="#8b5cf6"/>
-                    <stop offset=".45" stop-color="#e879f9"/>
-                    <stop offset="1" stop-color="#f3d38a"/>
-                </linearGradient>
-            </defs>
-        </svg>
-
-        {{-- Top wave --}}
-        <svg class="absolute -top-[118px] left-0 right-0 h-[120px] w-full rotate-180"
-             viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M0,96 C240,128 480,64 720,88 C960,112 1200,48 1440,88 L1440,120 L0,120 Z"
-                  fill="url(#servicesWaveGlow)"></path>
-        </svg>
-
-        {{-- Ambient glows --}}
-        <div class="pointer-events-none absolute -top-24 -left-24 h-[28rem] w-[28rem] rounded-full bg-violet-500/14 blur-3xl"></div>
-        <div class="pointer-events-none absolute -bottom-24 -right-24 h-[30rem] w-[30rem] rounded-full bg-fuchsia-400/12 blur-3xl"></div>
-        <div class="pointer-events-none absolute inset-0 opacity-40">
-            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(139,92,246,.16),transparent_60%)]"></div>
-            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(243,211,138,.10),transparent_60%)]"></div>
+<section class="relative overflow-hidden bg-ink-950 text-white">
+    <div class="absolute inset-0 opacity-60" aria-hidden="true">
+        <div class="absolute -right-24 top-12 h-96 w-96 rounded-full border border-bronze-300/10"></div>
+        <div class="absolute right-24 top-32 h-56 w-56 rounded-full border border-white/5"></div>
+    </div>
+    <div class="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28">
+        <div x-data="revealOnScroll(.05)" :class="{ 'is-visible': shown }" class="reveal-up max-w-4xl">
+            <p class="text-xs font-bold uppercase tracking-[0.22em] text-bronze-300">What we do</p>
+            <h1 class="mt-5 font-display text-5xl font-semibold leading-[1.02] tracking-[-0.04em] sm:text-6xl lg:text-7xl">Different decisions. One disciplined view of capital.</h1>
+            <p class="mt-7 max-w-2xl text-base leading-8 text-white/62 sm:text-lg">Our services are designed to help clients think more clearly about where capital should sit, what risk it should take, what it should protect and how each decision connects to the wider financial picture.</p>
         </div>
+    </div>
+</section>
 
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            {{-- Heading --}}
-            <div class="mx-auto max-w-2xl text-center">
-                <span class="inline-block rounded-full px-4 py-1.5 text-[11px] font-bold tracking-wide text-white shadow"
-                      style="background: linear-gradient(135deg, var(--brand), var(--brand-2), var(--accent));">
-                    What We Do
-                </span>
-
-                <h2 class="mt-5 text-3xl font-extrabold leading-tight sm:text-4xl"
-                    style="background: linear-gradient(135deg, var(--brand), var(--brand-2), var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent;">
-                    Sectors We Earn in
-                </h2>
-
-                @isset($web)
-                    <p class="mt-3 text-sm" style="color: var(--ink-soft);">
-                        {{ $web->name ?? $siteName ?? config('app.name') }}
-                    </p>
-                @endisset
+<section class="bg-paper-50 py-20 sm:py-24 lg:py-28">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid gap-8 lg:grid-cols-[.68fr_1.32fr] lg:gap-16">
+            <div x-data="revealOnScroll()" :class="{ 'is-visible': shown }" class="reveal-up lg:sticky lg:top-28 lg:self-start">
+                <p class="text-xs font-bold uppercase tracking-[0.2em] text-bronze-600">Our service architecture</p>
+                <h2 class="mt-4 font-display text-4xl font-semibold leading-tight tracking-[-0.03em] text-ink-950 sm:text-5xl">Start with the objective. Choose the tool second.</h2>
+                <p class="mt-5 text-base leading-8 text-ink-700">The strongest financial decisions rarely come from asking “what should I buy?” first. We begin with the role the capital needs to play, then evaluate the appropriate strategy, asset or service.</p>
+                <a href="{{ url('/contact') }}" class="group mt-7 inline-flex items-center gap-2 text-sm font-bold text-ink-950 transition hover:text-bronze-700">Talk to our team <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11.5 5.5 16 10l-4.5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
             </div>
 
-            {{-- Cards --}}
-            @if(isset($services) && count($services))
-                <div class="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                    @foreach($services as $service)
-                        <article class="group relative rounded-[28px] p-[2px] transition-transform duration-300 ease-out will-change-transform hover:-translate-y-1"
-                                 style="
-                                    background: conic-gradient(
-                                        from 220deg,
-                                        rgba(139,92,246,.95),
-                                        rgba(232,121,249,.92),
-                                        rgba(192,38,211,.85),
-                                        rgba(243,211,138,.82),
-                                        rgba(139,92,246,.95)
-                                    );
-                                    box-shadow:
-                                        0 30px 90px -40px rgba(139,92,246,.24),
-                                        0 24px 80px -48px rgba(232,121,249,.20);
-                                 ">
-                            <div class="relative h-full overflow-hidden rounded-[26px] backdrop-blur"
-                                 style="background: var(--surface); border: 1px solid var(--line);">
-
-                                {{-- Image --}}
-                                <div class="relative aspect-[16/10] w-full overflow-hidden">
-                                    <img
-                                        src="{{ asset('home/serv/' . $service->photo) }}"
-                                        alt="{{ $service->title }}"
-                                        class="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]">
-
-                                    {{-- Overlay glow --}}
-                                    <span class="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                                          style="background:
-                                              radial-gradient(800px 320px at 20% -10%, rgba(139,92,246,.24), transparent 60%),
-                                              radial-gradient(900px 360px at 120% 10%, rgba(232,121,249,.22), transparent 60%),
-                                              linear-gradient(180deg, rgba(20,10,35,0) 45%, rgba(20,10,35,.28) 100%);"></span>
-
-                                    {{-- Mobile vignette --}}
-                                    <span class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/20 to-transparent sm:hidden"></span>
-                                </div>
-
-                                {{-- Content --}}
-                                <div class="relative p-7 sm:p-8">
-                                    <div class="flex items-start gap-4">
-                                        <span class="grid h-12 w-12 place-items-center rounded-xl"
-                                              style="background: linear-gradient(135deg, rgba(139,92,246,.14), rgba(232,121,249,.12), rgba(243,211,138,.10)); border: 1px solid var(--line);">
-                                            <svg class="h-5 w-5" style="color: var(--brand-2);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                                                <path d="M3 3v18h18M7 15l4-4 3 3 5-6"/>
-                                            </svg>
-                                        </span>
-
-                                        <div class="min-w-0">
-                                            <h3 class="truncate text-lg font-bold sm:text-xl" style="color: var(--ink);">
-                                                <a href="{{ route('service.details', ['id' => $service->id]) }}" class="hover:opacity-90">
-                                                    {{ $service->title }}
-                                                </a>
-                                            </h3>
-
-                                            @if(!empty($service->short))
-                                                <p class="mt-2 line-clamp-3 text-sm leading-relaxed" style="color: var(--ink-soft);">
-                                                    {{ $service->short }}
-                                                </p>
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                    <div class="mt-6 flex items-center justify-between">
-                                        <a href="{{ route('service.details', ['id' => $service->id]) }}"
-                                           class="inline-flex items-center gap-2 rounded-lg px-4 py-2 text-xs font-semibold text-white shadow transition hover:opacity-95 focus:outline-none"
-                                           style="background: linear-gradient(135deg, var(--brand), var(--brand-2), var(--accent));">
-                                            Read More
-                                            <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                                <path d="M7.05 4.55a.75.75 0 011.06 0l5 5a.75.75 0 01-1.06 1.06L8.56 6.62v7.69a.75.75 0 01-1.5 0V4.55z"/>
-                                            </svg>
-                                        </a>
-
-                                        <span class="h-2 w-2 rounded-full transition-shadow"
-                                              style="background: rgba(232,121,249,.78);"
-                                              onmouseover="this.style.boxShadow='0 0 24px 6px rgba(232,121,249,.45)'"
-                                              onmouseout="this.style.boxShadow='none'"></span>
-                                    </div>
-                                </div>
+            <div class="grid gap-5 sm:grid-cols-2">
+                @forelse($services as $service)
+                    <a href="{{ route('service.details', ['id' => $service->id]) }}" x-data="revealOnScroll()" :class="{ 'is-visible': shown }" class="reveal-up group overflow-hidden rounded-[1.8rem] border border-ink-950/8 bg-white shadow-sm transition duration-500 hover:-translate-y-1.5 hover:border-bronze-500/35 hover:shadow-2xl hover:shadow-ink-950/8" style="--reveal-delay: {{ ($loop->index % 4) * 70 }}ms">
+                        @if(!empty($service->photo))
+                            <div class="relative aspect-[16/10] overflow-hidden bg-ink-900">
+                                <img src="{{ asset('home/serv/' . $service->photo) }}" alt="{{ $service->title }}" class="h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy">
+                                <div class="absolute inset-0 bg-gradient-to-t from-ink-950/55 via-transparent to-transparent"></div>
+                                <span class="absolute bottom-4 left-5 text-[10px] font-bold uppercase tracking-[0.2em] text-bronze-200">0{{ $loop->iteration }}</span>
                             </div>
-                        </article>
-                    @endforeach
-                </div>
-            @else
-                <div class="mt-14 text-center">
-                    <p style="color: var(--ink-soft);">
-                        No services are available at the moment. Please check back later.
-                    </p>
-                </div>
-            @endif
+                        @else
+                            <div class="flex aspect-[16/10] items-end bg-ink-900 p-5"><span class="text-[10px] font-bold uppercase tracking-[0.2em] text-bronze-300">0{{ $loop->iteration }}</span></div>
+                        @endif
+                        <div class="p-6 sm:p-7">
+                            <div class="flex items-start justify-between gap-4">
+                                <h3 class="font-display text-2xl font-semibold leading-tight text-ink-950">{{ $service->title }}</h3>
+                                <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-ink-950/10 text-ink-950 transition group-hover:border-bronze-500/40 group-hover:bg-bronze-100"><svg class="h-4 w-4" viewBox="0 0 20 20" fill="none"><path d="M5 15 15 5M8 5h7v7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                            </div>
+                            <p class="mt-4 text-sm leading-7 text-ink-700">{{ \Illuminate\Support\Str::limit(trim(strip_tags($service->short ?: $service->content)), 175) }}</p>
+                        </div>
+                    </a>
+                @empty
+                    <div class="sm:col-span-2 rounded-[1.8rem] border border-dashed border-ink-950/15 bg-white p-10 text-center"><p class="text-sm text-ink-700">Services will appear here once they are published.</p></div>
+                @endforelse
+            </div>
         </div>
+    </div>
+</section>
 
-        {{-- Bottom wave --}}
-        <svg class="absolute bottom-0 left-0 right-0 h-[120px] w-full"
-             viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M0,96 C240,128 480,64 720,88 C960,112 1200,48 1440,88 L1440,120 L0,120 Z"
-                  fill="url(#servicesWaveGlow)"></path>
-        </svg>
-    </section>
+<section class="bg-ink-900 py-20 text-white sm:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
+            <div><p class="text-xs font-bold uppercase tracking-[0.2em] text-bronze-300">Not sure where to start?</p><h2 class="mt-4 max-w-3xl font-display text-4xl font-semibold leading-tight sm:text-5xl">Bring us the objective before you bring us the product.</h2><p class="mt-5 max-w-2xl text-base leading-8 text-white/55">We can start with what you are trying to achieve, preserve or prepare for and work outward from there.</p></div>
+            <a href="{{ url('/contact') }}" class="inline-flex min-w-48 items-center justify-center rounded-full bg-bronze-300 px-6 py-3.5 text-sm font-bold text-ink-950 transition hover:bg-bronze-200">Start a conversation</a>
+        </div>
+    </div>
+</section>
 @endsection
