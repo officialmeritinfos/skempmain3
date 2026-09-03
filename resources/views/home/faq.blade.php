@@ -40,7 +40,7 @@ $faqs = [
 
         <div class="space-y-3">
             @foreach($faqs as $faq)
-                <article x-data="{ open: {{ $loop->first ? 'true' : 'false' }} }" x-data="revealOnScroll()" class="overflow-hidden rounded-[1.45rem] border border-ink-950/8 bg-white transition duration-300 hover:border-bronze-500/25">
+                <article x-data="{ open: {{ $loop->first ? 'true' : 'false' }} }" class="overflow-hidden rounded-[1.45rem] border border-ink-950/8 bg-white transition duration-300 hover:border-bronze-500/25">
                     <button type="button" @click="open = !open" class="flex w-full items-start justify-between gap-5 p-5 text-left sm:p-6" :aria-expanded="open">
                         <span class="flex gap-4"><span class="pt-1 text-[10px] font-bold tracking-[0.18em] text-bronze-600">{{ str_pad((string)$loop->iteration, 2, '0', STR_PAD_LEFT) }}</span><span class="text-base font-bold leading-7 text-ink-950">{{ $faq[0] }}</span></span>
                         <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-ink-950/10 text-ink-950 transition" :class="open ? 'rotate-45 bg-bronze-100 border-bronze-500/30' : ''"><svg class="h-4 w-4" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
