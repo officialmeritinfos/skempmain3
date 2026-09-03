@@ -25,7 +25,7 @@
             ['label' => 'Membership', 'route' => 'membership.index', 'active' => ['membership.*'], 'icon' => 'badge'],
             ['label' => 'Wallet Connect', 'route' => 'wallet.connect.index', 'active' => ['wallet.connect.*'], 'icon' => 'wallet'],
             ['label' => 'Referrals', 'route' => 'referral.index', 'active' => ['referral.*'], 'icon' => 'users'],
-            ['label' => 'KYC', 'route' => 'setting.kyc', 'active' => ['referral.*'], 'icon' => 'users'],
+            ['label' => 'KYC', 'route' => 'setting.kyc', 'active' => ['setting.kyc', 'kyc.*'], 'icon' => 'shield'],
         ];
     @endphp
 
@@ -142,32 +142,7 @@
                 </div>
 
                 <div class="flex items-center gap-2 sm:gap-3">
-                    <div x-data="gtUi()" x-init="init()" class="relative hidden sm:block">
-                        <button
-                            type="button"
-                            @click="toggle()"
-                            class="flex h-10 items-center gap-2 rounded-xl border border-ink-950/10 bg-white px-3 text-xs font-semibold text-ink-700 shadow-sm transition hover:border-ink-950/15 dark:border-white/10 dark:bg-white/5 dark:text-white/65"
-                        >
-                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/>
-                                <path d="M3.5 12h17M12 3c2.2 2.4 3.4 5.4 3.4 9S14.2 18.6 12 21c-2.2-2.4-3.4-5.4-3.4-9S9.8 5.4 12 3Z" stroke="currentColor" stroke-width="1.5"/>
-                            </svg>
-                            <span x-text="label"></span>
-                        </button>
-
-                        <div x-show="open" x-cloak @click.outside="open=false" x-transition.opacity class="absolute right-0 mt-2 w-72 overflow-hidden rounded-2xl border border-ink-950/10 bg-white shadow-2xl dark:border-white/10 dark:bg-ink-900">
-                            <div class="border-b border-ink-950/8 p-3 dark:border-white/8">
-                                <input x-model="q" type="text" placeholder="Search language..." class="w-full rounded-xl border border-ink-950/10 bg-paper-50 px-3 py-2 text-xs outline-none focus:border-bronze-400 dark:border-white/10 dark:bg-white/5 dark:text-white">
-                            </div>
-                            <div class="max-h-64 overflow-y-auto p-2">
-                                <template x-for="lang in filtered()" :key="lang.code">
-                                    <button type="button" @click="setLang(lang.code, lang.name)" class="block w-full rounded-xl px-3 py-2 text-left text-xs font-semibold text-ink-700 transition hover:bg-paper-100 dark:text-white/70 dark:hover:bg-white/5">
-                                        <span x-text="lang.name"></span>
-                                    </button>
-                                </template>
-                            </div>
-                        </div>
-                    </div>
+                    @include('layouts.partials.google-translate')
 
                     <button
                         type="button"
@@ -286,8 +261,8 @@
         </aside>
     </div>
 
-    {{-- Google translate target stays hidden --}}
-    <div id="google_translate_element" class="hidden"></div>
+    {{-- Google Translate's native control stays hidden; branded selector in the topbar drives it. --}}
+    <div id="google_translate_element" class="hidden" aria-hidden="true"></div>
 
     @livewireScripts
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
