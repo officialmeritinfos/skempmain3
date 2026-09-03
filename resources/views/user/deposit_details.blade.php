@@ -1,281 +1,132 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Deposit Invoice')
+@section('title', 'Deposit Details')
 
 @section('content')
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-6">
+    @php
+        $statusMeta = match ((int) $deposit->status) {
+            1 => ['Completed', 'bg-emerald-50 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300'],
+            2 => ['Awaiting payment', 'bg-sky-50 text-sky-700 dark:bg-sky-400/10 dark:text-sky-300'],
+            3 => ['Cancelled', 'bg-red-50 text-red-700 dark:bg-red-400/10 dark:text-red-300'],
+            4 => ['Verification pending', 'bg-amber-50 text-amber-700 dark:bg-amber-400/10 dark:text-amber-300'],
+            default => ['Partial', 'bg-slate-100 text-slate-700 dark:bg-white/10 dark:text-white/60'],
+        };
+    @endphp
+
+    <div x-data="{ copied: false }" class="space-y-6">
         @include('templates.notification')
 
-        {{-- Invoice Header --}}
-        <div class="bg-white dark:bg-gray-800 shadow-sm rounded-xl p-6">
-            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+                <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-bronze-600 dark:text-bronze-300">Deposit details</p>
+                <div class="mt-2 flex flex-wrap items-center gap-3">
+                    <h1 class="font-display text-3xl font-semibold tracking-[-0.03em] text-ink-950 dark:text-white sm:text-4xl">#{{ $deposit->reference }}</h1>
+                    <span class="rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] {{ $statusMeta[1] }}">{{ $statusMeta[0] }}</span>
+                </div>
+                <p class="mt-2 text-sm text-ink-500 dark:text-white/40">Created {{ $deposit->created_at->format('d M Y, h:i a') }}</p>
+            </div>
+
+            <a href="{{ route('deposit.index') }}" class="inline-flex items-center gap-2 self-start rounded-xl border border-ink-950/10 bg-white px-4 py-2.5 text-sm font-semibold text-ink-800 transition hover:border-bronze-300 dark:border-white/10 dark:bg-white/5 dark:text-white/70 sm:self-auto">
+                <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none"><path d="M11.5 5.5 7 10l4.5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Deposit history
+            </a>
+        </div>
+
+        <section class="relative overflow-hidden rounded-[2rem] bg-ink-950 p-6 text-white shadow-xl shadow-ink-950/10 sm:p-8">
+            <div class="pointer-events-none absolute right-[-5rem] top-[-6rem] h-64 w-64 rounded-full border border-bronze-300/15"></div>
+            <div class="relative grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
                 <div>
-                    <h2 class="text-lg font-semibold text-gray-800 dark:text-white">Invoice</h2>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">
-                        ID: <span class="font-medium text-blue-600 dark:text-blue-400">#{{ $deposit->reference }}</span>
-                    </p>
+                    <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-bronze-300">Deposit amount</p>
+                    <p class="mt-3 font-display text-4xl font-semibold tracking-[-0.035em] sm:text-5xl">${{ number_format($deposit->amount, 2) }}</p>
+                    <p class="mt-3 text-sm leading-6 text-white/50">Payment asset: <span class="font-semibold text-white/75">{{ $deposit->asset }}</span></p>
                 </div>
-                <div class="mt-4 sm:mt-0">
-                    @switch($deposit->status)
-                        @case(1)
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-700 dark:bg-green-700/20 dark:text-green-300">Completed</span>
-                            @break
-                        @case(2)
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-700 dark:bg-blue-700/20 dark:text-blue-300">Pending</span>
-                            @break
-                        @case(3)
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-700 dark:bg-red-700/20 dark:text-red-300">Cancelled</span>
-                            @break
-                        @case(4)
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium
-                                         bg-amber-100 text-amber-700 dark:bg-amber-700/20 dark:text-amber-300">
-                                Proof Submitted
-                            </span>
-                        @break
-
-                        @default
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-700 dark:bg-gray-700/20 dark:text-gray-300">Partial</span>
-                    @endswitch
-                </div>
-            </div>
-        </div>
-
-        {{-- Details Section --}}
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {{-- User Info --}}
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 space-y-2">
-                <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300">Billed To</h3>
-                <p class="text-sm text-gray-800 dark:text-white">{{ $user->name }}</p>
-                <p class="text-sm text-gray-500 dark:text-gray-400">{{ $web->address }}</p>
-                <p class="text-sm text-gray-500 dark:text-gray-400"><i class="fas fa-phone mr-1"></i>{{ $web->phone }}</p>
-            </div>
-
-            {{-- Invoice Meta --}}
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 space-y-2">
-                <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300">Invoice Details</h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400">ID: <span class="text-gray-800 dark:text-white">#{{ $deposit->reference }}</span></p>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Created: <span class="text-gray-800 dark:text-white">{{ $deposit->created_at->format('Y-m-d H:i') }}</span></p>
-                @if($deposit->status == 4 && $deposit->transactionHash)
-                    <p class="text-sm text-gray-500 dark:text-gray-400">Transaction Hash: <span class="text-gray-800 dark:text-white">{{ $deposit->transactionHash }}</span></p>
-                @endif
-            </div>
-        </div>
-
-        {{-- Table --}}
-        <div class="overflow-x-auto rounded-xl shadow-sm">
-            <table class="min-w-full text-sm bg-white dark:bg-gray-800 text-left">
-                <thead class="bg-blue-600 text-white">
-                <tr>
-                    <th class="px-4 py-3">#</th>
-                    <th class="px-4 py-3">Description</th>
-                    <th class="px-4 py-3">Amount</th>
-                    <th class="px-4 py-3">Payment Method</th>
-                    <th class="px-4 py-3">Address</th>
-                </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                <tr>
-                    <td class="px-4 py-4">1</td>
-                    <td class="px-4 py-4">Account Funding</td>
-                    <td class="px-4 py-4">${{ number_format($deposit->amount, 2) }}</td>
-                    <td class="px-4 py-4">{{ $deposit->asset }}</td>
-                    <td class="px-4 py-4">{{ $deposit->details }}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-
-        {{-- Payment Instructions --}}
-        <div class="bg-blue-50 dark:bg-blue-900/10 text-blue-800 dark:text-blue-300 rounded-xl p-6 shadow space-y-4">
-            @if($deposit->paymentMethod == 1)
-                <p>
-                    Please send <strong>{{ number_format($deposit->cryptoAmount, 5) }} {{ $deposit->asset }}</strong> to the address below.
-                    Your account will be credited once payment is confirmed. Do not send less than the exact amount.
-                </p>
-            @else
-                <p>
-                    Please send <strong>${{ number_format($deposit->amount, 2) }} worth of {{ $deposit->asset }}</strong> to the address below.
-                    After payment, contact support for instant confirmation.
-                </p>
-            @endif
-
-            <div
-                x-data="{ copy() { navigator.clipboard.writeText('{{ $deposit->details }}').then(() => toastr.success('Address copied to clipboard')) } }"
-                class="flex flex-wrap items-center gap-3"
-            >
-                <div
-                    id="address"
-                    class="bg-gray-100 dark:bg-gray-800 px-4 py-2 rounded text-sm break-all font-mono"
-                >
-                    {{ $deposit->details }}
-                </div>
-
-                <button
-                    @click="copy"
-                    type="button"
-                    class="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm transition"
-                >
-                    Copy Address
-                </button>
-            </div>
-
-                {{-- QR + Wallet Address (Tailwind) --}}
-                <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
-                    {{-- QR Card --}}
-                    <div class="bg-white/80 dark:bg-gray-900/40 border border-blue-100 dark:border-blue-900/40
-                rounded-2xl p-4 sm:p-6 shadow-sm">
-                        <div class="flex items-start justify-between gap-3">
-                            <div>
-                                <h4 class="text-sm font-semibold text-gray-900 dark:text-white">
-                                    Scan QR Code
-                                </h4>
-                                <p class="mt-1 text-xs text-gray-600 dark:text-gray-400">
-                                    Scan to copy the address instantly.
-                                </p>
-                            </div>
-
-                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium
-                         bg-blue-100 text-blue-700 dark:bg-blue-700/20 dark:text-blue-300">
-                {{ $deposit->asset }}
-            </span>
-                        </div>
-
-                        <div class="mt-4 flex items-center justify-center">
-                            <img
-                                class="h-40 w-40 sm:h-44 sm:w-44 rounded-xl bg-white p-2 shadow"
-                                alt="Wallet address QR code"
-                                src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={{ urlencode($deposit->details) }}"
-                                loading="lazy"
-                            >
-                        </div>
-
-                        <p class="mt-4 text-center text-xs text-gray-500 dark:text-gray-400">
-                            If scanning fails, use the “Copy Address” button.
-                        </p>
+                <div class="grid grid-cols-2 gap-3 sm:min-w-[360px]">
+                    <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                        <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-white/35">Payment ref</p>
+                        <p class="mt-2 truncate text-sm font-semibold">{{ $deposit->paymentRef ?: '—' }}</p>
                     </div>
+                    <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                        <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-white/35">Status</p>
+                        <p class="mt-2 text-sm font-semibold">{{ $statusMeta[0] }}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
+        <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+            <section class="rounded-[1.7rem] border border-ink-950/8 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.035] sm:p-6">
+                <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-bronze-600 dark:text-bronze-300">Payment instructions</p>
+                <h2 class="mt-2 text-xl font-semibold text-ink-950 dark:text-white">Send the payment to this address.</h2>
+
+                <div class="mt-4 rounded-2xl bg-paper-50 p-4 dark:bg-white/[0.03]">
+                    @if($deposit->paymentMethod == 1)
+                        <p class="text-sm leading-6 text-ink-600 dark:text-white/50">Send exactly <span class="font-semibold text-ink-900 dark:text-white/80">{{ number_format($deposit->cryptoAmount, 5) }} {{ $deposit->asset }}</span> to the address below.</p>
+                    @else
+                        <p class="text-sm leading-6 text-ink-600 dark:text-white/50">Send <span class="font-semibold text-ink-900 dark:text-white/80">${{ number_format($deposit->amount, 2) }} worth of {{ $deposit->asset }}</span> to the address below.</p>
+                    @endif
                 </div>
 
-                {{-- Action Bar --}}
-                <div class="flex flex-wrap items-center gap-3">
-                    @if(in_array($deposit->status, [2, 4]))
-{{--                        <button--}}
-{{--                            x-data--}}
-{{--                            @click="$dispatch('open-proof-modal')"--}}
-{{--                            type="button"--}}
-{{--                            class="btn-pink-blue"--}}
-{{--                        >--}}
-{{--                            I’ve Deposited--}}
-{{--                        </button>--}}
-
-                        <a
-                             href="{{ route('deposit.havePaid', $deposit->id) }}"
-                            class="btn-pink-blue"
+                <div class="mt-5">
+                    <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-ink-400 dark:text-white/30">Wallet address</p>
+                    <div class="mt-2 flex flex-col gap-3 sm:flex-row sm:items-center">
+                        <div class="min-w-0 flex-1 rounded-2xl border border-ink-950/8 bg-paper-50 px-4 py-3 font-mono text-sm leading-6 text-ink-800 dark:border-white/10 dark:bg-white/[0.03] dark:text-white/70 break-all">{{ $deposit->details }}</div>
+                        <button
+                            type="button"
+                            @click="navigator.clipboard.writeText('{{ $deposit->details }}').then(() => { copied = true; setTimeout(() => copied = false, 1800) })"
+                            class="inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-xl bg-ink-950 px-4 text-sm font-bold text-white transition hover:bg-ink-900 dark:bg-bronze-300 dark:text-ink-950"
                         >
-                            I’ve Deposited
+                            <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none"><rect x="6" y="6" width="9" height="9" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M12 6V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                            <span x-text="copied ? 'Copied' : 'Copy address'"></span>
+                        </button>
+                    </div>
+                </div>
+
+                @if($deposit->transactionHash)
+                    <div class="mt-5 border-t border-ink-950/8 pt-5 dark:border-white/10">
+                        <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-ink-400 dark:text-white/30">Transaction hash</p>
+                        <p class="mt-2 break-all font-mono text-sm leading-6 text-ink-700 dark:text-white/60">{{ $deposit->transactionHash }}</p>
+                    </div>
+                @endif
+
+                <div class="mt-6 flex flex-wrap gap-3">
+                    @if(in_array($deposit->status, [2, 4]))
+                        <a href="{{ route('deposit.havePaid', $deposit->id) }}" class="inline-flex items-center justify-center rounded-xl bg-bronze-300 px-5 py-3 text-sm font-bold text-ink-950 transition hover:bg-bronze-200">
+                            I’ve deposited
                         </a>
                     @endif
 
                     @if($deposit->status == 4 && $deposit->paymentProof)
-                        <a href="{{ url($deposit->paymentProof) }}" target="_blank"
-                           class="px-4 py-2 rounded bg-emerald-600 hover:bg-emerald-700 text-white text-sm transition">
-                            View Submitted Proof
+                        <a href="{{ url($deposit->paymentProof) }}" target="_blank" rel="noopener" class="inline-flex items-center justify-center rounded-xl border border-ink-950/10 px-5 py-3 text-sm font-semibold text-ink-800 transition hover:border-bronze-300 dark:border-white/10 dark:text-white/70">
+                            View submitted proof
                         </a>
                     @endif
                 </div>
+            </section>
 
-
-        </div>
-
-    </div>
-
-    {{-- Proof Modal --}}
-    <div
-        x-data="{ open: false }"
-        x-on:open-proof-modal.window="open = true"
-        x-show="open"
-        x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center"
-        aria-modal="true"
-        role="dialog"
-    >
-        {{-- Backdrop --}}
-        <div class="absolute inset-0 bg-black/50" @click="open = false"></div>
-
-        {{-- Dialog --}}
-        <div class="relative w-full max-w-lg mx-4 rounded-2xl shadow-xl overflow-hidden
-                bg-white dark:bg-gray-800">
-            {{-- Header --}}
-            <div class="px-6 py-4 bg-gradient-to-r from-pink-500 via-rose-500 to-blue-600 text-white">
-                <div class="flex items-center justify-between">
-                    <h4 class="font-semibold">Submit Payment Proof</h4>
-                    <button @click="open = false" class="text-white/90 hover:text-white">&times;</button>
-                </div>
-            </div>
-
-            {{-- Body --}}
-            <form action="{{ route('deposits.proof', ['id' => $deposit->id]) }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="px-6 py-5 space-y-4">
-                    <div>
-                        <label for="tx_hash" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                            Transaction Hash
-                        </label>
-                        <input
-                            type="text"
-                            id="tx_hash"
-                            name="tx_hash"
-                            class="mt-1 w-full rounded-xl border border-gray-300 dark:border-gray-700
-               bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100
-               px-4 py-3 text-sm
-               shadow-sm focus:ring-2 focus:ring-pink-500 focus:border-pink-500
-               transition duration-200 ease-in-out"
-                            placeholder="Paste your blockchain TX hash">
+            <aside class="space-y-6 lg:sticky lg:top-24 lg:self-start">
+                <section class="rounded-[1.7rem] border border-ink-950/8 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.035]">
+                    <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-bronze-600 dark:text-bronze-300">Scan to pay</p>
+                    <div class="mt-4 flex items-center justify-center rounded-2xl bg-white p-4 ring-1 ring-ink-950/5">
+                        <img
+                            class="h-44 w-44 rounded-xl bg-white p-1"
+                            alt="Deposit wallet address QR code"
+                            src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={{ urlencode($deposit->details) }}"
+                            loading="lazy"
+                        >
                     </div>
+                    <p class="mt-3 text-center text-xs leading-5 text-ink-500 dark:text-white/35">If your wallet cannot scan the code, copy the address manually.</p>
+                </section>
 
-                    <div class="mt-5">
-                        <label for="proof" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                            Payment Proof (PNG, JPG, WEBP, or PDF • max 5MB)
-                        </label>
-                        <input
-                            type="file"
-                            id="proof"
-                            name="proof"
-                            accept=".png,.jpg,.jpeg,.webp,.pdf"
-                            class="mt-1 w-full text-sm
-               file:mr-4 file:py-2.5 file:px-4
-               file:rounded-lg file:border-0
-               file:text-white file:font-medium
-               file:bg-gradient-to-r file:from-pink-500 file:via-rose-500 file:to-blue-600
-               hover:file:from-pink-600 hover:file:to-blue-700
-               dark:file:from-pink-500 dark:file:to-blue-600
-               rounded-xl border border-gray-300 dark:border-gray-700
-               bg-gray-50 dark:bg-gray-900 px-4 py-2
-               shadow-sm focus:ring-2 focus:ring-pink-500 focus:border-pink-500
-               transition duration-200 ease-in-out">
-                        <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
-                            Tip: Upload screenshots or PDF receipts. Ensure details are clear and readable.
-                        </p>
+                <section class="rounded-[1.7rem] border border-ink-950/8 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.035]">
+                    <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-bronze-600 dark:text-bronze-300">Deposit summary</p>
+                    <div class="mt-4 divide-y divide-ink-950/8 text-sm dark:divide-white/10">
+                        <div class="flex justify-between gap-4 py-3 first:pt-0"><span class="text-ink-500 dark:text-white/40">Asset</span><span class="font-semibold text-ink-900 dark:text-white/80">{{ $deposit->asset }}</span></div>
+                        <div class="flex justify-between gap-4 py-3"><span class="text-ink-500 dark:text-white/40">Created</span><span class="text-right font-semibold text-ink-900 dark:text-white/80">{{ $deposit->created_at->format('d M Y') }}</span></div>
+                        <div class="flex justify-between gap-4 py-3"><span class="text-ink-500 dark:text-white/40">Reference</span><span class="text-right font-semibold text-ink-900 dark:text-white/80">#{{ $deposit->reference }}</span></div>
+                        <div class="flex justify-between gap-4 py-3 last:pb-0"><span class="text-ink-500 dark:text-white/40">Status</span><span class="text-right font-semibold text-ink-900 dark:text-white/80">{{ $statusMeta[0] }}</span></div>
                     </div>
-
-                </div>
-
-                {{-- Footer --}}
-                <div class="px-6 py-4 bg-gray-50 dark:bg-gray-900 flex items-center justify-end gap-3">
-                    <button type="button" @click="open = false"
-                            class="px-4 py-2 rounded-lg text-sm bg-gray-200 dark:bg-gray-700
-                               text-gray-800 dark:text-gray-100 hover:bg-gray-300 dark:hover:bg-gray-600">
-                        Cancel
-                    </button>
-                    <button type="submit"
-                            class="px-4 py-2 rounded-lg text-sm text-white
-                               bg-gradient-to-r from-pink-500 via-rose-500 to-blue-600
-                               hover:from-pink-600 hover:to-blue-700">
-                        Submit Proof
-                    </button>
-                </div>
-            </form>
+                </section>
+            </aside>
         </div>
     </div>
-
 @endsection
