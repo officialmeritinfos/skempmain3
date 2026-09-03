@@ -3,105 +3,81 @@
 @section('title', 'My Investments')
 
 @section('content')
-    <div class="max-w-3xl mx-auto px-4 py-8 space-y-6">
-        {{-- Notification --}}
+    <div class="space-y-6">
         @include('templates.notification')
 
-        {{-- Page Heading --}}
-        <div class="text-center">
-            <h1 class="text-xl font-bold text-gray-900 dark:text-white">My Investments</h1>
-            <p class="text-sm text-gray-500 dark:text-gray-400">All your current and past investments are listed below.</p>
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+                <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-bronze-600 dark:text-bronze-300">Portfolio activity</p>
+                <h1 class="mt-2 font-display text-3xl font-semibold tracking-[-0.03em] text-ink-950 dark:text-white sm:text-4xl">Your investments.</h1>
+                <p class="mt-2 text-sm leading-6 text-ink-600 dark:text-white/50">Track every allocation, its current status and the return activity attached to it.</p>
+            </div>
 
-            <a href="{{ route('new_investment') }}"
-               class="inline-flex items-center mt-4 px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium shadow hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition">
-                <i class="fa fa-plus mr-2"></i> New Investment
+            <a href="{{ route('new_investment') }}" class="inline-flex items-center justify-center gap-2 self-start rounded-xl bg-ink-950 px-4 py-2.5 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-ink-900 dark:bg-bronze-300 dark:text-ink-950 dark:hover:bg-bronze-200 sm:self-auto">
+                <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+                New investment
             </a>
         </div>
 
-        {{-- Investment Cards --}}
         @forelse($investments as $investment)
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 space-y-4">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-sm font-medium text-gray-600 dark:text-gray-300">Reference</h2>
-                    <span class="text-sm font-semibold text-blue-600 dark:text-blue-400">#{{ $investment->reference }}</span>
-                </div>
+            @php
+                $statusMeta = match ((int) $investment->status) {
+                    1 => ['Completed', 'bg-emerald-50 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300'],
+                    2 => ['Pending payment', 'bg-sky-50 text-sky-700 dark:bg-sky-400/10 dark:text-sky-300'],
+                    3 => ['Cancelled', 'bg-red-50 text-red-700 dark:bg-red-400/10 dark:text-red-300'],
+                    default => ['Ongoing', 'bg-amber-50 text-amber-700 dark:bg-amber-400/10 dark:text-amber-300'],
+                };
+            @endphp
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                    <div>
-                        <p class="text-gray-500 dark:text-gray-400">Amount</p>
-                        <p class="text-gray-800 dark:text-white font-medium">${{ number_format($investment->amount, 2) }}</p>
+            <article class="group overflow-hidden rounded-[1.6rem] border border-ink-950/8 bg-white shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-ink-950/5 dark:border-white/10 dark:bg-white/[0.035]">
+                <div class="grid gap-5 p-5 sm:p-6 lg:grid-cols-[1.15fr_.85fr_auto] lg:items-center">
+                    <div class="min-w-0">
+                        <div class="flex flex-wrap items-center gap-3">
+                            <span class="rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] {{ $statusMeta[1] }}">{{ $statusMeta[0] }}</span>
+                            <span class="text-xs font-semibold text-ink-400 dark:text-white/30">#{{ $investment->reference }}</span>
+                        </div>
+                        <p class="mt-4 font-display text-3xl font-semibold tracking-[-0.025em] text-ink-950 dark:text-white">${{ number_format($investment->amount, 2) }}</p>
+                        <p class="mt-1 text-xs text-ink-500 dark:text-white/35">Started {{ $investment->created_at->format('d M Y') }}</p>
                     </div>
-{{--                    <div>--}}
-{{--                        <p class="text-gray-500 dark:text-gray-400">Service</p>--}}
-{{--                        <p class="text-gray-800 dark:text-white font-medium">{{ $investment->service ?? 'N/A' }}</p>--}}
-{{--                    </div>--}}
-                    <div>
-                        <p class="text-gray-500 dark:text-gray-400">ROI</p>
-                        <p class="text-gray-800 dark:text-white font-medium">{{ $investment->roi }}%</p>
-                    </div>
-                    <div>
-                        <p class="text-gray-500 dark:text-gray-400">Current Profit</p>
-                        <p class="text-gray-800 dark:text-white font-medium">${{ $investment->currentProfit }}</p>
-                    </div>
-                    <div>
-                        <p class="text-gray-500 dark:text-gray-400">Date Initiated</p>
-                        <p class="text-gray-800 dark:text-white font-medium">{{ $investment->created_at->format('Y-m-d') }}</p>
-                    </div>
-                    <div>
-                        <p class="text-gray-500 dark:text-gray-400">Status</p>
-                        @switch($investment->status)
-                            @case(1)
-                                <span class="inline-block px-2 py-1 text-xs font-medium bg-green-100 text-green-700 dark:bg-green-700/20 dark:text-green-300 rounded-full">Completed</span>
-                                @break
-                            @case(2)
-                                <span class="inline-block px-2 py-1 text-xs font-medium bg-blue-100 text-blue-700 dark:bg-blue-700/20 dark:text-blue-300 rounded-full">Pending Payment</span>
-                                @break
-                            @case(3)
-                                <span class="inline-block px-2 py-1 text-xs font-medium bg-red-100 text-red-700 dark:bg-red-700/20 dark:text-red-300 rounded-full">Cancelled</span>
-                                @break
-                            @default
-                                <span class="inline-block px-2 py-1 text-xs font-medium bg-yellow-100 text-yellow-700 dark:bg-yellow-700/20 dark:text-yellow-300 rounded-full">Ongoing</span>
-                                @break
-                        @endswitch
-                    </div>
-                </div>
 
-                {{-- Action --}}
-                <div class="pt-4 text-right">
-                    <a href="{{ route('invest_detail', ['id' => $investment->id]) }}"
-                       class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition">
-                        <i class="fas fa-eye mr-2"></i> View Details
+                    <div class="grid grid-cols-2 gap-4 border-t border-ink-950/8 pt-5 text-sm dark:border-white/10 lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0">
+                        <div>
+                            <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-ink-400 dark:text-white/30">Return rate</p>
+                            <p class="mt-1 font-semibold text-ink-900 dark:text-white/80">{{ $investment->roi }}%</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-ink-400 dark:text-white/30">Current profit</p>
+                            <p class="mt-1 font-semibold text-ink-900 dark:text-white/80">${{ number_format($investment->currentProfit, 2) }}</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-ink-400 dark:text-white/30">Funding source</p>
+                            <p class="mt-1 font-semibold capitalize text-ink-900 dark:text-white/80">{{ $investment->source ?: '—' }}</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-ink-400 dark:text-white/30">Returns</p>
+                            <p class="mt-1 font-semibold text-ink-900 dark:text-white/80">{{ $investment->currentReturn }} / {{ $investment->numberOfReturns }}</p>
+                        </div>
+                    </div>
+
+                    <a href="{{ route('invest_detail', ['id' => $investment->id]) }}" class="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-ink-950/10 px-4 text-sm font-semibold text-ink-800 transition group-hover:border-bronze-300 group-hover:text-bronze-700 dark:border-white/10 dark:text-white/65 dark:group-hover:border-bronze-300 dark:group-hover:text-bronze-300">
+                        View details
+                        <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12M11.5 5.5 16 10l-4.5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </a>
                 </div>
-            </div>
+            </article>
         @empty
-            <div class="flex flex-col items-center justify-center text-center py-10 px-4 bg-white dark:bg-gray-800 border border-dashed border-gray-200 dark:border-gray-700 rounded-xl shadow-sm">
-                {{-- Icon --}}
-                <div class="mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400 dark:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 018 0v2m-4-4v-2m0 6v2m-4-2v2m-4-6a4 4 0 00-4 4v2a2 2 0 002 2h12a2 2 0 002-2v-2a4 4 0 00-4-4H7z" />
-                    </svg>
-                </div>
-
-                {{-- Title --}}
-                <h3 class="text-lg font-semibold text-gray-800 dark:text-white">No Investments Yet</h3>
-
-                {{-- Message --}}
-                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400 max-w-md">
-                    You haven’t made any investment yet. When you do, they’ll show up here for easy tracking.
-                </p>
-
-                {{-- Call to Action --}}
-                <a href="{{ route('new_investment') }}"
-                   class="mt-6 inline-flex items-center px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition dark:bg-blue-500 dark:hover:bg-blue-600">
-                    <i class="fa fa-plus mr-2"></i> Make Your First Investment
-                </a>
+            <div class="rounded-[1.8rem] border border-dashed border-ink-950/15 bg-white px-6 py-16 text-center dark:border-white/15 dark:bg-white/[0.025]">
+                <span class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-bronze-50 text-bronze-700 dark:bg-bronze-300/10 dark:text-bronze-300">
+                    <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 19V8m0 11h16M8 15l3-4 3 2 5-7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <h2 class="mt-5 font-display text-2xl font-semibold text-ink-950 dark:text-white">No investments yet</h2>
+                <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-ink-500 dark:text-white/45">When you make your first allocation, its status and return activity will appear here.</p>
+                <a href="{{ route('new_investment') }}" class="mt-6 inline-flex items-center justify-center gap-2 rounded-xl bg-ink-950 px-5 py-3 text-sm font-bold text-white dark:bg-bronze-300 dark:text-ink-950">Choose a plan</a>
             </div>
         @endforelse
 
-        {{-- Pagination --}}
-        <div class="pt-6">
-            {{ $investments->links() }}
-        </div>
+        @if($investments->hasPages())
+            <div class="pt-2">{{ $investments->links() }}</div>
+        @endif
     </div>
 @endsection
