@@ -1,413 +1,58 @@
-@extends('layouts.app', ['title' => $pageName ?? 'FAQs'])
+@extends('layouts.marketing')
+
+@section('title', config('app.name') . ' | Frequently Asked Questions')
+@section('meta_description', 'Answers to common questions about our investment approach, plans, accounts, risk and client experience.')
+
+@php
+$faqs = [
+    ['What is ' . config('app.name') . '?', config('app.name') . ' is an investment, wealth and asset management company. We help clients think more deliberately about capital allocation, portfolio risk, long-term planning and selected investment opportunities.'],
+    ['How do I know which investment plan is appropriate for me?', 'Start with the objective, time horizon, liquidity needs and risk tolerance rather than the headline return rate. The published plans show their configured terms, but suitability depends on your wider financial circumstances.'],
+    ['Are investment returns guaranteed?', 'No investment outcome should be treated as risk-free. Published rates and plan terms describe configured product terms; actual investment values and outcomes can be affected by market, operational, liquidity and other risks.'],
+    ['How do I create an account?', 'Use the Create Account or registration link, provide the requested information and complete any verification steps shown in the application. Once your account is available, you can review the options presented in the client area.'],
+    ['What should I consider before committing capital?', 'Consider how long the money can remain invested, whether you may need it unexpectedly, what loss or volatility you can tolerate, and how the investment changes the concentration of your wider portfolio.'],
+    ['How are deposits and account activity handled?', 'Funding and account activity are completed through the client application using the instructions presented for the selected investment. Always verify payment instructions inside your authenticated account and avoid relying on instructions received through unverified third parties.'],
+    ['How do withdrawals work?', 'Withdrawal timing and availability can depend on the investment or plan terms, account status and applicable processing requirements. Review the terms attached to your account or contact the team when you need clarification about a specific position.'],
+    ['Does ' . config('app.name') . ' only invest in cryptocurrency?', 'No. The company positioning covers investment, wealth and asset management across multiple areas. The public site discusses listed markets, real estate, agriculture, gold, foreign exchange, retirement planning and selected digital-asset exposures.'],
+    ['How does the company think about risk?', 'Risk is considered before return. We look at concentration, liquidity, time horizon, downside scenarios, implementation structure and the role an investment is expected to play in the portfolio.'],
+    ['How can I speak with someone before investing?', 'Use the Contact page to reach the team using the official email, phone or address details configured for the company. Starting with a conversation is appropriate when the objective or product fit is not clear.'],
+];
+@endphp
 
 @section('content')
-    {{-- =========================
-        PAGE HEADER — Premium Violet + Wave
-    ========================= --}}
-    <section class="relative isolate overflow-hidden" style="background: var(--bg);">
-        <svg width="0" height="0" class="absolute">
-            <defs>
-                <linearGradient id="faqGlow" x1="0" x2="1" y1="0" y2="0">
-                    <stop offset="0" stop-color="#8b5cf6"/>
-                    <stop offset=".55" stop-color="#e879f9"/>
-                    <stop offset="1" stop-color="#f3d38a"/>
-                </linearGradient>
-            </defs>
-        </svg>
-
-        <div class="absolute inset-0 -z-10"
-             style="background:
-                radial-gradient(900px 420px at 10% -10%, rgba(139,92,246,.20), transparent 60%),
-                radial-gradient(720px 420px at 90% 0%, rgba(232,121,249,.16), transparent 58%),
-                radial-gradient(680px 380px at 50% 115%, rgba(243,211,138,.12), transparent 62%),
-                linear-gradient(180deg, var(--bg-soft), var(--bg));"></div>
-
-        <div class="pointer-events-none absolute inset-0 -z-10 opacity-60">
-            <div class="absolute right-8 top-8 h-36 w-36 rounded-full bg-fuchsia-400/15 blur-2xl"></div>
-            <div class="absolute -left-16 top-16 h-48 w-48 rounded-full bg-violet-400/15 blur-3xl"></div>
-            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(139,92,246,.18),transparent_60%)]"></div>
-            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(243,211,138,.10),transparent_60%)]"></div>
+<section class="bg-ink-950 text-white">
+    <div class="mx-auto grid max-w-7xl gap-12 px-4 py-20 sm:px-6 sm:py-24 lg:grid-cols-[1fr_.7fr] lg:items-end lg:px-8 lg:py-28">
+        <div x-data="revealOnScroll(.05)" :class="{ 'is-visible': shown }" class="reveal-up">
+            <p class="text-xs font-bold uppercase tracking-[0.22em] text-bronze-300">Questions, answered clearly</p>
+            <h1 class="mt-5 max-w-4xl font-display text-5xl font-semibold leading-[1.02] tracking-[-0.04em] sm:text-6xl lg:text-7xl">Understanding should come before commitment.</h1>
         </div>
+        <p class="text-base leading-8 text-white/58 lg:pb-2">These answers explain the public experience in general terms. For a question about a specific account, investment or transaction, use the official contact channels.</p>
+    </div>
+</section>
 
-        <div class="relative z-10 mx-auto max-w-7xl px-4 py-16 text-center sm:px-6 sm:py-24 lg:px-8">
-            <span class="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-extrabold tracking-wide text-white shadow"
-                  style="background: linear-gradient(135deg, var(--brand), var(--brand-2), var(--accent));">
-                <span class="h-2 w-2 rounded-full bg-white/80"></span>
-                FAQs
-            </span>
+<section class="bg-paper-50 py-20 sm:py-24 lg:py-28">
+    <div class="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[.68fr_1.32fr] lg:gap-16 lg:px-8">
+        <aside x-data="revealOnScroll()" :class="{ 'is-visible': shown }" class="reveal-up lg:sticky lg:top-28 lg:self-start">
+            <p class="text-xs font-bold uppercase tracking-[0.2em] text-bronze-600">FAQ</p>
+            <h2 class="mt-4 font-display text-4xl font-semibold leading-tight tracking-[-0.03em] text-ink-950 sm:text-5xl">Straight answers without the sales language.</h2>
+            <p class="mt-5 text-base leading-8 text-ink-700">If an answer depends on your specific plan or account, the safest source is the term shown in your client area or a direct response from the company.</p>
+            <a href="{{ url('/contact') }}" class="group mt-7 inline-flex items-center gap-2 text-sm font-bold text-ink-950 hover:text-bronze-700">Still need help? Contact us <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11.5 5.5 16 10l-4.5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </aside>
 
-            <h1 class="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl"
-                style="color: var(--ink);">
-                {{ $pageName }}
-            </h1>
-
-            <nav class="mt-4 text-xs sm:text-sm" style="color: var(--muted);">
-                <a href="{{ url('/') }}" class="hover:underline" style="color: var(--ink-soft);">Home</a>
-                <span class="mx-2 opacity-60">/</span>
-                <span style="color: var(--ink);">{{ $pageName }}</span>
-            </nav>
+        <div class="space-y-3">
+            @foreach($faqs as $faq)
+                <article x-data="{ open: {{ $loop->first ? 'true' : 'false' }} }" x-data="revealOnScroll()" class="overflow-hidden rounded-[1.45rem] border border-ink-950/8 bg-white transition duration-300 hover:border-bronze-500/25">
+                    <button type="button" @click="open = !open" class="flex w-full items-start justify-between gap-5 p-5 text-left sm:p-6" :aria-expanded="open">
+                        <span class="flex gap-4"><span class="pt-1 text-[10px] font-bold tracking-[0.18em] text-bronze-600">{{ str_pad((string)$loop->iteration, 2, '0', STR_PAD_LEFT) }}</span><span class="text-base font-bold leading-7 text-ink-950">{{ $faq[0] }}</span></span>
+                        <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-ink-950/10 text-ink-950 transition" :class="open ? 'rotate-45 bg-bronze-100 border-bronze-500/30' : ''"><svg class="h-4 w-4" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+                    </button>
+                    <div x-show="open" x-collapse x-cloak><div class="border-t border-ink-950/8 px-5 py-5 sm:px-6"><p class="max-w-3xl text-sm leading-7 text-ink-700">{{ $faq[1] }}</p></div></div>
+                </article>
+            @endforeach
         </div>
+    </div>
+</section>
 
-        <svg class="pointer-events-none absolute bottom-0 left-0 right-0 h-[120px] w-full"
-             viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M0,96 C240,128 480,64 720,88 C960,112 1200,48 1440,88 L1440,120 L0,120 Z" fill="var(--bg)"></path>
-        </svg>
-    </section>
-
-    {{-- =========================
-        FAQ — 2 Column Premium Accordion
-    ========================= --}}
-    <section x-data class="relative overflow-hidden py-16 pb-28 lg:py-24 lg:pb-36"
-             style="background: var(--bg);">
-        <svg class="pointer-events-none absolute -top-[118px] left-0 right-0 -z-10 h-[120px] w-full rotate-180"
-             viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M0,96 C240,128 480,64 720,88 C960,112 1200,48 1440,88 L1440,120 Z" fill="var(--bg)"></path>
-        </svg>
-
-        <div class="pointer-events-none absolute -top-20 -left-24 -z-10 h-[28rem] w-[28rem] rounded-full bg-violet-500/10 blur-3xl"></div>
-        <div class="pointer-events-none absolute -bottom-24 -right-24 -z-10 h-[30rem] w-[30rem] rounded-full bg-fuchsia-400/10 blur-3xl"></div>
-        <div class="pointer-events-none absolute inset-0 -z-10 opacity-40">
-            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(139,92,246,.14),transparent_60%)]"></div>
-            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(243,211,138,.10),transparent_60%)]"></div>
-        </div>
-
-        <div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <span class="inline-block rounded-full px-4 py-1.5 text-[11px] font-extrabold tracking-wide text-white shadow"
-                      style="background: linear-gradient(135deg, var(--brand), var(--brand-2), var(--accent));">
-                    FAQs
-                </span>
-
-                <h2 class="mt-4 text-3xl font-extrabold sm:text-4xl"
-                    style="color: var(--ink);">
-                    Frequently Asked Questions
-                </h2>
-
-                <p class="mx-auto mt-2 max-w-2xl text-sm" style="color: var(--ink-soft);">
-                    Quick answers about deposits, withdrawals, accounts, and how {{ $siteName }} works.
-                </p>
-            </div>
-
-            <div class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
-                {{-- LEFT COLUMN --}}
-                <div class="space-y-4">
-
-                    {{-- Q1 --}}
-                    <article x-data="{open:false}"
-                             class="group rounded-[26px] p-[2px] transition-transform duration-300 hover:-translate-y-1"
-                             style="background:
-                                conic-gradient(from 210deg,
-                                rgba(139,92,246,.55),
-                                rgba(232,121,249,.18),
-                                rgba(243,211,138,.14),
-                                rgba(255,255,255,0),
-                                rgba(139,92,246,.55));
-                                box-shadow: 0 28px 90px -48px rgba(0,0,0,.28);">
-                        <div class="rounded-[24px] backdrop-blur"
-                             style="background: var(--surface); border: 1px solid var(--line);">
-                            <button @click="open=!open"
-                                    class="flex w-full items-center justify-between gap-3 px-6 py-4 text-left">
-                                <h3 class="text-sm font-bold sm:text-base" style="color: var(--ink);">
-                                    What is {{ $siteName }}?
-                                </h3>
-                                <svg class="h-5 w-5 transition-transform"
-                                     :class="open ? 'rotate-90' : ''"
-                                     style="color: var(--ink-soft);"
-                                     viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M7.05 4.55a.75.75 0 011.06 0l5 5a.75.75 0 01-1.06 1.06L8.56 6.62v7.69a.75.75 0 01-1.5 0V4.55z"/>
-                                </svg>
-                            </button>
-                            <div class="px-6 pb-5" x-show="open" x-collapse x-cloak>
-                                <p class="text-[14.5px] leading-relaxed" style="color: var(--ink-soft);">
-                                    {{ $siteName }} is an investment platform focused on bitcoin and cryptocurrency markets.
-                                    We provide structured plans and a clear dashboard to track your progress end-to-end.
-                                </p>
-                            </div>
-                        </div>
-                    </article>
-
-                    {{-- Q2 --}}
-                    <article x-data="{open:false}"
-                             class="group rounded-[26px] p-[2px] transition-transform duration-300 hover:-translate-y-1"
-                             style="background:
-                                conic-gradient(from 200deg,
-                                rgba(243,211,138,.40),
-                                rgba(232,121,249,.16),
-                                rgba(139,92,246,.12),
-                                rgba(255,255,255,0),
-                                rgba(243,211,138,.40));
-                                box-shadow: 0 28px 90px -48px rgba(0,0,0,.28);">
-                        <div class="rounded-[24px] backdrop-blur"
-                             style="background: var(--surface); border: 1px solid var(--line);">
-                            <button @click="open=!open"
-                                    class="flex w-full items-center justify-between gap-3 px-6 py-4 text-left">
-                                <h3 class="text-sm font-bold sm:text-base" style="color: var(--ink);">
-                                    How do I create my account?
-                                </h3>
-                                <svg class="h-5 w-5 transition-transform"
-                                     :class="open ? 'rotate-90' : ''"
-                                     style="color: var(--ink-soft);"
-                                     viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M7.05 4.55a.75.75 0 011.06 0l5 5a.75.75 0 01-1.06 1.06L8.56 6.62v7.69a.75.75 0 01-1.5 0V4.55z"/>
-                                </svg>
-                            </button>
-                            <div class="px-6 pb-5" x-show="open" x-collapse x-cloak>
-                                <p class="text-[14.5px] leading-relaxed" style="color: var(--ink-soft);">
-                                    Click <span class="font-semibold" style="color: var(--brand-2);">Create Account</span>, fill in your details,
-                                    verify your email, and your dashboard becomes available immediately.
-                                </p>
-                            </div>
-                        </div>
-                    </article>
-
-                    {{-- Q3 --}}
-                    <article x-data="{open:false}"
-                             class="group rounded-[26px] p-[2px] transition-transform duration-300 hover:-translate-y-1"
-                             style="background:
-                                conic-gradient(from 210deg,
-                                rgba(139,92,246,.55),
-                                rgba(232,121,249,.18),
-                                rgba(243,211,138,.14),
-                                rgba(255,255,255,0),
-                                rgba(139,92,246,.55));
-                                box-shadow: 0 28px 90px -48px rgba(0,0,0,.28);">
-                        <div class="rounded-[24px] backdrop-blur"
-                             style="background: var(--surface); border: 1px solid var(--line);">
-                            <button @click="open=!open"
-                                    class="flex w-full items-center justify-between gap-3 px-6 py-4 text-left">
-                                <h3 class="text-sm font-bold sm:text-base" style="color: var(--ink);">
-                                    How do I make a deposit?
-                                </h3>
-                                <svg class="h-5 w-5 transition-transform"
-                                     :class="open ? 'rotate-90' : ''"
-                                     style="color: var(--ink-soft);"
-                                     viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M7.05 4.55a.75.75 0 011.06 0l5 5a.75.75 0 01-1.06 1.06L8.56 6.62v7.69a.75.75 0 01-1.5 0V4.55z"/>
-                                </svg>
-                            </button>
-                            <div class="space-y-3 px-6 pb-5 text-[14.5px] leading-relaxed" x-show="open" x-collapse x-cloak style="color: var(--ink-soft);">
-                                <p>From your dashboard:</p>
-                                <ul class="list-disc space-y-1 pl-5">
-                                    <li>Go to <span class="font-semibold" style="color: var(--brand-2);">New Investment</span>.</li>
-                                    <li>Select your plan and enter the amount.</li>
-                                    <li>Copy the wallet address and complete payment.</li>
-                                    <li>After confirmation, the investment shows as <span class="font-semibold" style="color: var(--brand-2);">Ongoing</span>.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </article>
-
-                    {{-- Q4 --}}
-                    <article x-data="{open:false}"
-                             class="group rounded-[26px] p-[2px] transition-transform duration-300 hover:-translate-y-1"
-                             style="background:
-                                conic-gradient(from 200deg,
-                                rgba(243,211,138,.40),
-                                rgba(232,121,249,.16),
-                                rgba(139,92,246,.12),
-                                rgba(255,255,255,0),
-                                rgba(243,211,138,.40));
-                                box-shadow: 0 28px 90px -48px rgba(0,0,0,.28);">
-                        <div class="rounded-[24px] backdrop-blur"
-                             style="background: var(--surface); border: 1px solid var(--line);">
-                            <button @click="open=!open"
-                                    class="flex w-full items-center justify-between gap-3 px-6 py-4 text-left">
-                                <h3 class="text-sm font-bold sm:text-base" style="color: var(--ink);">
-                                    How long before my deposit reflects on my {{ $siteName }} dashboard?
-                                </h3>
-                                <svg class="h-5 w-5 transition-transform"
-                                     :class="open ? 'rotate-90' : ''"
-                                     style="color: var(--ink-soft);"
-                                     viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M7.05 4.55a.75.75 0 011.06 0l5 5a.75.75 0 01-1.06 1.06L8.56 6.62v7.69a.75.75 0 01-1.5 0V4.55z"/>
-                                </svg>
-                            </button>
-                            <div class="px-6 pb-5" x-show="open" x-collapse x-cloak>
-                                <p class="text-[14.5px] leading-relaxed" style="color: var(--ink-soft);">
-                                    Once the blockchain confirms your transaction, your deposit updates automatically on your dashboard.
-                                </p>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-
-                {{-- RIGHT COLUMN --}}
-                <div class="space-y-4">
-
-                    {{-- Q5 --}}
-                    <article x-data="{open:false}"
-                             class="group rounded-[26px] p-[2px] transition-transform duration-300 hover:-translate-y-1"
-                             style="background:
-                                conic-gradient(from 210deg,
-                                rgba(139,92,246,.55),
-                                rgba(232,121,249,.18),
-                                rgba(243,211,138,.14),
-                                rgba(255,255,255,0),
-                                rgba(139,92,246,.55));
-                                box-shadow: 0 28px 90px -48px rgba(0,0,0,.28);">
-                        <div class="rounded-[24px] backdrop-blur"
-                             style="background: var(--surface); border: 1px solid var(--line);">
-                            <button @click="open=!open"
-                                    class="flex w-full items-center justify-between gap-3 px-6 py-4 text-left">
-                                <h3 class="text-sm font-bold sm:text-base" style="color: var(--ink);">
-                                    How do I make a withdrawal?
-                                </h3>
-                                <svg class="h-5 w-5 transition-transform"
-                                     :class="open ? 'rotate-90' : ''"
-                                     style="color: var(--ink-soft);"
-                                     viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M7.05 4.55a.75.75 0 011.06 0l5 5a.75.75 0 01-1.06 1.06L8.56 6.62v7.69a.75.75 0 01-1.5 0V4.55z"/>
-                                </svg>
-                            </button>
-                            <div class="px-6 pb-5" x-show="open" x-collapse x-cloak>
-                                <p class="text-[14.5px] leading-relaxed" style="color: var(--ink-soft);">
-                                    In your dashboard, click <span class="font-semibold" style="color: var(--brand-2);">Withdraw</span>,
-                                    enter your wallet address and amount, then submit.
-                                </p>
-                            </div>
-                        </div>
-                    </article>
-
-                    {{-- Q6 --}}
-                    <article x-data="{open:false}"
-                             class="group rounded-[26px] p-[2px] transition-transform duration-300 hover:-translate-y-1"
-                             style="background:
-                                conic-gradient(from 200deg,
-                                rgba(243,211,138,.40),
-                                rgba(232,121,249,.16),
-                                rgba(139,92,246,.12),
-                                rgba(255,255,255,0),
-                                rgba(243,211,138,.40));
-                                box-shadow: 0 28px 90px -48px rgba(0,0,0,.28);">
-                        <div class="rounded-[24px] backdrop-blur"
-                             style="background: var(--surface); border: 1px solid var(--line);">
-                            <button @click="open=!open"
-                                    class="flex w-full items-center justify-between gap-3 px-6 py-4 text-left">
-                                <h3 class="text-sm font-bold sm:text-base" style="color: var(--ink);">
-                                    How long does it take to process my withdrawal?
-                                </h3>
-                                <svg class="h-5 w-5 transition-transform"
-                                     :class="open ? 'rotate-90' : ''"
-                                     style="color: var(--ink-soft);"
-                                     viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M7.05 4.55a.75.75 0 011.06 0l5 5a.75.75 0 01-1.06 1.06L8.56 6.62v7.69a.75.75 0 01-1.5 0V4.55z"/>
-                                </svg>
-                            </button>
-                            <div class="px-6 pb-5" x-show="open" x-collapse x-cloak>
-                                <p class="text-[14.5px] leading-relaxed" style="color: var(--ink-soft);">
-                                    Withdrawals are processed as quickly as possible. Once sent, delivery time depends on the blockchain network.
-                                </p>
-                            </div>
-                        </div>
-                    </article>
-
-                    {{-- Q7 --}}
-                    <article x-data="{open:false}"
-                             class="group rounded-[26px] p-[2px] transition-transform duration-300 hover:-translate-y-1"
-                             style="background:
-                                conic-gradient(from 210deg,
-                                rgba(139,92,246,.55),
-                                rgba(232,121,249,.18),
-                                rgba(243,211,138,.14),
-                                rgba(255,255,255,0),
-                                rgba(139,92,246,.55));
-                                box-shadow: 0 28px 90px -48px rgba(0,0,0,.28);">
-                        <div class="rounded-[24px] backdrop-blur"
-                             style="background: var(--surface); border: 1px solid var(--line);">
-                            <button @click="open=!open"
-                                    class="flex w-full items-center justify-between gap-3 px-6 py-4 text-left">
-                                <h3 class="text-sm font-bold sm:text-base" style="color: var(--ink);">
-                                    Can I have more than one account?
-                                </h3>
-                                <svg class="h-5 w-5 transition-transform"
-                                     :class="open ? 'rotate-90' : ''"
-                                     style="color: var(--ink-soft);"
-                                     viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M7.05 4.55a.75.75 0 011.06 0l5 5a.75.75 0 01-1.06 1.06L8.56 6.62v7.69a.75.75 0 01-1.5 0V4.55z"/>
-                                </svg>
-                            </button>
-                            <div class="px-6 pb-5" x-show="open" x-collapse x-cloak>
-                                <p class="text-[14.5px] leading-relaxed" style="color: var(--ink-soft);">
-                                    We typically allow one account per user for security and compliance.
-                                    If you need a special setup, contact support.
-                                </p>
-                            </div>
-                        </div>
-                    </article>
-
-                    {{-- Q8 --}}
-                    <article x-data="{open:false}"
-                             class="group rounded-[26px] p-[2px] transition-transform duration-300 hover:-translate-y-1"
-                             style="background:
-                                conic-gradient(from 200deg,
-                                rgba(243,211,138,.40),
-                                rgba(232,121,249,.16),
-                                rgba(139,92,246,.12),
-                                rgba(255,255,255,0),
-                                rgba(243,211,138,.40));
-                                box-shadow: 0 28px 90px -48px rgba(0,0,0,.28);">
-                        <div class="rounded-[24px] backdrop-blur"
-                             style="background: var(--surface); border: 1px solid var(--line);">
-                            <button @click="open=!open"
-                                    class="flex w-full items-center justify-between gap-3 px-6 py-4 text-left">
-                                <h3 class="text-sm font-bold sm:text-base" style="color: var(--ink);">
-                                    Is this company properly registered?
-                                </h3>
-                                <svg class="h-5 w-5 transition-transform"
-                                     :class="open ? 'rotate-90' : ''"
-                                     style="color: var(--ink-soft);"
-                                     viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M7.05 4.55a.75.75 0 011.06 0l5 5a.75.75 0 01-1.06 1.06L8.56 6.62v7.69a.75.75 0 01-1.5 0V4.55z"/>
-                                </svg>
-                            </button>
-                            <div class="px-6 pb-5" x-show="open" x-collapse x-cloak>
-                                <p class="text-[14.5px] leading-relaxed" style="color: var(--ink-soft);">
-                                    Yes — {{ $siteName }} operates as a registered business. If you need verification details,
-                                    contact support for official documentation.
-                                </p>
-                            </div>
-                        </div>
-                    </article>
-
-                    {{-- Q9 --}}
-                    <article x-data="{open:false}"
-                             class="group rounded-[26px] p-[2px] transition-transform duration-300 hover:-translate-y-1"
-                             style="background:
-                                conic-gradient(from 200deg,
-                                rgba(243,211,138,.40),
-                                rgba(232,121,249,.16),
-                                rgba(139,92,246,.12),
-                                rgba(255,255,255,0),
-                                rgba(243,211,138,.40));
-                                box-shadow: 0 28px 90px -48px rgba(0,0,0,.28);">
-                        <div class="rounded-[24px] backdrop-blur"
-                             style="background: var(--surface); border: 1px solid var(--line);">
-                            <button @click="open=!open"
-                                    class="flex w-full items-center justify-between gap-3 px-6 py-4 text-left">
-                                <h3 class="text-sm font-bold sm:text-base" style="color: var(--ink);">
-                                    How many times can I make a deposit?
-                                </h3>
-                                <svg class="h-5 w-5 transition-transform"
-                                     :class="open ? 'rotate-90' : ''"
-                                     style="color: var(--ink-soft);"
-                                     viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M7.05 4.55a.75.75 0 011.06 0l5 5a.75.75 0 01-1.06 1.06L8.56 6.62v7.69a.75.75 0 01-1.5 0V4.55z"/>
-                                </svg>
-                            </button>
-                            <div class="px-6 pb-5" x-show="open" x-collapse x-cloak>
-                                <p class="text-[14.5px] leading-relaxed" style="color: var(--ink-soft);">
-                                    As many as you want — you can fund multiple plans or reinvest whenever it matches your strategy.
-                                </p>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </div>
-
-        <svg class="pointer-events-none absolute bottom-0 left-0 right-0 -z-10 h-[120px] w-full"
-             viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M0,96 C240,128 480,64 720,88 C960,112 1200,48 1440,88 L1440,120 L0,120 Z" fill="var(--bg)"></path>
-        </svg>
-    </section>
+<section class="bg-paper-100 py-20 sm:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><div class="rounded-[2rem] bg-ink-900 p-7 text-white sm:p-10 lg:flex lg:items-end lg:justify-between lg:gap-10 lg:p-12"><div><p class="text-xs font-bold uppercase tracking-[0.2em] text-bronze-300">Specific question?</p><h2 class="mt-4 max-w-3xl font-display text-4xl font-semibold leading-tight sm:text-5xl">Talk to a person before making assumptions about your account.</h2></div><a href="{{ url('/contact') }}" class="mt-7 inline-flex shrink-0 items-center justify-center rounded-full bg-bronze-300 px-6 py-3.5 text-sm font-bold text-ink-950 transition hover:bg-bronze-200 lg:mt-0">Contact the team</a></div></div>
+</section>
 @endsection
