@@ -4,7 +4,7 @@
     $authCopy = $authCopy ?? 'Access your account through the same disciplined, long-term thinking that shapes how we approach capital.';
 @endphp
 
-<section class="relative isolate min-h-[330px] overflow-hidden bg-ink-950 text-white lg:min-h-screen">
+<section class="relative isolate min-h-[330px] overflow-hidden bg-ink-950 text-white lg:sticky lg:top-0 lg:h-screen lg:min-h-screen lg:self-start">
     <div class="absolute inset-0 -z-30">
         <img
             src="{{ asset('home/images/brand/alpine-ibex-hero.svg') }}"
