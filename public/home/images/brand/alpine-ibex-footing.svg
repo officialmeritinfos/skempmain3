@@ -1,0 +1,53 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="180" y1="40" x2="1030" y2="860" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#10262D"/>
+      <stop offset="1" stop-color="#07151B"/>
+    </linearGradient>
+    <linearGradient id="stone" x1="470" y1="380" x2="790" y2="850" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#667176"/>
+      <stop offset="0.35" stop-color="#3B484C"/>
+      <stop offset="1" stop-color="#17272C"/>
+    </linearGradient>
+    <linearGradient id="fur" x1="620" y1="80" x2="720" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B28A5D"/>
+      <stop offset="0.55" stop-color="#725744"/>
+      <stop offset="1" stop-color="#3C332C"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(205 205) rotate(39) scale(490)">
+      <stop stop-color="#D5B67D" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#D5B67D" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="900" fill="url(#bg)"/>
+  <rect width="1200" height="900" fill="url(#glow)"/>
+
+  <path d="M0 700L160 616L303 647L431 530L540 559L673 489L793 525L907 449L1200 510V900H0V700Z" fill="#12262C"/>
+  <path d="M190 900L315 700L450 640L550 520L686 553L775 459L942 419L1200 465V900H190Z" fill="url(#stone)"/>
+  <path d="M354 691L458 645L521 570L626 588L706 514" stroke="#9D8B72" stroke-opacity="0.52" stroke-width="5"/>
+  <path d="M694 558L814 484L930 461" stroke="#C7AC7A" stroke-opacity="0.3" stroke-width="4"/>
+  <path d="M479 638L518 679L499 724" stroke="#152329" stroke-width="8" stroke-linecap="round"/>
+  <path d="M810 494L845 532L823 570" stroke="#152329" stroke-width="7" stroke-linecap="round"/>
+
+  <g transform="translate(445 40)">
+    <path d="M144 38C187 31 224 55 239 96L302 302L248 383L188 315L104 119C87 79 104 44 144 38Z" fill="url(#fur)"/>
+    <path d="M118 122C90 189 78 259 84 331L98 520L151 526L180 337L191 178" fill="#715744"/>
+    <path d="M239 119C263 191 274 260 270 331L256 520L309 526L342 337L313 169" fill="#765B45"/>
+    <path d="M92 503C79 516 76 535 87 551C98 567 124 574 151 566L174 538L151 523L92 503Z" fill="#292724"/>
+    <path d="M253 503C240 516 238 535 249 551C260 567 286 574 313 566L335 538L311 523L253 503Z" fill="#292724"/>
+    <path d="M98 526L126 553L151 523" stroke="#BCA57E" stroke-opacity="0.8" stroke-width="3"/>
+    <path d="M258 526L286 553L311 523" stroke="#BCA57E" stroke-opacity="0.8" stroke-width="3"/>
+  </g>
+
+  <g opacity="0.68" stroke="#D5B67D" stroke-linecap="round">
+    <path d="M131 260H285"/>
+    <path d="M131 276H238" stroke-opacity="0.45"/>
+    <path d="M131 292H204" stroke-opacity="0.28"/>
+  </g>
+
+  <text x="130" y="214" fill="#D5B67D" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="4">SURE-FOOTED</text>
+  <text x="130" y="346" fill="#F7F3EA" font-family="Georgia, serif" font-size="58">Balance is not</text>
+  <text x="130" y="408" fill="#F7F3EA" font-family="Georgia, serif" font-size="58">the absence of risk.</text>
+  <text x="130" y="464" fill="#AAB4B6" font-family="Inter, Arial, sans-serif" font-size="22">It is knowing where to place the next step.</text>
+</svg>
