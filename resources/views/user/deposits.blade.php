@@ -3,102 +3,74 @@
 @section('title', 'Deposit History')
 
 @section('content')
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-        <div class="flex justify-between items-center">
-            <h2 class="text-lg font-semibold text-gray-800 dark:text-white">Deposit History</h2>
+    <div class="space-y-6">
+        @include('templates.notification')
 
-            <a href="{{ route('new_deposit') }}"
-               class="inline-flex items-center px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium shadow hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition">
-                <i class="fa fa-plus mr-2"></i> New Deposit
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+                <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-bronze-600 dark:text-bronze-300">Funding activity</p>
+                <h1 class="mt-2 font-display text-3xl font-semibold tracking-[-0.03em] text-ink-950 dark:text-white sm:text-4xl">Deposit history.</h1>
+                <p class="mt-2 text-sm leading-6 text-ink-600 dark:text-white/50">Review every funding request, the asset used and its current verification state.</p>
+            </div>
+
+            <a href="{{ route('new_deposit') }}" class="inline-flex items-center justify-center gap-2 self-start rounded-xl bg-ink-950 px-4 py-2.5 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-ink-900 dark:bg-bronze-300 dark:text-ink-950 dark:hover:bg-bronze-200 sm:self-auto">
+                <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+                New deposit
             </a>
         </div>
 
-        @forelse ($deposits as $deposit)
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow p-4 space-y-2">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">Ref</p>
-                        <h4 class="text-sm font-semibold text-gray-800 dark:text-white">{{ $deposit->reference }}</h4>
-                    </div>
-                    <div>
-                        @switch($deposit->status)
-                            @case(1)
-                                <span class="px-3 py-1 text-xs font-medium rounded-full bg-green-100 text-green-700 dark:bg-green-700/20 dark:text-green-300">Completed</span>
-                                @break
-                            @case(2)
-                                <span class="px-3 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-700 dark:bg-blue-700/20 dark:text-blue-300">Pending</span>
-                                @break
-                            @case(3)
-                                <span class="px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-700 dark:bg-red-700/20 dark:text-red-300">Cancelled</span>
-                                @break
+        @forelse($deposits as $deposit)
+            @php
+                $statusMeta = match ((int) $deposit->status) {
+                    1 => ['Completed', 'bg-emerald-50 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300'],
+                    2 => ['Awaiting payment', 'bg-sky-50 text-sky-700 dark:bg-sky-400/10 dark:text-sky-300'],
+                    3 => ['Cancelled', 'bg-red-50 text-red-700 dark:bg-red-400/10 dark:text-red-300'],
+                    4 => ['Verification pending', 'bg-amber-50 text-amber-700 dark:bg-amber-400/10 dark:text-amber-300'],
+                    default => ['Partial', 'bg-slate-100 text-slate-700 dark:bg-white/10 dark:text-white/60'],
+                };
+            @endphp
 
-                            @case(4)
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium
-                                         bg-amber-100 text-amber-700 dark:bg-amber-700/20 dark:text-amber-300">
-                                Proof Submitted
-                            </span>
-                                @break
-                            @default
-                                <span class="px-3 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-700 dark:bg-gray-700/20 dark:text-gray-300">Partial</span>
-                        @endswitch
+            <article class="group overflow-hidden rounded-[1.6rem] border border-ink-950/8 bg-white shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-ink-950/5 dark:border-white/10 dark:bg-white/[0.035]">
+                <div class="grid gap-5 p-5 sm:p-6 lg:grid-cols-[1fr_.9fr_auto] lg:items-center">
+                    <div>
+                        <div class="flex flex-wrap items-center gap-3">
+                            <span class="rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] {{ $statusMeta[1] }}">{{ $statusMeta[0] }}</span>
+                            <span class="text-xs font-semibold text-ink-400 dark:text-white/30">#{{ $deposit->reference }}</span>
+                        </div>
+                        <p class="mt-4 font-display text-3xl font-semibold tracking-[-0.025em] text-ink-950 dark:text-white">${{ number_format($deposit->amount, 2) }}</p>
+                        <p class="mt-1 text-xs text-ink-500 dark:text-white/35">Created {{ $deposit->created_at->format('d M Y, h:i a') }}</p>
                     </div>
-                </div>
 
-                <div class="grid grid-cols-2 gap-4 text-sm text-gray-700 dark:text-gray-200 mt-2">
-                    <div>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Amount</p>
-                        <p>${{ number_format($deposit->amount, 2) }}</p>
+                    <div class="grid grid-cols-2 gap-4 border-t border-ink-950/8 pt-5 dark:border-white/10 lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0">
+                        <div>
+                            <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-ink-400 dark:text-white/30">Asset</p>
+                            <p class="mt-1 font-semibold text-ink-900 dark:text-white/80">{{ $deposit->asset }}</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-ink-400 dark:text-white/30">Payment ref</p>
+                            <p class="mt-1 truncate font-semibold text-ink-900 dark:text-white/80">{{ $deposit->paymentRef ?: '—' }}</p>
+                        </div>
                     </div>
-                    <div>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Payment Method</p>
-                        <p>{{ $deposit->asset }}</p>
-                    </div>
-                    <div>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Deposit Ref</p>
-                        <p>{{ $deposit->paymentRef }}</p>
-                    </div>
-                    <div>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Date</p>
-                        <p>{{ $deposit->created_at->format('Y-m-d H:i') }}</p>
-                    </div>
-                </div>
 
-                <div class="pt-4">
-                    <a href="{{ route('deposit_detail', ['id' => $deposit->id]) }}"
-                       class="inline-flex items-center text-sm text-blue-600 hover:underline dark:text-blue-400">
-                        <i class="fa fa-eye mr-1"></i> View Details
+                    <a href="{{ route('deposit_detail', ['id' => $deposit->id]) }}" class="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-ink-950/10 px-4 text-sm font-semibold text-ink-800 transition group-hover:border-bronze-300 group-hover:text-bronze-700 dark:border-white/10 dark:text-white/65 dark:group-hover:border-bronze-300 dark:group-hover:text-bronze-300">
+                        View details
+                        <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11.5 5.5 16 10l-4.5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </a>
                 </div>
-            </div>
+            </article>
         @empty
-            <div class="flex flex-col items-center justify-center text-center py-10 px-4 bg-white dark:bg-gray-900 border border-dashed border-gray-200 dark:border-gray-700 rounded-xl shadow-sm">
-                {{-- Icon --}}
-                <div class="mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400 dark:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 018 0v2m-4-4v-2m0 6v2m-4-2v2m-4-6a4 4 0 00-4 4v2a2 2 0 002 2h12a2 2 0 002-2v-2a4 4 0 00-4-4H7z" />
-                    </svg>
-                </div>
-
-                {{-- Title --}}
-                <h3 class="text-lg font-semibold text-gray-800 dark:text-white">No Deposits Yet</h3>
-
-                {{-- Message --}}
-                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400 max-w-md">
-                    You haven’t made any deposits yet. When you do, they’ll show up here for easy tracking.
-                </p>
-
-                {{-- Call to Action --}}
-                <a href="{{ route('new_deposit') }}"
-                   class="mt-6 inline-flex items-center px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition dark:bg-blue-500 dark:hover:bg-blue-600">
-                    <i class="fa fa-plus mr-2"></i> Make Your First Deposit
-                </a>
+            <div class="rounded-[1.8rem] border border-dashed border-ink-950/15 bg-white px-6 py-16 text-center dark:border-white/15 dark:bg-white/[0.025]">
+                <span class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-bronze-50 text-bronze-700 dark:bg-bronze-300/10 dark:text-bronze-300">
+                    <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none"><path d="M12 4v12m0 0-4-4m4 4 4-4M5 20h14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <h2 class="mt-5 font-display text-2xl font-semibold text-ink-950 dark:text-white">No deposits yet</h2>
+                <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-ink-500 dark:text-white/45">Your funding requests will appear here after you create your first deposit.</p>
+                <a href="{{ route('new_deposit') }}" class="mt-6 inline-flex items-center justify-center rounded-xl bg-ink-950 px-5 py-3 text-sm font-bold text-white dark:bg-bronze-300 dark:text-ink-950">Fund account</a>
             </div>
-
         @endforelse
 
-        {{-- Pagination --}}
-        <div class="pt-6">
-            {{ $deposits->links() }}
-        </div>
+        @if($deposits->hasPages())
+            <div class="pt-2">{{ $deposits->links() }}</div>
+        @endif
     </div>
 @endsection
