@@ -25,6 +25,7 @@
             ['label' => 'Membership', 'route' => 'membership.index', 'active' => ['membership.*'], 'icon' => 'badge'],
             ['label' => 'Wallet Connect', 'route' => 'wallet.connect.index', 'active' => ['wallet.connect.*'], 'icon' => 'wallet'],
             ['label' => 'Referrals', 'route' => 'referral.index', 'active' => ['referral.*'], 'icon' => 'users'],
+            ['label' => 'KYC', 'route' => 'setting.kyc', 'active' => ['referral.*'], 'icon' => 'users'],
         ];
     @endphp
 
