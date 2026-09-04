@@ -37,7 +37,7 @@
         >
             <div
                 :class="scrolled ? 'h-[70px]' : 'h-20'"
-                class="mx-auto flex max-w-7xl items-center justify-between gap-6 px-4 transition-all duration-500 sm:px-6 lg:px-8"
+                class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 transition-all duration-500 sm:px-6 lg:gap-6 lg:px-8"
             >
                 <a href="{{ url('/') }}" class="group flex min-w-0 items-center gap-3" aria-label="{{ $appName }} home">
                     @if(!empty($web?->logo))
@@ -85,7 +85,8 @@
                     @endforeach
                 </nav>
 
-                <div class="hidden items-center gap-3 lg:flex">
+                <div class="hidden items-center gap-2 lg:flex">
+                    @include('layouts.partials.google-translate', ['tone' => 'dark'])
                     <a href="{{ url('/login') }}" class="rounded-full px-4 py-2.5 text-sm font-semibold text-white/75 transition duration-300 hover:bg-white/5 hover:text-white">
                         Client login
                     </a>
@@ -97,21 +98,24 @@
                     </a>
                 </div>
 
-                <button
-                    type="button"
-                    class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition duration-300 hover:bg-white/10 lg:hidden"
-                    @click="open = !open"
-                    :aria-expanded="open"
-                    aria-controls="mobile-navigation"
-                    aria-label="Toggle navigation"
-                >
-                    <svg x-show="!open" class="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                    </svg>
-                    <svg x-show="open" x-cloak class="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                    </svg>
-                </button>
+                <div class="flex shrink-0 items-center gap-2 lg:hidden">
+                    @include('layouts.partials.google-translate', ['tone' => 'dark'])
+                    <button
+                        type="button"
+                        class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition duration-300 hover:bg-white/10 sm:h-11 sm:w-11"
+                        @click="open = !open"
+                        :aria-expanded="open"
+                        aria-controls="mobile-navigation"
+                        aria-label="Toggle navigation"
+                    >
+                        <svg x-show="!open" class="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        </svg>
+                        <svg x-show="open" x-cloak class="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                </div>
             </div>
 
             <div id="mobile-navigation" x-show="open" x-collapse x-cloak class="border-t border-white/10 bg-ink-950/98 lg:hidden">
@@ -196,6 +200,9 @@
             </div>
         </footer>
     </div>
+
+    {{-- Google Translate's native control stays hidden; branded selectors above drive it. --}}
+    <div id="google_translate_element" class="hidden" aria-hidden="true"></div>
 
     @stack('scripts')
 
