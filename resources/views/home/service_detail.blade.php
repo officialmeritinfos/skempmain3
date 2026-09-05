@@ -44,7 +44,7 @@
         </aside>
 
         <article x-data="revealOnScroll()" :class="{ 'is-visible': shown }" class="reveal-up glass-panel rounded-[2rem] p-7 sm:p-10 lg:p-12" style="--reveal-delay: 100ms">
-            <div class="prose prose-invert max-w-none prose-headings:font-display prose-headings:font-bold prose-headings:tracking-[-0.02em] prose-p:leading-8 prose-li:leading-7 prose-a:text-cyan-300 prose-strong:text-white">
+            <div class="rich-content">
                 {!! str_replace('MYSITE', config('app.name'), $service->content) !!}
             </div>
         </article>
