@@ -10,6 +10,25 @@ window.Alpine = Alpine
 Alpine.plugin(collapse)
 registerGoogleTranslate(Alpine)
 
+Alpine.store('theme', {
+    isDark: document.documentElement.classList.contains('dark'),
+
+    apply(theme, persist = true) {
+        this.isDark = theme === 'dark'
+        document.documentElement.classList.toggle('dark', this.isDark)
+        document.documentElement.dataset.theme = this.isDark ? 'dark' : 'light'
+        document.documentElement.style.colorScheme = this.isDark ? 'dark' : 'light'
+
+        if (persist) {
+            window.localStorage.setItem('site-theme', this.isDark ? 'dark' : 'light')
+        }
+    },
+
+    toggle() {
+        this.apply(this.isDark ? 'light' : 'dark')
+    },
+})
+
 Alpine.data('heroSlider', (count = 1, delay = 6800) => ({
     active: 0,
     timer: null,
