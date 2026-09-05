@@ -266,6 +266,115 @@
     transform: none;
 }
 
+/* Rich service content without requiring @tailwindcss/typography. */
+.rich-content {
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 1rem;
+    line-height: 2;
+}
+
+.rich-content > * + * {
+    margin-top: 1.25rem;
+}
+
+.rich-content h1,
+.rich-content h2,
+.rich-content h3,
+.rich-content h4,
+.rich-content h5,
+.rich-content h6 {
+    margin-top: 2.25rem;
+    margin-bottom: 0.85rem;
+    color: #fff;
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+}
+
+.rich-content h1 { font-size: clamp(2rem, 4vw, 3rem); }
+.rich-content h2 { font-size: clamp(1.75rem, 3vw, 2.4rem); }
+.rich-content h3 { font-size: clamp(1.4rem, 2.4vw, 1.9rem); }
+.rich-content h4 { font-size: 1.25rem; }
+
+.rich-content p,
+.rich-content li {
+    color: rgba(255, 255, 255, 0.66);
+}
+
+.rich-content ul,
+.rich-content ol {
+    margin: 1.25rem 0;
+    padding-left: 1.35rem;
+}
+
+.rich-content ul { list-style: disc; }
+.rich-content ol { list-style: decimal; }
+.rich-content li + li { margin-top: 0.55rem; }
+.rich-content li::marker { color: #67e8f9; }
+
+.rich-content a {
+    color: #67e8f9;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: rgba(103, 232, 249, 0.35);
+    text-underline-offset: 0.2em;
+}
+
+.rich-content a:hover {
+    color: #fff;
+    text-decoration-color: rgba(255, 255, 255, 0.55);
+}
+
+.rich-content strong,
+.rich-content b {
+    color: #fff;
+    font-weight: 700;
+}
+
+.rich-content blockquote {
+    margin: 1.75rem 0;
+    border-left: 2px solid rgba(103, 232, 249, 0.7);
+    border-radius: 0 1rem 1rem 0;
+    background: rgba(103, 232, 249, 0.06);
+    padding: 1rem 1.25rem;
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.rich-content hr {
+    margin: 2rem 0;
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.rich-content table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    border-radius: 1rem;
+    font-size: 0.9rem;
+}
+
+.rich-content th,
+.rich-content td {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.8rem 0.9rem;
+    text-align: left;
+}
+
+.rich-content th {
+    background: rgba(255, 255, 255, 0.07);
+    color: #fff;
+    font-weight: 700;
+}
+
+.rich-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 1.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 @keyframes orbFloat {
     0% { transform: translate3d(0, 0, 0) scale(1); }
     100% { transform: translate3d(1.25rem, -1rem, 0) scale(1.08); }
