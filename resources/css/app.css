@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap');
 @import 'tailwindcss';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -7,25 +7,25 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --font-display: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+    --font-sans: 'DM Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-display: 'Cormorant Garamond', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
 
-    --color-ink-950: #08171d;
-    --color-ink-900: #10232a;
-    --color-ink-800: #1a3037;
-    --color-ink-700: #465a5f;
-    --color-ink-600: #657579;
+    --color-ink-950: #07181b;
+    --color-ink-900: #0d2327;
+    --color-ink-800: #173238;
+    --color-ink-700: #425b60;
+    --color-ink-600: #667a7e;
 
-    --color-paper-50: #fbfaf7;
-    --color-paper-100: #f3f0e9;
-    --color-paper-200: #e9e3d9;
+    --color-paper-50: #fbfaf6;
+    --color-paper-100: #f4f1e9;
+    --color-paper-200: #e9e3d7;
 
-    --color-bronze-100: #f5ead8;
-    --color-bronze-200: #ead4ae;
-    --color-bronze-300: #d5b67d;
-    --color-bronze-400: #c29d61;
-    --color-bronze-500: #a9834c;
-    --color-bronze-600: #8b6839;
+    --color-bronze-100: #f5ead7;
+    --color-bronze-200: #ead4ad;
+    --color-bronze-300: #d6b575;
+    --color-bronze-400: #c39b59;
+    --color-bronze-500: #aa8248;
+    --color-bronze-600: #8e6938;
     --color-bronze-700: #6f502c;
 }
 
@@ -42,8 +42,8 @@
     }
 
     ::selection {
-        background: #d5b67d;
-        color: #08171d;
+        background: #d6b575;
+        color: #07181b;
     }
 }
 
@@ -51,29 +51,19 @@
     display: none !important;
 }
 
-.hero-slide-image {
-    transform: scale(1.015);
-    transition: transform 8s cubic-bezier(.18, .8, .2, 1);
-    will-change: transform;
-}
-
-.hero-slide-image.is-active {
-    transform: scale(1.085);
-}
-
-.hero-vignette {
-    background:
-        linear-gradient(90deg, rgba(5, 18, 23, .96) 0%, rgba(5, 18, 23, .86) 32%, rgba(5, 18, 23, .48) 62%, rgba(5, 18, 23, .20) 100%),
-        linear-gradient(0deg, rgba(5, 18, 23, .84) 0%, rgba(5, 18, 23, .05) 52%, rgba(5, 18, 23, .18) 100%);
-}
-
-.hero-film-grain {
-    opacity: .16;
+.hero-grid {
     background-image:
-        radial-gradient(circle at 20% 20%, rgba(255,255,255,.17) 0 1px, transparent 1px),
-        radial-gradient(circle at 80% 65%, rgba(255,255,255,.10) 0 1px, transparent 1px);
-    background-size: 19px 19px, 27px 27px;
-    mix-blend-mode: soft-light;
+        linear-gradient(rgba(255, 255, 255, .045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .045) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: linear-gradient(90deg, #000, rgba(0, 0, 0, .28) 68%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, #000, rgba(0, 0, 0, .28) 68%, transparent);
+}
+
+.hero-portrait {
+    transform: scale(1.025);
+    animation: heroDrift 16s ease-in-out infinite alternate;
+    will-change: transform;
 }
 
 .reveal-up,
@@ -88,15 +78,15 @@
 }
 
 .reveal-up {
-    transform: translateY(34px);
+    transform: translateY(30px);
 }
 
 .reveal-fade {
-    transform: translateY(12px);
+    transform: translateY(10px);
 }
 
 .reveal-scale {
-    transform: scale(.965) translateY(18px);
+    transform: scale(.975) translateY(14px);
 }
 
 .reveal-up.is-visible,
@@ -106,34 +96,15 @@
     transform: none;
 }
 
-.story-image {
+.story-image,
+.card-image {
     transition: transform .8s cubic-bezier(.2, .8, .2, 1), filter .8s ease;
 }
 
-.story-image-wrap:hover .story-image {
-    transform: scale(1.045);
-    filter: saturate(1.05) contrast(1.02);
-}
-
-.card-image {
-    transition: transform .7s cubic-bezier(.2, .8, .2, 1);
-}
-
+.story-image-wrap:hover .story-image,
 .group:hover .card-image {
-    transform: scale(1.06);
-}
-
-.video-poster-image {
-    transition: transform 1s cubic-bezier(.2, .8, .2, 1), filter .8s ease;
-}
-
-.video-poster:hover .video-poster-image {
-    transform: scale(1.035);
-    filter: saturate(.9) contrast(1.04);
-}
-
-.video-play-ring {
-    animation: videoPulse 2.8s ease-in-out infinite;
+    transform: scale(1.05);
+    filter: saturate(1.02) contrast(1.02);
 }
 
 .marquee-shell {
@@ -145,20 +116,22 @@
 .marquee-track {
     display: flex;
     width: max-content;
-    animation: marqueeMove 28s linear infinite;
+    animation: marqueeMove 30s linear infinite;
 }
 
 .marquee-track:hover {
     animation-play-state: paused;
 }
 
-.hero-progress-fill {
-    transform-origin: left;
-    animation: heroProgress 6.8s linear forwards;
-}
-
 .float-slow {
     animation: floatSlow 6.5s ease-in-out infinite;
+}
+
+.cta-lines {
+    background-image:
+        linear-gradient(90deg, transparent 0 9%, rgba(7, 24, 27, .09) 9% 9.12%, transparent 9.12% 100%),
+        linear-gradient(0deg, transparent 0 78%, rgba(7, 24, 27, .08) 78% 78.2%, transparent 78.2% 100%);
+    background-size: 150px 150px;
 }
 
 @keyframes marqueeMove {
@@ -170,22 +143,9 @@
     50% { transform: translateY(-8px); }
 }
 
-@keyframes videoPulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(213, 182, 125, .24); }
-    50% { box-shadow: 0 0 0 15px rgba(213, 182, 125, 0); }
-}
-
-@keyframes heroProgress {
-    from { transform: scaleX(0); }
-    to { transform: scaleX(1); }
-}
-
-@media (max-width: 767px) {
-    .hero-vignette {
-        background:
-            linear-gradient(90deg, rgba(5, 18, 23, .90), rgba(5, 18, 23, .62)),
-            linear-gradient(0deg, rgba(5, 18, 23, .90), rgba(5, 18, 23, .12) 62%, rgba(5, 18, 23, .28));
-    }
+@keyframes heroDrift {
+    from { transform: scale(1.025) translate3d(0, 0, 0); }
+    to { transform: scale(1.085) translate3d(-1.1%, -.7%, 0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -207,8 +167,8 @@
         transform: none;
     }
 
-    .hero-slide-image,
-    .hero-slide-image.is-active {
+    .hero-portrait {
+        animation: none;
         transform: none;
     }
 }
