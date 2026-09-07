@@ -245,6 +245,7 @@
         </section>
     @endif
 
+    @auth
     <section id="approach" class="relative overflow-hidden bg-white py-24 text-slate-950 transition-colors dark:bg-[#030712] dark:text-white sm:py-28">
         <div class="spark-field pointer-events-none absolute inset-0 opacity-35"></div>
         <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -277,6 +278,8 @@
             </div>
         </div>
     </section>
+
+    @endauth
 
     <section class="bg-[#f7f9fc] py-24 text-slate-950 transition-colors dark:bg-[linear-gradient(180deg,#07111e_0%,#09051a_100%)] dark:text-white sm:py-28">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

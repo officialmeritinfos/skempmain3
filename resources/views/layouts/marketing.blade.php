@@ -216,6 +216,8 @@
     <script type="text/javascript">
         var _smartsupp = _smartsupp || {};
         _smartsupp.key = 'a14b3f32631caf0fe57de147f9e4cce3cb5a867f';
+        _smartsupp.offsetX = 0;
+        _smartsupp.offsetY = 180;
         window.smartsupp||(function(d) {
             var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
             s=d.getElementsByTagName('script')[0];c=d.createElement('script');

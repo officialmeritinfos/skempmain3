@@ -21,8 +21,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/',[HomeController::class,'index'])->name('home.index');
 Route::get('index',[HomeController::class,'index']);
 Route::get('about',[HomeController::class,'about']);
-Route::get('plans',[HomeController::class,'plans']);
-Route::get('plan',[HomeController::class,'plans']);
+Route::get('plans',[HomeController::class,'plans'])->middleware('auth');
+Route::get('plan',[HomeController::class,'plans'])->middleware('auth');
 Route::get('terms',[HomeController::class,'terms']);
 Route::get('services',[HomeController::class,'services']);
 Route::get('service/{id}/details',[HomeController::class,'serviceDetail'])
