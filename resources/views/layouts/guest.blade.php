@@ -72,7 +72,7 @@
     <div id="google_translate_element" class="hidden" aria-hidden="true"></div>
     @stack('scripts')
 
-
+    {!! $web->livechat_code !!}
 
 </body>
 </html>

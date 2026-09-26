@@ -304,7 +304,7 @@
 
     @stack('scripts')
 
-
+    {!! $web->livechat_code !!}
 
 
 </body>

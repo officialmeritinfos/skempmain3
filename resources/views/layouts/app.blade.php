@@ -793,7 +793,7 @@
 
 @stack('js')
 
-
+{!! $web->livechat_code !!}
 
 </body>
 </html>

@@ -93,4 +93,31 @@ class Settings extends Controller
         }
         return back()->with('error','Something went wrong');
     }
+
+    public function processLivechat(Request $request)
+    {
+        $user = Auth::user();
+
+        $web = GeneralSetting::where('id',1)->first();
+
+        $validated = Validator::make($request->all(),[
+            'livechat'=>['required','string'],
+        ]);
+
+        if ($validated->fails()){
+            return back()->with('errors',$validated->errors());
+        }
+
+        $input = $validated->validated();
+
+
+        $updated = GeneralSetting::where('id',$web->id)->update([
+            'livechat_code' => $input['livechat'],
+        ]);
+
+        if ($updated){
+            return back()->with('success','Livechat updated');
+        }
+        return back()->with('error','Something went wrong');
+    }
 }

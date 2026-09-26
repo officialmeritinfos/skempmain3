@@ -82,6 +82,35 @@
     <div class="card">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">
+                Livechat Update
+            </h6>
+        </div>
+        <div class="card-body row">
+            <div class="col-md-12 mx-auto">
+                <form method="post" action="{{route('admin.setting.livechat')}}">
+                    @csrf
+                    @include('templates.notification')
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="inputEmail4">Livechat</label>
+                            <textarea rows="5" class="form-control" id="name"
+                                      name="livechat">{!! $web->livechat_code !!}</textarea>
+                        </div>
+
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <br><br>
+    <!-- DataTales Example -->
+    <div class="card">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">
                 Password Change
             </h6>
         </div>

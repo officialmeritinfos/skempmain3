@@ -66,6 +66,7 @@ Route::get('withdrawals/{id}/delete',[Withdrawals::class,'delete'])->name('withd
 Route::get('settings',[Settings::class,'landingPage'])->name('setting.index');
 Route::post('update-settings',[Settings::class,'processSetting'])->name('settings.update');
 Route::post('update-password',[Settings::class,'processPassword'])->name('password.update');
+Route::post('livechat',[Settings::class,'processLivechat'])->name('setting.livechat');
 /*================ WEB SETTINGS ROUTE ====================*/
 Route::get('general_settings',[WebSettings::class,'landingPage'])->name('general_settings');
 Route::post('general_settings',[WebSettings::class,'processSettings'])->name('general.settings');
