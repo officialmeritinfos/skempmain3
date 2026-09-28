@@ -47,7 +47,11 @@ class Investments extends Controller
             'user'=>$user,
             'pageName'=>'New Investment',
             'siteName'=>$web->name,
-            'packages'=>Package::where('status',1)->get(),
+            'packages'=>Package::where('status',1)
+                ->whereIn('plan_type', ['crypto', 'gold'])
+                ->orderBy('plan_type')
+                ->orderBy('minAmount')
+                ->get(),
             'coins'=>Coin::where('status',1)->get(),
             'services'=>Service::where('status',1)->get(),
         ];
@@ -60,35 +64,36 @@ class Investments extends Controller
         $web = GeneralSetting::where('id',1)->first();
         $user = Auth::user();
         $validator = Validator::make($request->input(),[
-            'amount'=>['required','numeric'],
-            'account'=>['required','numeric'],
+            'investment_type'=>['required','in:crypto,gold'],
+            'amount'=>['required','numeric','gt:0'],
+            'account'=>['required','in:1,2'],
             'package'=>['required','numeric'],
         ]);
 
         if ($validator->fails()){
-            return back()->with('errors',$validator->errors());
+            return back()->withInput()->with('errors',$validator->errors());
         }
 
         $input = $validator->validated();
 
-        //generate deposit reference
-        $reference = $this->generateId('deposits','reference',10);
-        //check if the package exists
-
-        $packageExists = Package::where('id',$input['package'])->first();
+        // The selected package must belong to the selected investment type.
+        $packageExists = Package::where('id', $input['package'])
+            ->where('status', 1)
+            ->where('plan_type', $input['investment_type'])
+            ->first();
 
         if (empty($packageExists)){
-            return back()->with('error','Selected Package is invalid');
+            return back()->withInput()->with('error','Selected investment plan is invalid for this investment type.');
         }
 
         //check if amount matches
         if ($packageExists->isUnlimited !=1){
             if ($packageExists->maxAmount < $input['amount']){
-                return back()->with('error','Deposit amount cannot be greater than maximum amount');
+                return back()->withInput()->with('error','Investment amount cannot be greater than the selected plan maximum.');
             }
         }
         if ($packageExists->minAmount > $input['amount']){
-            return back()->with('error','Deposit amount cannot be less than minimum amount');
+            return back()->withInput()->with('error','Investment amount cannot be less than the selected plan minimum.');
         }
 
         $packageHasLoan = $packageExists->canLoan;
@@ -114,12 +119,12 @@ class Investments extends Controller
         }
 
         if ($balance < $input['amount'] ){
-            return back()->with('error',"Insufficient balance in {$source} account.");
+            return back()->withInput()->with('error',"Insufficient balance in {$source} account.");
         }
 
 
         if ($packageExists->reinvest!=1 && $source=='profit') {
-            return back()->with('error','You cannot reinvest on this package. Please upgrade.');
+            return back()->withInput()->with('error','You cannot reinvest on this package. Please upgrade.');
         }
 
         //get the return type attached to investment package
@@ -144,8 +149,10 @@ class Investments extends Controller
             //send notification
             //check if admin exists
             $admin = User::where('is_admin',1)->first();
+            $investmentTypeLabel = $input['investment_type'] === 'gold' ? 'Gold Investment' : 'Crypto Investment';
+
             $userMessage = "
-                    Your new investment package purchase of $<b>".$input['amount']." </b>
+                    Your new <b>".$investmentTypeLabel."</b> of $<b>".$input['amount']." </b>
                     has been received. Your Investment reference Id is <b>".$ref."</b>
                 ";
 
@@ -155,7 +162,7 @@ class Investments extends Controller
             //send mail to Admin
             if (!empty($admin)){
                 $adminMessage = "
-                    A new investment of $<b>".$input['amount']."</b>
+                    A new <b>".$investmentTypeLabel."</b> of $<b>".$input['amount']."</b>
                     has been started by the investor <b>".$user->name."</b> with reference <b>".$ref."</b>
                 ";
                 //SendInvestmentNotification::dispatch($admin,$adminMessage,'New Investment Initiation');
