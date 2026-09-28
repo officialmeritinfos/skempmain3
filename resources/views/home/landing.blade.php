@@ -272,51 +272,51 @@
         </section>
     @endif
 
-    @auth
-        <section class="bg-[#f5f3ed] py-24 text-[#132131] dark:bg-[#08111b] dark:text-white sm:py-28">
-            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div class="grid gap-10 lg:grid-cols-[.72fr_1.28fr] lg:gap-16">
-                    <div x-data="revealOnScroll()" :class="{ 'is-visible': shown }" class="reveal-up lg:sticky lg:top-28 lg:self-start">
-                        <div class="flex items-center gap-3">
-                            <span class="h-px w-8 bg-[#9a7445] dark:bg-[#e4c38f]"></span>
-                            <p class="text-[11px] font-bold uppercase tracking-[0.2em] text-[#7b5a32] dark:text-[#e4c38f]">Investment plans</p>
-                        </div>
-                        <h2 class="mt-5 font-display text-4xl font-bold leading-[1.02] tracking-[-0.045em] sm:text-5xl">See the terms. Then judge the fit.</h2>
-                        <p class="mt-5 text-base leading-8 text-[#64707c] dark:text-white/56">A return rate is only one part of the decision. Duration, liquidity, risk and the wider objective matter too.</p>
-                        <a href="{{ url('/plans') }}" class="mt-7 inline-flex items-center gap-2 text-sm font-bold text-[#7b5a32] transition hover:text-[#0b1b2b] dark:text-[#e4c38f] dark:hover:text-white">View all plans →</a>
-                    </div>
+{{--    @auth--}}
+{{--        <section class="bg-[#f5f3ed] py-24 text-[#132131] dark:bg-[#08111b] dark:text-white sm:py-28">--}}
+{{--            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">--}}
+{{--                <div class="grid gap-10 lg:grid-cols-[.72fr_1.28fr] lg:gap-16">--}}
+{{--                    <div x-data="revealOnScroll()" :class="{ 'is-visible': shown }" class="reveal-up lg:sticky lg:top-28 lg:self-start">--}}
+{{--                        <div class="flex items-center gap-3">--}}
+{{--                            <span class="h-px w-8 bg-[#9a7445] dark:bg-[#e4c38f]"></span>--}}
+{{--                            <p class="text-[11px] font-bold uppercase tracking-[0.2em] text-[#7b5a32] dark:text-[#e4c38f]">Investment plans</p>--}}
+{{--                        </div>--}}
+{{--                        <h2 class="mt-5 font-display text-4xl font-bold leading-[1.02] tracking-[-0.045em] sm:text-5xl">See the terms. Then judge the fit.</h2>--}}
+{{--                        <p class="mt-5 text-base leading-8 text-[#64707c] dark:text-white/56">A return rate is only one part of the decision. Duration, liquidity, risk and the wider objective matter too.</p>--}}
+{{--                        <a href="{{ url('/plans') }}" class="mt-7 inline-flex items-center gap-2 text-sm font-bold text-[#7b5a32] transition hover:text-[#0b1b2b] dark:text-[#e4c38f] dark:hover:text-white">View all plans →</a>--}}
+{{--                    </div>--}}
 
-                    <div class="grid gap-5 lg:grid-cols-3">
-                        @forelse($featuredPlans as $package)
-                            <article x-data="revealOnScroll()" :class="{ 'is-visible': shown }" class="reveal-up flex flex-col rounded-2xl border border-[#132131]/10 bg-white p-6 transition hover:-translate-y-1 hover:border-[#9a7445]/35 hover:shadow-[0_18px_50px_rgba(15,23,42,.09)] dark:border-white/10 dark:bg-white/4 dark:hover:border-[#e4c38f]/25" style="--reveal-delay: {{ ($loop->iteration - 1) * 70 }}ms">
-                                <div>
-                                    <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8a6538] dark:text-[#e4c38f]">Plan {{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</p>
-                                    <h3 class="mt-3 font-display text-2xl font-bold">{{ $package->name }}</h3>
-                                </div>
+{{--                    <div class="grid gap-5 lg:grid-cols-3">--}}
+{{--                        @forelse($featuredPlans as $package)--}}
+{{--                            <article x-data="revealOnScroll()" :class="{ 'is-visible': shown }" class="reveal-up flex flex-col rounded-2xl border border-[#132131]/10 bg-white p-6 transition hover:-translate-y-1 hover:border-[#9a7445]/35 hover:shadow-[0_18px_50px_rgba(15,23,42,.09)] dark:border-white/10 dark:bg-white/4 dark:hover:border-[#e4c38f]/25" style="--reveal-delay: {{ ($loop->iteration - 1) * 70 }}ms">--}}
+{{--                                <div>--}}
+{{--                                    <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8a6538] dark:text-[#e4c38f]">Plan {{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</p>--}}
+{{--                                    <h3 class="mt-3 font-display text-2xl font-bold">{{ $package->name }}</h3>--}}
+{{--                                </div>--}}
 
-                                <div class="mt-7 border-y border-[#132131]/8 py-5 dark:border-white/8">
-                                    <p class="text-[10px] font-bold uppercase tracking-[0.16em] text-[#79828b] dark:text-white/38">Published return</p>
-                                    <p class="mt-2 font-display text-4xl font-bold tracking-[-0.04em]">{{ rtrim(rtrim(number_format((float) $package->roi, 2), '0'), '.') }}%</p>
-                                </div>
+{{--                                <div class="mt-7 border-y border-[#132131]/8 py-5 dark:border-white/8">--}}
+{{--                                    <p class="text-[10px] font-bold uppercase tracking-[0.16em] text-[#79828b] dark:text-white/38">Published return</p>--}}
+{{--                                    <p class="mt-2 font-display text-4xl font-bold tracking-[-0.04em]">{{ rtrim(rtrim(number_format((float) $package->roi, 2), '0'), '.') }}%</p>--}}
+{{--                                </div>--}}
 
-                                <div class="mt-6 space-y-4 text-sm">
-                                    <div class="flex items-center justify-between gap-4"><span class="text-[#7a848d] dark:text-white/42">Duration</span><span class="font-semibold">{{ $package->Duration }}</span></div>
-                                    <div class="flex items-center justify-between gap-4"><span class="text-[#7a848d] dark:text-white/42">Return type</span><span class="text-right font-semibold">{{ $option->getReturnType($package->returnType) }}</span></div>
-                                    <div class="flex items-center justify-between gap-4"><span class="text-[#7a848d] dark:text-white/42">Minimum</span><span class="font-semibold">&#36;{{ number_format((float) $package->minAmount, 2) }}</span></div>
-                                </div>
+{{--                                <div class="mt-6 space-y-4 text-sm">--}}
+{{--                                    <div class="flex items-center justify-between gap-4"><span class="text-[#7a848d] dark:text-white/42">Duration</span><span class="font-semibold">{{ $package->Duration }}</span></div>--}}
+{{--                                    <div class="flex items-center justify-between gap-4"><span class="text-[#7a848d] dark:text-white/42">Return type</span><span class="text-right font-semibold">{{ $option->getReturnType($package->returnType) }}</span></div>--}}
+{{--                                    <div class="flex items-center justify-between gap-4"><span class="text-[#7a848d] dark:text-white/42">Minimum</span><span class="font-semibold">&#36;{{ number_format((float) $package->minAmount, 2) }}</span></div>--}}
+{{--                                </div>--}}
 
-                                <div class="mt-auto pt-7">
-                                    <a href="{{ url('/plans') }}" class="inline-flex w-full items-center justify-center rounded-xl bg-[#0b1b2b] px-5 py-3.5 text-sm font-bold text-white transition hover:bg-[#162c41] dark:bg-[#e4c38f] dark:text-[#0b1b2b] dark:hover:bg-[#efd3a6]">Review plan</a>
-                                </div>
-                            </article>
-                        @empty
-                            <div class="lg:col-span-3 rounded-2xl border border-dashed border-[#132131]/15 bg-white p-10 text-center text-[#6c7782] dark:border-white/15 dark:bg-white/3 dark:text-white/45">No investment plans are currently published.</div>
-                        @endforelse
-                    </div>
-                </div>
-            </div>
-        </section>
-    @endauth
+{{--                                <div class="mt-auto pt-7">--}}
+{{--                                    <a href="{{ url('/plans') }}" class="inline-flex w-full items-center justify-center rounded-xl bg-[#0b1b2b] px-5 py-3.5 text-sm font-bold text-white transition hover:bg-[#162c41] dark:bg-[#e4c38f] dark:text-[#0b1b2b] dark:hover:bg-[#efd3a6]">Review plan</a>--}}
+{{--                                </div>--}}
+{{--                            </article>--}}
+{{--                        @empty--}}
+{{--                            <div class="lg:col-span-3 rounded-2xl border border-dashed border-[#132131]/15 bg-white p-10 text-center text-[#6c7782] dark:border-white/15 dark:bg-white/3 dark:text-white/45">No investment plans are currently published.</div>--}}
+{{--                        @endforelse--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </section>--}}
+{{--    @endauth--}}
 
     <section class="bg-[#e9e3d7] py-20 text-[#132131] dark:bg-[#101c27] dark:text-white sm:py-24">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

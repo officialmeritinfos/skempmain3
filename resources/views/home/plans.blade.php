@@ -45,7 +45,7 @@
                                     <h3 class="mt-2 font-display text-3xl font-bold tracking-[-0.03em]">{{ $package->name }}</h3>
                                 </div>
                                 <div class="text-right">
-                                    <p class="font-display text-3xl font-bold text-[#0b1b2b] dark:text-white">{{ rtrim(rtrim(number_format((float) $package->roi, 2), '0'), '.') }}%</p>
+{{--                                    <p class="font-display text-3xl font-bold text-[#0b1b2b] dark:text-white">{{ rtrim(rtrim(number_format((float) $package->roi, 2), '0'), '.') }}%</p>--}}
                                     <p class="mt-1 text-[9px] font-bold uppercase tracking-[0.15em] text-[#7a848d] dark:text-white/38">{{ $option->getReturnType($package->returnType) }}</p>
                                 </div>
                             </div>
