@@ -10,7 +10,6 @@
         $primaryNavigation = [
             ['label' => 'Home', 'href' => url('/'), 'active' => request()->routeIs('home.index')],
             ['label' => 'About', 'href' => url('/about'), 'active' => request()->is('about')],
-            ['label' => 'Legal', 'href' => url('/legal'), 'active' => request()->is('legal')],
             ['label' => 'Services', 'href' => url('/services'), 'active' => request()->is('services') || request()->is('service/*')],
             ['label' => 'Plans', 'href' => url('/plans'), 'active' => request()->is('plans') || request()->is('plan')],
             ['label' => 'Approach', 'href' => url('/#approach'), 'active' => false],
