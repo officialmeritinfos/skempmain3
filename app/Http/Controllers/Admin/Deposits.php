@@ -85,10 +85,17 @@ class Deposits extends Controller
 
             User::where('id',$investor->id)->update($dataUser);
             //send mail to investor
-            $userMessage = "
-                Your deposit of $<b>" . $deposit->amount . " worth of " . $deposit->asset . "</b>
-                has been received and your payment credited to your account. You can proceed to investing.
-            ";
+            if (($deposit->deposit_type ?? 'crypto') === 'bank') {
+                $userMessage = "
+                    Your bank deposit of $<b>" . $deposit->amount . "</b>
+                    has been received and credited to your account. You can proceed to investing.
+                ";
+            } else {
+                $userMessage = "
+                    Your deposit of $<b>" . $deposit->amount . " worth of " . $deposit->asset . "</b>
+                    has been received and your payment credited to your account. You can proceed to investing.
+                ";
+            }
             //SendInvestmentNotification::dispatch($investor, $userMessage, 'Deposit Received');
             $investor->notify(new InvestmentMail($investor, $userMessage, 'Deposit Received'));
             //check if user has referral
