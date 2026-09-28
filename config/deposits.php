@@ -11,7 +11,7 @@ return [
     |
     */
     'crypto_minimum' => (float) env('CRYPTO_DEPOSIT_MINIMUM', 30),
-    'bank_minimum' => 3000,
+    'bank_minimum' => (float) env('BANK_DEPOSIT_MINIMUM', 3000),
 
     /*
     |--------------------------------------------------------------------------
