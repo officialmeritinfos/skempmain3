@@ -106,6 +106,56 @@ class HomeController extends Controller
 
         return view('home.privacy',$dataView);
     }
+
+
+    public function legal()
+    {
+        $web = GeneralSetting::where('id', 1)->first();
+
+        $resolveDocument = static function (array $paths): ?string {
+            foreach ($paths as $path) {
+                if (is_file(public_path($path))) {
+                    return $path;
+                }
+            }
+
+            return null;
+        };
+
+        $dataView = [
+            'siteName' => $web->name,
+            'web' => $web,
+            'pageName' => 'Legal',
+            'packages' => Package::where('status', 1)->get(),
+            'certificates' => [
+                [
+                    'label' => 'Certificate 01',
+                    'path' => $resolveDocument([
+                        'home/images/legal/certificate-1.jpg',
+                        'home/images/legal/certificate-1.jpeg',
+                        'home/images/legal/certificate-1.png',
+                        'home/images/legal/certificate-1.webp',
+                    ]),
+                ],
+                [
+                    'label' => 'Certificate 02',
+                    'path' => $resolveDocument([
+                        'home/images/legal/certificate-2.jpg',
+                        'home/images/legal/certificate-2.jpeg',
+                        'home/images/legal/certificate-2.png',
+                        'home/images/legal/certificate-2.webp',
+                    ]),
+                ],
+            ],
+            'legalPdfPath' => $resolveDocument([
+                'home/documents/legal/legal-document.pdf',
+                'home/documents/legal/company-document.pdf',
+                'home/documents/legal/company-verification.pdf',
+            ]),
+        ];
+
+        return view('home.legal', $dataView);
+    }
     public function faqs()
     {
         $web = GeneralSetting::where('id',1)->first();

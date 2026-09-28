@@ -10,6 +10,7 @@
         $primaryNavigation = [
             ['label' => 'Home', 'href' => url('/'), 'active' => request()->routeIs('home.index')],
             ['label' => 'About', 'href' => url('/about'), 'active' => request()->is('about')],
+            ['label' => 'Legal', 'href' => url('/legal'), 'active' => request()->is('legal')],
             ['label' => 'Services', 'href' => url('/services'), 'active' => request()->is('services') || request()->is('service/*')],
             ['label' => 'Plans', 'href' => url('/plans'), 'active' => request()->is('plans') || request()->is('plan')],
             ['label' => 'Approach', 'href' => url('/#approach'), 'active' => false],
@@ -219,6 +220,7 @@
                         <p class="text-xs font-bold uppercase tracking-[0.18em] text-[#e4c38f]">Information</p>
                         <div class="mt-5 grid gap-3 text-sm text-white/64">
                             <a href="{{ url('/security') }}" class="transition hover:text-white">Security</a>
+                            <a href="{{ url('/legal') }}" class="transition hover:text-white">Legal</a>
                             <a href="{{ url('/faqs') }}" class="transition hover:text-white">FAQs</a>
                             <a href="{{ url('/privacy') }}" class="transition hover:text-white">Privacy</a>
                             <a href="{{ url('/terms') }}" class="transition hover:text-white">Terms</a>
