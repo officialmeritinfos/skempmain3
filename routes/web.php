@@ -34,6 +34,7 @@ Route::get('estate',[HomeController::class,'estate']);
 Route::get('contact',[HomeController::class,'contact']);
 Route::get('loan', PublicLoanController::class);
 Route::get('privacy',[HomeController::class,'privacy']);
+Route::get('legal',[HomeController::class,'legal'])->name('home.legal');
 Route::get('career',[HomeController::class,'career']);
 Route::get('buy-btc',[HomeController::class,'buyBtc']);
 Route::get('register',[Register::class,'landingPage']);
