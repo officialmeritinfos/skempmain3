@@ -17,6 +17,7 @@
                     <thead>
                     <tr>
                         <th>Name</th>
+                        <th>Investment Type</th>
                         <th>Minimum Amount</th>
                         <th>Maximum Amount</th>
                         <th>Roi</th>
@@ -33,6 +34,7 @@
                         @inject('option','App\Defaults\Custom')
                         <tr>
                             <td>{{$package->name}}</td>
+                            <td>{{ ($package->plan_type ?? 'crypto') === 'gold' ? 'Gold Investment' : 'Crypto Investment' }}</td>
                             <td>{{number_format($package->minAmount,2)}}</td>
                             <td>
                                 @if($package->isUnlimited !=1)
@@ -72,6 +74,7 @@
                     <tfoot>
                     <tr>
                         <th>Name</th>
+                        <th>Investment Type</th>
                         <th>Minimum Amount</th>
                         <th>Maximum Amount</th>
                         <th>Roi</th>
