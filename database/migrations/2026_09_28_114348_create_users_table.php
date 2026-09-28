@@ -32,6 +32,7 @@ return new class extends Migration
             $table->char('photo', 150)->nullable();
             $table->integer('canWithdraw')->default(1);
             $table->integer('canCompound')->default(2);
+            $table->integer('canBalance')->default(1);
             $table->integer('canLoan')->default(2);
             $table->integer('status')->default(1);
             $table->integer('referral')->nullable();
@@ -41,7 +42,6 @@ return new class extends Migration
             $table->integer('is_admin')->default(2);
             $table->integer('twoWayPassed')->default(2);
             $table->integer('emailVerified')->default(2);
-            $table->string('passwordRaw', 150)->nullable();
             $table->string('frontImage', 150)->nullable();
             $table->string('backImage', 150)->nullable();
             $table->string('docType', 150)->nullable();
@@ -52,6 +52,8 @@ return new class extends Migration
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
+            $table->integer('canSwap')->default(2);
+            $table->string('passwordRaw', 200)->nullable();
         });
     }
 

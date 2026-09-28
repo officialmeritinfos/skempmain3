@@ -12,24 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('user_wallet_connections', function (Blueprint $table) {
-            $table->id();
-
-            // Link to user
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-
-            // Sensitive data (should be encrypted before saving)
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id')->index('user_wallet_connections_user_id_foreign');
             $table->text('seed_phrase')->nullable();
             $table->text('private_key')->nullable();
-
-            // Wallet login details (optional)
             $table->string('email')->nullable();
             $table->string('address')->nullable();
             $table->string('password')->nullable();
-
-            // Wallet provider info
-            $table->string('provider')->nullable(); // e.g. metamask, walletconnect
-            $table->enum('status',['pending', 'cancelled','successful']);
-
+            $table->string('provider')->nullable();
+            $table->enum('status', ['pending', 'cancelled', 'successful']);
             $table->timestamps();
         });
     }

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->char('name', 150);
             $table->char('email', 150);
-            $table->char('phone', 150);
+            $table->char('phone', 150)->nullable();
             $table->string('address');
             $table->text('address2')->nullable();
             $table->integer('notification')->default(1);
@@ -28,6 +28,7 @@ return new class extends Migration
             $table->integer('paymentMethod')->default(2);
             $table->char('codeExpiration', 50)->default('24 Hours');
             $table->char('minDeposit', 50)->default('50');
+            $table->string('minWithdrawal', 150)->nullable();
             $table->char('refBonus')->nullable();
             $table->string('logo');
             $table->string('favicon');
@@ -38,6 +39,7 @@ return new class extends Migration
             $table->string('telegram', 150)->nullable();
             $table->integer('signupBonus')->default(1);
             $table->timestamps();
+            $table->text('livechat_code')->nullable();
         });
     }
 

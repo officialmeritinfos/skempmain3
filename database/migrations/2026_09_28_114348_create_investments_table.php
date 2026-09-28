@@ -14,7 +14,11 @@ return new class extends Migration
         Schema::create('investments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('user');
+            $table->unsignedBigInteger('funding_wallet_id')->nullable()->index('investments_funding_wallet_id_foreign');
+            $table->unsignedBigInteger('funding_coin_id')->nullable()->index('investments_funding_coin_id_foreign');
             $table->string('amount');
+            $table->decimal('funding_crypto_amount', 36, 18)->nullable();
+            $table->decimal('funding_market_price', 36, 18)->nullable();
             $table->string('roi');
             $table->string('reference');
             $table->string('source');
@@ -25,6 +29,7 @@ return new class extends Migration
             $table->string('returnType');
             $table->string('numberOfReturns');
             $table->string('duration', 50)->nullable();
+            $table->timestamp('trade_ends_at')->nullable();
             $table->integer('package');
             $table->string('asset', 200)->nullable();
             $table->string('wallet', 200)->nullable();

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->bigInteger('id', true);
             $table->string('name', 150);
             $table->string('amount', 150);
-            $table->enum('type', ['deposit', 'withdrawal', '', '']);
+            $table->enum('type', ['deposit', 'withdrawal']);
             $table->string('created_at', 150)->nullable();
             $table->string('updated_at', 150)->nullable();
         });
