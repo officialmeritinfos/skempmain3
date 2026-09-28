@@ -19,7 +19,8 @@
                         <th>User</th>
                         <th>Reference</th>
                         <th>Amount</th>
-                        <th>Asset</th>
+                        <th>Type</th>
+                        <th>Asset / Method</th>
                         <th>Deposit Ref</th>
                         <th>Date Initiated</th>
                         <th>Status</th>
@@ -33,7 +34,8 @@
                             <td>{{$option->getInvestor($deposit->user)}}</td>
                             <td>{{$deposit->reference}}</td>
                             <td>{{number_format($deposit->amount,2)}}</td>
-                            <td>{{$deposit->asset}}</td>
+                            <td>{{ ucfirst($deposit->deposit_type ?? 'crypto') }}</td>
+                            <td>{{ ($deposit->deposit_type ?? 'crypto') === 'bank' ? 'Bank transfer' : $deposit->asset }}</td>
                             <td>{{$deposit->paymentRef}}</td>
                             <td>{{$deposit->created_at}}</td>
                             <td>
@@ -68,7 +70,8 @@
                         <th>User</th>
                         <th>Reference</th>
                         <th>Amount</th>
-                        <th>Asset</th>
+                        <th>Type</th>
+                        <th>Asset / Method</th>
                         <th>Deposit Ref</th>
                         <th>Date Initiated</th>
                         <th>Status</th>

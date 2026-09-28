@@ -28,6 +28,8 @@
                     4 => ['Verification pending', 'bg-amber-50 text-amber-700 dark:bg-amber-400/10 dark:text-amber-300'],
                     default => ['Partial', 'bg-slate-100 text-slate-700 dark:bg-white/10 dark:text-white/60'],
                 };
+
+                $isBankDeposit = ($deposit->deposit_type ?? 'crypto') === 'bank';
             @endphp
 
             <article class="group overflow-hidden rounded-[1.6rem] border border-ink-950/8 bg-white shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-ink-950/5 dark:border-white/10 dark:bg-white/[0.035]">
@@ -35,6 +37,7 @@
                     <div>
                         <div class="flex flex-wrap items-center gap-3">
                             <span class="rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] {{ $statusMeta[1] }}">{{ $statusMeta[0] }}</span>
+                            <span class="rounded-full bg-ink-950/5 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-ink-600 dark:bg-white/10 dark:text-white/55">{{ $isBankDeposit ? 'Bank' : 'Crypto' }}</span>
                             <span class="text-xs font-semibold text-ink-400 dark:text-white/30">#{{ $deposit->reference }}</span>
                         </div>
                         <p class="mt-4 font-display text-3xl font-semibold tracking-[-0.025em] text-ink-950 dark:text-white">${{ number_format($deposit->amount, 2) }}</p>
@@ -43,8 +46,8 @@
 
                     <div class="grid grid-cols-2 gap-4 border-t border-ink-950/8 pt-5 dark:border-white/10 lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0">
                         <div>
-                            <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-ink-400 dark:text-white/30">Asset</p>
-                            <p class="mt-1 font-semibold text-ink-900 dark:text-white/80">{{ $deposit->asset }}</p>
+                            <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-ink-400 dark:text-white/30">{{ $isBankDeposit ? 'Method' : 'Asset' }}</p>
+                            <p class="mt-1 font-semibold text-ink-900 dark:text-white/80">{{ $isBankDeposit ? 'Bank transfer' : $deposit->asset }}</p>
                         </div>
                         <div>
                             <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-ink-400 dark:text-white/30">Payment ref</p>

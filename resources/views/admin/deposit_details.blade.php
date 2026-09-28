@@ -1,6 +1,9 @@
 @extends('admin.base')
 
 @section('content')
+    @php
+        $isBankDeposit = ($deposit->deposit_type ?? 'crypto') === 'bank';
+    @endphp
 
     <div class="card">
         <div class="card-body">
@@ -78,8 +81,8 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Description</th>
                                 <th scope="col">Amount</th>
-                                <th scope="col">Asset</th>
-                                <th scope="col">Address</th>
+                                <th scope="col">Type / Asset</th>
+                                <th scope="col">Payment Details</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -87,8 +90,8 @@
                                 <th scope="row">1</th>
                                 <td>Account Funding</td>
                                 <td>${{number_format($deposit->amount,2)}}</td>
-                                <td>{{$deposit->asset}}</td>
-                                <td>{{$deposit->details}}</td>
+                                <td>{{ $isBankDeposit ? 'Bank Deposit' : $deposit->asset }}</td>
+                                <td>{{ $isBankDeposit ? 'Unique bank details are issued by support' : $deposit->details }}</td>
                             </tr>
                             </tbody>
 
@@ -98,12 +101,18 @@
                     <hr>
                     <div class="row">
                         <div class="col-xl-12 text-center text-info alert alert-primary">
-                            @if($deposit->paymentMethod ==1)
+                            @if($isBankDeposit)
+                                <p>
+                                    This is a <b>Bank Deposit</b> for <b>${{ number_format($deposit->amount, 2) }}</b>.
+                                    The investor has been instructed to contact support for the unique bank details
+                                    assigned to their account before making payment.
+                                </p>
+                            @elseif($deposit->paymentMethod == 1)
                                 <p>
                                     User is to send <b>{{number_format($deposit->cryptoAmount,5)}} {{$deposit->asset}}</b>
                                     to the address <b style="font-size:20px;" id="address">{{$deposit->details}}</b>.<br>
                                     Your account will be credited immediately your payment is received. Ensure you do not
-                                    send less than tha above stated amount.
+                                    send less than the above stated amount.
                                 </p>
                             @else
                                 <p>
