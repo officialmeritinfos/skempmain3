@@ -105,6 +105,7 @@
                     @forelse($packages->where('plan_type', 'crypto') as $package)
                         <label
                             class="group relative cursor-pointer overflow-hidden rounded-2xl border p-5 transition duration-300"
+                            @click="selectedPackage = '{{ $package->id }}'"
                             :class="selectedPackage === '{{ $package->id }}'
                                 ? 'border-bronze-400 bg-bronze-50 shadow-lg shadow-bronze-950/5 ring-1 ring-bronze-300 dark:bg-bronze-300/10'
                                 : 'border-ink-950/10 bg-paper-50 hover:-translate-y-0.5 hover:border-bronze-300 hover:shadow-md dark:border-white/10 dark:bg-white/[0.025]'"
@@ -162,6 +163,7 @@
                     @forelse($packages->where('plan_type', 'gold') as $package)
                         <label
                             class="group relative cursor-pointer overflow-hidden rounded-2xl border p-5 transition duration-300"
+                            @click="selectedPackage = '{{ $package->id }}'"
                             :class="selectedPackage === '{{ $package->id }}'
                                 ? 'border-bronze-400 bg-bronze-50 shadow-lg shadow-bronze-950/5 ring-1 ring-bronze-300 dark:bg-bronze-300/10'
                                 : 'border-ink-950/10 bg-paper-50 hover:-translate-y-0.5 hover:border-bronze-300 hover:shadow-md dark:border-white/10 dark:bg-white/[0.025]'"
