@@ -26,6 +26,13 @@
                                    value="{{$package->name}}" name="name">
                         </div>
                         <div class="form-group col-md-6">
+                            <label for="planType">Investment Type</label>
+                            <select class="form-control" id="planType" name="plan_type" required>
+                                <option value="crypto" {{ old('plan_type', $package->plan_type ?? 'crypto') === 'crypto' ? 'selected' : '' }}>Crypto Investment</option>
+                                <option value="gold" {{ old('plan_type', $package->plan_type ?? 'crypto') === 'gold' ? 'selected' : '' }}>Gold Investment</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
                             <label for="inputEmail4">ROI</label>
                             <input type="text" class="form-control" id="inputEmail4" placeholder="Email"
                                    value="{{$package->roi}}" name="roi">
