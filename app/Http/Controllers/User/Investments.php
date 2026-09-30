@@ -49,7 +49,6 @@ class Investments extends Controller
             'siteName'=>$web->name,
             'packages'=>Package::where('status',1)
                 ->whereIn('plan_type', ['crypto', 'gold'])
-                ->orderBy('plan_type')
                 ->orderBy('minAmount')
                 ->get(),
             'coins'=>Coin::where('status',1)->get(),

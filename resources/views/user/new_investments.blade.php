@@ -140,7 +140,7 @@
                                     <p class="mt-1 font-semibold text-ink-900 dark:text-white/80">
                                         ${{ number_format($package->minAmount, 2) }} –
                                         @if($package->isUnlimited == 1)
-                                            No cap
+                                            Infinity
                                         @else
                                             ${{ number_format($package->maxAmount, 2) }}
                                         @endif
@@ -198,7 +198,7 @@
                                     <p class="mt-1 font-semibold text-ink-900 dark:text-white/80">
                                         ${{ number_format($package->minAmount, 2) }} –
                                         @if($package->isUnlimited == 1)
-                                            No cap
+                                            Infinity
                                         @else
                                             ${{ number_format($package->maxAmount, 2) }}
                                         @endif
