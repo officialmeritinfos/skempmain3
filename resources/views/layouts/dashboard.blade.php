@@ -22,8 +22,8 @@
             ['label' => 'Managed Accounts', 'route' => 'subtrade.index', 'active' => ['subtrade.*'], 'icon' => 'briefcase'],
             ['label' => 'Cards', 'route' => 'cards.index', 'active' => ['cards.*', 'card.*'], 'icon' => 'card'],
             ['label' => 'Financing', 'route' => 'loans.index', 'active' => ['loans.*'], 'icon' => 'finance'],
-            ['label' => 'Membership', 'route' => 'membership.index', 'active' => ['membership.*'], 'icon' => 'badge'],
-            ['label' => 'Wallet Connect', 'route' => 'wallet.connect.index', 'active' => ['wallet.connect.*'], 'icon' => 'wallet'],
+//            ['label' => 'Membership', 'route' => 'membership.index', 'active' => ['membership.*'], 'icon' => 'badge'],
+//            ['label' => 'Wallet Connect', 'route' => 'wallet.connect.index', 'active' => ['wallet.connect.*'], 'icon' => 'wallet'],
             ['label' => 'Referrals', 'route' => 'referral.index', 'active' => ['referral.*'], 'icon' => 'users'],
             ['label' => 'KYC', 'route' => 'setting.kyc', 'active' => ['setting.kyc', 'kyc.*'], 'icon' => 'shield'],
         ];
