@@ -1,0 +1,1 @@
+<div class="pd-empty"><span class="pd-empty-icon">@include('layouts.partials.user-nav-icon',['icon'=>$icon ?? 'chart'])</span><h2>{{ $heading }}</h2><p>{{ $description }}</p>@isset($action)<a class="pd-button" href="{{ $action }}">{{ $actionLabel }} @include('user.portfolio.icon',['name'=>'arrow'])</a>@endisset</div>

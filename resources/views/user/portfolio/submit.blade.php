@@ -1,0 +1,1 @@
+<button type="submit" class="pd-button pd-button-block" data-submit-button @if($disabled ?? false) disabled @endif><span data-submit-label>{{ $label }}</span>@include('user.portfolio.icon',['name'=>'arrow'])</button>
