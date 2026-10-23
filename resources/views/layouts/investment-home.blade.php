@@ -158,7 +158,6 @@
                 <div><h2>Invest with us</h2><a href="{{ url('/realestate') }}">Real estate</a><a href="{{ url('/stocks') }}">Stocks & ETFs</a><a href="{{ url('/gold') }}">Gold</a><a href="{{ url('/agriculture') }}">Agriculture</a><a href="{{ url('/plans') }}">Investment plans</a></div>
                 <div><h2>Client resources</h2><a href="{{ url('/login') }}">Client portal</a><a href="{{ url('/register') }}">Open an account</a><a href="{{ url('/faqs') }}">Help & FAQs</a><a href="{{ url('/security') }}">Security</a><a href="{{ url('/legal') }}">Legal information</a></div>
             </div>
-            <div class="ih-risk-note"><span>Investment involves risk.</span> The value of investments can go down as well as up. Past performance is not a reliable indicator of future results. Consider your objectives, time horizon and ability to bear loss before investing.</div>
             <div class="ih-footer-bottom"><p>&copy; {{ now()->year }} {{ $brandName }}. All rights reserved.</p><div><a href="{{ url('/privacy') }}">Privacy policy</a><a href="{{ url('/terms') }}">Terms & conditions</a><a href="#site-header">Back to top <span aria-hidden="true">↑</span></a></div></div>
         </div>
     </footer>
