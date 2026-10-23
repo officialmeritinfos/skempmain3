@@ -1,10 +1,16 @@
-@extends('layouts.marketing')
+@extends('layouts.investment-home')
 
-@section('title', config('app.name') . ' | Digital Collectibles & NFTs')
+@section('title', ($siteName ?? config('app.name')) . ' | Digital Collectibles & NFTs')
 @section('meta_description', 'A risk-aware view of NFTs, digital collectibles, liquidity, custody and speculative exposure.')
 
 @php
 $assetPage = [
+    'hero_heading' => 'Digital ownership.',
+    'hero_accent' => 'A closer look.',
+    'image' => 'digital-art',
+    'image_alt' => 'Abstract blue digital artwork with curved lines',
+    'related' => [['Digital assets', '/buy-btc'], ['Stocks & ETFs', '/stocks'], ['Gold', '/gold']],
+
     'eyebrow' => 'Digital collectibles & NFTs',
     'title' => 'Innovation does not remove the need for underwriting.',
     'intro' => 'NFTs and digital collectibles can represent ownership, access, culture or speculation. Their markets are young, fragmented and highly dependent on liquidity, community, platform quality and changing investor behaviour.',
@@ -29,3 +35,4 @@ $assetPage = [
 @section('content')
     @include('home.partials.asset-page', ['assetPage' => $assetPage])
 @endsection
+

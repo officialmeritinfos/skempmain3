@@ -1,10 +1,16 @@
-@extends('layouts.marketing')
+@extends('layouts.investment-home')
 
-@section('title', config('app.name') . ' | Bitcoin & Digital Assets')
+@section('title', ($siteName ?? config('app.name')) . ' | Bitcoin & Digital Assets')
 @section('meta_description', 'A risk-aware introduction to Bitcoin exposure, custody, liquidity and portfolio sizing.')
 
 @php
 $assetPage = [
+    'hero_heading' => 'New possibilities.',
+    'hero_accent' => 'The same need for care.',
+    'image' => 'digital-assets',
+    'image_alt' => 'Bitcoin coins representing digital assets',
+    'related' => [['NFTs & collectibles', '/nft'], ['Stocks & ETFs', '/stocks'], ['Foreign exchange', '/forex']],
+
     'eyebrow' => 'Bitcoin & digital assets',
     'title' => 'Access is easy. Understanding the risk is the harder part.',
     'intro' => 'Bitcoin is globally traded, highly liquid in major markets and historically volatile. For investors considering exposure, the important questions are not only where to buy, but why to own it, how to hold it and how much risk the wider portfolio can absorb.',
@@ -29,3 +35,4 @@ $assetPage = [
 @section('content')
     @include('home.partials.asset-page', ['assetPage' => $assetPage])
 @endsection
+

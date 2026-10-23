@@ -1,10 +1,16 @@
-@extends('layouts.marketing')
+@extends('layouts.investment-home')
 
-@section('title', config('app.name') . ' | Retirement & Long-Term Planning')
+@section('title', ($siteName ?? config('app.name')) . ' | Retirement & Long-Term Planning')
 @section('meta_description', 'A disciplined approach to retirement planning, long-term capital, liquidity and income needs.')
 
 @php
 $assetPage = [
+    'hero_heading' => 'Your next chapter.',
+    'hero_accent' => 'A plan to get there.',
+    'image' => 'family-future',
+    'image_alt' => 'People enjoying time together outdoors',
+    'related' => [['Stocks & ETFs', '/stocks'], ['Real estate', '/realestate'], ['Gold', '/gold']],
+
     'eyebrow' => 'Retirement & long-term planning',
     'title' => 'Retirement is not a date. It is a funding problem to solve deliberately.',
     'intro' => 'Long-term planning is about converting today’s capital into future flexibility—balancing growth, income, liquidity, inflation and the risk of needing money at the wrong time.',
@@ -29,3 +35,4 @@ $assetPage = [
 @section('content')
     @include('home.partials.asset-page', ['assetPage' => $assetPage])
 @endsection
+

@@ -1,10 +1,16 @@
-@extends('layouts.marketing')
+@extends('layouts.investment-home')
 
-@section('title', config('app.name') . ' | Agriculture')
+@section('title', ($siteName ?? config('app.name')) . ' | Agriculture')
 @section('meta_description', 'A disciplined view of agricultural investment, productive assets, operating risk and long-term portfolio relevance.')
 
 @php
 $assetPage = [
+    'hero_heading' => 'Rooted in the real world.',
+    'hero_accent' => 'Focused on the future.',
+    'image' => 'agriculture',
+    'image_alt' => 'Agricultural fields at sunset',
+    'related' => [['Real estate', '/realestate'], ['Stocks & ETFs', '/stocks'], ['Gold', '/gold']],
+
     'eyebrow' => 'Agriculture',
     'title' => 'Investing where capital meets the real economy.',
     'intro' => 'Agriculture can connect capital to productive assets, essential demand and long-duration economic activity. The opportunity is tangible—but so are weather, operating, commodity and execution risks.',
@@ -29,3 +35,4 @@ $assetPage = [
 @section('content')
     @include('home.partials.asset-page', ['assetPage' => $assetPage])
 @endsection
+

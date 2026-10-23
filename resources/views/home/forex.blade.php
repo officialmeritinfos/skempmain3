@@ -1,10 +1,16 @@
-@extends('layouts.marketing')
+@extends('layouts.investment-home')
 
-@section('title', config('app.name') . ' | Foreign Exchange')
+@section('title', ($siteName ?? config('app.name')) . ' | Foreign Exchange')
 @section('meta_description', 'A disciplined view of foreign exchange exposure, currency risk and portfolio relevance.')
 
 @php
 $assetPage = [
+    'hero_heading' => 'A world of currencies.',
+    'hero_accent' => 'A clear purpose.',
+    'image' => 'currency-notes',
+    'image_alt' => 'US dollar banknotes',
+    'related' => [['Stocks & ETFs', '/stocks'], ['Gold', '/gold'], ['Digital assets', '/buy-btc']],
+
     'eyebrow' => 'Foreign exchange',
     'title' => 'Currency exposure should serve a purpose, not become a prediction contest.',
     'intro' => 'Foreign exchange markets are deep, liquid and highly responsive to policy, inflation, growth and global capital flows. That makes currency exposure useful in some strategies—and unforgiving when approached without discipline.',
@@ -29,3 +35,4 @@ $assetPage = [
 @section('content')
     @include('home.partials.asset-page', ['assetPage' => $assetPage])
 @endsection
+
