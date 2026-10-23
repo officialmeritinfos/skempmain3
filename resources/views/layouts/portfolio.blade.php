@@ -74,7 +74,7 @@
         @foreach([['Overview','user.dashboard','home'],['Deposit','new_deposit','deposit'],['Invest','new_investment','chart'],['Withdraw','new_withdrawal','withdraw']] as $shortcut)
             <a href="{{ route($shortcut[1]) }}" @if(request()->routeIs($shortcut[1])) aria-current="page" @endif>@include('layouts.partials.user-nav-icon', ['icon'=>$shortcut[2]])<span>{{ $shortcut[0] }}</span></a>
         @endforeach
-        <button type="button" data-open-menu aria-controls="portfolio-menu">@include('user.portfolio.icon', ['name'=>'menu'])<span>More</span></button>
+        <button type="button" data-open-menu aria-controls="portfolio-menu" @if(collect($accountNav)->contains(fn($item) => request()->routeIs($item[1]))) aria-current="true" @endif>@include('user.portfolio.icon', ['name'=>'menu'])<span>More</span></button>
     </nav>
     <dialog id="portfolio-menu" class="pd-menu-dialog" aria-label="Account navigation">
         <button type="button" class="pd-icon-button pd-close-menu" data-close-menu aria-label="Close navigation">@include('user.portfolio.icon', ['name'=>'close'])</button>

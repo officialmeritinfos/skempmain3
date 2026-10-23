@@ -121,6 +121,7 @@
         const amount = one('[name=amount]', investmentForm); let previousType = one('[name=investment_type]:checked', investmentForm)?.value;
         function updateInvestment() {
             const type = one('[name=investment_type]:checked', investmentForm)?.value;
+            const planSection = one('[data-plan-section]', investmentForm); if (planSection) planSection.hidden = !type;
             if (type !== previousType) { all('[name=package]', investmentForm).forEach(input => input.checked = false); previousType = type; }
             all('[data-plan-group]', investmentForm).forEach(group => { group.hidden = group.dataset.planGroup !== type; group.disabled = group.hidden; });
             const selected = one('[name=package]:checked:not(:disabled)', investmentForm);
@@ -128,10 +129,9 @@
             const cannotReinvest = selected?.dataset.reinvest !== '1';
             if (profit) { profit.disabled = !!selected && cannotReinvest; if (profit.disabled) profit.checked = false; }
             const notice = one('[data-reinvestment-note]', investmentForm); if (notice) notice.hidden = !selected || !cannotReinvest;
-            setText('[data-review-type]', type === 'gold' ? 'Gold' : 'Crypto', investmentForm);
+            setText('[data-review-type]', type ? (type === 'gold' ? 'Gold' : 'Crypto') : 'Choose a category', investmentForm);
             setText('[data-review-plan]', selected?.dataset.name || 'Choose a plan', investmentForm);
             setText('[data-review-duration]', selected?.dataset.duration || '—', investmentForm);
-            setText('[data-review-rate]', selected ? selected.dataset.rate + '% per return' : '—', investmentForm);
             setText('[data-review-amount]', currency(amount.value), investmentForm);
             const source = one('[name=account]:checked:not(:disabled)', investmentForm);
             setText('[data-review-source]', source?.dataset.label || 'Select a balance', investmentForm);
