@@ -9,7 +9,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="theme-color" content="#173e35">
+    <meta name="theme-color" content="#151923">
     <title>{{ $brandName }} | Investment & Asset Management</title>
     <meta name="description" content="Investment and asset management with your future in focus. Explore {{ $brandName }}'s services, investment areas and approach to building long-term wealth.">
     <meta property="og:type" content="website">
@@ -33,7 +33,7 @@
         })();
     </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link rel="stylesheet" href="{{ asset('home/redesign/homepage.css') }}">
+    <link rel="stylesheet" href="{{ asset('home/redesign/homepage.css') . '?v=2' }}">
     <script src="{{ asset('home/redesign/homepage.js') }}" defer></script>
 </head>
 <body class="ih-home">

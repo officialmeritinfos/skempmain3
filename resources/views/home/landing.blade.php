@@ -27,9 +27,9 @@
                 <p class="ih-hero-description">Your ambitions deserve a thoughtful investment approach. We bring a wider perspective to managing your wealth, with your long-term future in focus.</p>
                 <div class="ih-hero-actions">
                     @auth
-                        <a class="ih-button ih-button-cream" href="{{ route('user.dashboard') }}">Go to your dashboard <svg class="ih-icon" aria-hidden="true"><use href="#ih-arrow"/></svg></a>
+                        <a class="ih-button ih-button-light" href="{{ route('user.dashboard') }}">Go to your dashboard <svg class="ih-icon" aria-hidden="true"><use href="#ih-arrow"/></svg></a>
                     @else
-                        <a class="ih-button ih-button-cream" href="{{ url('/register') }}">Start your journey <svg class="ih-icon" aria-hidden="true"><use href="#ih-arrow"/></svg></a>
+                        <a class="ih-button ih-button-light" href="{{ url('/register') }}">Start your journey <svg class="ih-icon" aria-hidden="true"><use href="#ih-arrow"/></svg></a>
                     @endauth
                     <a class="ih-hero-secondary" href="#expertise">Discover our expertise <svg class="ih-icon" aria-hidden="true"><use href="#ih-diagonal"/></svg></a>
                 </div>
@@ -124,7 +124,7 @@
                 <article><span>02 <i></i></span><h3>Know your options.</h3><p>Review the available plans, their requirements and their terms. Ask questions before you commit.</p></article>
                 <article><span>03 <i></i></span><h3>Stay connected.</h3><p>Use your dashboard to follow your investments and account activity, with support a conversation away.</p></article>
             </div>
-            <a class="ih-button ih-button-cream" href="{{ url('/plans') }}">Explore investment plans <svg class="ih-icon" aria-hidden="true"><use href="#ih-arrow"/></svg></a>
+            <a class="ih-button ih-button-light" href="{{ url('/plans') }}">Explore investment plans <svg class="ih-icon" aria-hidden="true"><use href="#ih-arrow"/></svg></a>
         </div>
     </section>
 
