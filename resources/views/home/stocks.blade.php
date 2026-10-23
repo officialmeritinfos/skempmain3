@@ -1,10 +1,16 @@
-@extends('layouts.marketing')
+@extends('layouts.investment-home')
 
-@section('title', config('app.name') . ' | Stocks & ETFs')
+@section('title', ($siteName ?? config('app.name')) . ' | Stocks & ETFs')
 @section('meta_description', 'A disciplined view of listed equities, ETFs, diversification and long-term ownership.')
 
 @php
 $assetPage = [
+    'hero_heading' => 'A stake in business.',
+    'hero_accent' => 'A world of opportunity.',
+    'image' => 'global-markets',
+    'image_alt' => 'Market prices on a financial chart',
+    'related' => [['Real estate', '/realestate'], ['Foreign exchange', '/forex'], ['Retirement planning', '/retirement-and-iras']],
+
     'eyebrow' => 'Stocks & ETFs',
     'title' => 'Own businesses with a reason, not a ticker.',
     'intro' => 'Listed markets make it easy to buy and sell. That convenience should not replace the work of understanding what is owned, what assumptions support the valuation and how each position contributes to the portfolio.',
@@ -29,3 +35,4 @@ $assetPage = [
 @section('content')
     @include('home.partials.asset-page', ['assetPage' => $assetPage])
 @endsection
+

@@ -66,3 +66,35 @@
         });
     });
 })();
+
+
+// Native disclosure menus retain keyboard support and work without this enhancement.
+(() => {
+    const groups = [...document.querySelectorAll('[data-nav-group]')];
+    groups.forEach(group => group.addEventListener('toggle', () => {
+        if (group.open) groups.forEach(other => { if (other !== group) other.open = false; });
+    }));
+    document.addEventListener('click', event => groups.forEach(group => {
+        if (!group.contains(event.target)) group.open = false;
+    }));
+    document.addEventListener('keydown', event => {
+        if (event.key !== 'Escape') return;
+        const current = groups.find(group => group.open);
+        if (current) { current.open = false; current.querySelector('summary')?.focus(); }
+    });
+    const faqSearch = document.querySelector('[data-faq-search]');
+    const questions = [...document.querySelectorAll('[data-faq-item]')];
+    faqSearch?.addEventListener('input', () => {
+        const query = faqSearch.value.trim().toLocaleLowerCase();
+        let visible = 0;
+        questions.forEach(question => {
+            const matches = question.textContent.toLocaleLowerCase().includes(query);
+            question.hidden = !matches;
+            if (matches) visible++;
+        });
+        const empty = document.querySelector('[data-faq-empty]');
+        if (empty) empty.hidden = visible !== 0;
+        const count = document.querySelector('[data-faq-count]');
+        if (count) count.textContent = `${visible} ${visible === 1 ? 'question' : 'questions'}`;
+    });
+})();

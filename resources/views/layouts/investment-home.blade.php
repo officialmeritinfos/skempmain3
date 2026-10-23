@@ -2,6 +2,36 @@
     $brandName = $siteName ?? $web?->name ?? config('app.name');
     $brandLogo = asset('home/images/' . ($web?->logo ?: 'logo.png'));
     $brandIcon = asset('home/images/' . ($web?->favicon ?: ($web?->logo ?: 'logo.png')));
+    $isHome = request()->is('/') || request()->is('index');
+    $companyLinks = [
+        ['label' => 'About us', 'path' => '/about', 'active' => request()->is('about')],
+        ['label' => 'Our approach', 'path' => '/#approach', 'active' => false],
+        ['label' => 'Careers', 'path' => '/career', 'active' => request()->is('career')],
+    ];
+    $investmentLinks = [
+        ['label' => 'Real estate', 'path' => '/realestate', 'active' => request()->is('realestate') || request()->is('estate')],
+        ['label' => 'Stocks & ETFs', 'path' => '/stocks', 'active' => request()->is('stocks')],
+        ['label' => 'Gold', 'path' => '/gold', 'active' => request()->is('gold')],
+        ['label' => 'Agriculture', 'path' => '/agriculture', 'active' => request()->is('agriculture')],
+        ['label' => 'Foreign exchange', 'path' => '/forex', 'active' => request()->is('forex')],
+        ['label' => 'Retirement planning', 'path' => '/retirement-and-iras', 'active' => request()->is('retirement-and-iras')],
+        ['label' => 'Digital assets', 'path' => '/buy-btc', 'active' => request()->is('buy-btc')],
+        ['label' => 'NFTs & collectibles', 'path' => '/nft', 'active' => request()->is('nft')],
+    ];
+    $resourceLinks = [
+        ['label' => 'Help & FAQs', 'path' => '/faqs', 'active' => request()->is('faq') || request()->is('faqs')],
+        ['label' => 'Account security', 'path' => '/security', 'active' => request()->is('security')],
+        ['label' => 'Financing', 'path' => '/loan', 'active' => request()->is('loan')],
+        ['label' => 'Company documents', 'path' => '/legal', 'active' => request()->is('legal')],
+        ['label' => 'Privacy policy', 'path' => '/privacy', 'active' => request()->is('privacy')],
+        ['label' => 'Terms of use', 'path' => '/terms', 'active' => request()->is('terms')],
+    ];
+    $navGroups = [
+        ['label' => 'Company', 'links' => $companyLinks],
+        ['label' => 'Investment areas', 'links' => $investmentLinks, 'wide' => true],
+        ['label' => 'Resources', 'links' => $resourceLinks],
+    ];
+
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -10,17 +40,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="theme-color" content="#151923">
-    <title>{{ $brandName }} | Investment & Asset Management</title>
-    <meta name="description" content="Investment and asset management with your future in focus. Explore {{ $brandName }}'s services, investment areas and approach to building long-term wealth.">
+    <title>@yield('title', $brandName . ' | Investment & Asset Management')</title>
+    <meta name="description" content="@yield('meta_description', 'Investment and asset management with your future in focus. Explore our services, investment areas and approach to building long-term wealth.')">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="{{ $brandName }} | Investment & Asset Management">
-    <meta property="og:description" content="A wider perspective on your wealth. Explore investment and asset management with {{ $brandName }}.">
+    <meta property="og:title" content="@yield('title', $brandName . ' | Investment & Asset Management')">
+    <meta property="og:description" content="@yield('meta_description', 'A wider perspective on your wealth. Explore investment and asset management with us.')">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:image" content="{{ asset('home/redesign/images/financial-district.webp') }}">
     <link rel="icon" href="{{ $brandIcon }}">
     <link rel="preload" href="{{ asset('home/redesign/fonts/libre-caslon-display.woff2') }}" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="{{ asset('home/redesign/fonts/dm-sans-regular.woff2') }}" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="{{ asset('home/redesign/images/financial-district.webp') }}" as="image">
+    @if($isHome)<link rel="preload" href="{{ asset('home/redesign/images/financial-district.webp') }}" as="image">@endif
     <script>
         (() => {
             try {
@@ -33,10 +63,12 @@
         })();
     </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link rel="stylesheet" href="{{ asset('home/redesign/homepage.css') . '?v=2' }}">
-    <script src="{{ asset('home/redesign/homepage.js') }}" defer></script>
+    <link rel="stylesheet" href="{{ asset('home/redesign/homepage.css') . '?v=3' }}">
+    <link rel="stylesheet" href="{{ asset('home/redesign/pages.css') . '?v=1' }}">
+    <script src="{{ asset('home/redesign/homepage.js') . '?v=3' }}" defer></script>
+    @stack('head')
 </head>
-<body class="ih-home">
+<body class="ih-home {{ $isHome ? '' : 'ih-inner' }}">
     <a class="ih-skip" href="#main-content">Skip to content</a>
     <svg class="ih-symbols" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
         <symbol id="ih-arrow" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></symbol>
@@ -56,11 +88,22 @@
         <div class="ih-container ih-header-inner">
             <a href="{{ url('/') }}" class="ih-brand" aria-label="{{ $brandName }} home"><img src="{{ $brandLogo }}" alt="{{ $brandName }}" width="138" height="68"></a>
             <nav class="ih-desktop-nav" aria-label="Main navigation">
-                <a href="{{ url('/') }}" aria-current="page">Home</a>
-                <a href="{{ url('/about') }}">Who we are</a>
-                <a href="#expertise">Our expertise</a>
-                <a href="#investment-areas">Investment areas</a>
-                <a href="{{ url('/contact') }}">Contact</a>
+                <a href="{{ url('/') }}" @if($isHome) aria-current="page" @endif>Home</a>
+                @foreach($navGroups as $group)
+                    @if($loop->iteration === 2)
+                        <a href="{{ url('/services') }}" @if(request()->is('services') || request()->is('service/*')) aria-current="page" @endif>Our expertise</a>
+                    @endif
+                    <details class="ih-nav-group {{ collect($group['links'])->contains('active', true) || (!empty($group['wide']) && (request()->is('plans') || request()->is('plan'))) ? 'is-active' : '' }}" data-nav-group>
+                        <summary>{{ $group['label'] }} <svg class="ih-nav-chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></summary>
+                        <div class="ih-nav-panel {{ !empty($group['wide']) ? 'ih-nav-panel-wide' : '' }}">
+                            <div class="ih-nav-panel-links">
+                                @foreach($group['links'] as $link)<a href="{{ url($link['path']) }}" @if($link['active']) aria-current="page" @endif>{{ $link['label'] }} <svg class="ih-icon" aria-hidden="true"><use href="#ih-diagonal"/></svg></a>@endforeach
+                            </div>
+                            @if(!empty($group['wide']))<a class="ih-nav-plan-link" href="{{ url('/plans') }}" @if(request()->is('plans') || request()->is('plan')) aria-current="page" @endif>Explore investment plans <svg class="ih-icon" aria-hidden="true"><use href="#ih-arrow"/></svg></a>@endif
+                        </div>
+                    </details>
+                @endforeach
+                <a href="{{ url('/contact') }}" @if(request()->is('contact')) aria-current="page" @endif>Contact</a>
             </nav>
             <div class="ih-header-actions">
                 <div class="ih-translate">@include('layouts.partials.google-translate', ['tone' => 'adaptive'])</div>
@@ -74,12 +117,16 @@
             </div>
         </div>
         <nav class="ih-mobile-nav" id="mobile-navigation" aria-label="Mobile navigation" hidden>
-            <a href="{{ url('/') }}" aria-current="page">Home</a>
-            <a href="{{ url('/about') }}">Who we are</a>
-            <a href="#expertise">Our expertise</a>
-            <a href="#investment-areas">Investment areas</a>
-            <a href="#approach">Our approach</a>
-            <a href="{{ url('/contact') }}">Contact</a>
+            <a href="{{ url('/') }}" @if($isHome) aria-current="page" @endif>Home</a>
+            <a href="{{ url('/services') }}" @if(request()->is('services') || request()->is('service/*')) aria-current="page" @endif>Our expertise</a>
+            @foreach($navGroups as $group)
+                <details class="ih-mobile-group" data-mobile-group>
+                    <summary>{{ $group['label'] }} <svg class="ih-nav-chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></summary>
+                    <div>@foreach($group['links'] as $link)<a href="{{ url($link['path']) }}" @if($link['active']) aria-current="page" @endif>{{ $link['label'] }}</a>@endforeach
+                    @if(!empty($group['wide']))<a href="{{ url('/plans') }}">Investment plans</a>@endif</div>
+                </details>
+            @endforeach
+            <a href="{{ url('/contact') }}" @if(request()->is('contact')) aria-current="page" @endif>Contact</a>
             <div class="ih-mobile-translate">@include('layouts.partials.google-translate', ['tone' => 'adaptive', 'fullWidth' => true, 'align' => 'left'])</div>
             <div class="ih-mobile-account">
                 @auth
@@ -107,7 +154,7 @@
                     @if(!empty($web?->email))<a class="ih-footer-email" href="mailto:{{ $web->email }}">{{ $web->email }} <svg class="ih-icon" aria-hidden="true"><use href="#ih-diagonal"/></svg></a>@endif
                     @if(!empty($web?->phone))<a class="ih-footer-phone" href="tel:{{ preg_replace('/[^+0-9]/', '', $web->phone) }}">{{ $web->phone }}</a>@endif
                 </div>
-                <div><h2>Discover</h2><a href="{{ url('/about') }}">Our company</a><a href="{{ url('/services') }}">Our services</a><a href="#approach">Our approach</a><a href="{{ url('/career') }}">Careers</a><a href="{{ url('/contact') }}">Contact us</a></div>
+                <div><h2>Discover</h2><a href="{{ url('/about') }}">Our company</a><a href="{{ url('/services') }}">Our services</a><a href="{{ url('/#approach') }}">Our approach</a><a href="{{ url('/career') }}">Careers</a><a href="{{ url('/contact') }}">Contact us</a></div>
                 <div><h2>Invest with us</h2><a href="{{ url('/realestate') }}">Real estate</a><a href="{{ url('/stocks') }}">Stocks & ETFs</a><a href="{{ url('/gold') }}">Gold</a><a href="{{ url('/agriculture') }}">Agriculture</a><a href="{{ url('/plans') }}">Investment plans</a></div>
                 <div><h2>Client resources</h2><a href="{{ url('/login') }}">Client portal</a><a href="{{ url('/register') }}">Open an account</a><a href="{{ url('/faqs') }}">Help & FAQs</a><a href="{{ url('/security') }}">Security</a><a href="{{ url('/legal') }}">Legal information</a></div>
             </div>
@@ -116,6 +163,8 @@
         </div>
     </footer>
     <div id="google_translate_element" class="hidden" aria-hidden="true"></div>
+    @stack('scripts')
     {!! $web->livechat_code !!}
 </body>
 </html>
+

@@ -1,10 +1,16 @@
-@extends('layouts.marketing')
+@extends('layouts.investment-home')
 
-@section('title', config('app.name') . ' | Real Estate')
+@section('title', ($siteName ?? config('app.name')) . ' | Real Estate')
 @section('meta_description', 'A disciplined view of real estate, income, liquidity, concentration and long-term portfolio relevance.')
 
 @php
 $assetPage = [
+    'hero_heading' => 'Real assets.',
+    'hero_accent' => 'A longer view.',
+    'image' => 'real-estate',
+    'image_alt' => 'Contemporary residential architecture at dusk',
+    'related' => [['Stocks & ETFs', '/stocks'], ['Agriculture', '/agriculture'], ['Gold', '/gold']],
+
     'eyebrow' => 'Real estate',
     'title' => 'Real assets need real underwriting.',
     'intro' => 'Property can provide income, long-duration exposure and tangible collateral, but location, financing, tenant quality, operating costs and liquidity can matter more than the headline appreciation story.',
@@ -29,3 +35,4 @@ $assetPage = [
 @section('content')
     @include('home.partials.asset-page', ['assetPage' => $assetPage])
 @endsection
+
