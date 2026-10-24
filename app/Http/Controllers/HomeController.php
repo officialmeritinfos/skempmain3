@@ -131,12 +131,12 @@ class HomeController extends Controller
                 [
                     'label' => 'Certificate 01',
                     'path' => $resolveDocument([
-//                        'home/images/legal/certificate.jpg',
+                        'certificate.jpeg',
                     ]),
                 ],
             ],
             'legalPdfPath' => $resolveDocument([
-//                'home/documents/legal/company-document.pdf',
+                'profile.pdf',
             ]),
         ];
 
